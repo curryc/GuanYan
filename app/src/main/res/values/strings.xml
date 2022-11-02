@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">SignL</string>
+
+    <string name="send">send</string>
+    <string name="shutdown">shutdown</string>
+    <string name="create">create</string>
+    <string name="stop">stop</string>
+    <string name="cancel_text">cancle</string>
+
+    <string name="chinese_sign">CN_CSL</string>
+
+
+    <string name="queue_model">queue</string>
+
+    <string name="clear_model">clean</string>
+
+    <string name="translate_language_text">language</string>
+
+    <string name="mode_text">mode</string>
+</resources>
