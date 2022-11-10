@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/catalog_height"
+        android:id="@+id/select_holder"
+        android:layout_margin="@dimen/round_rec_radius"
+        android:background="@drawable/round_rec">
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textAppearance="@style/MiddleTextAppearance"
+              android:layout_margin="@dimen/round_rec_radius"
+              android:layout_gravity="center"
+              android:text="hello"
+              android:id="@+id/select_title"></TextView>
+    <com.curry.util.view.RoundImageView
+            android:layout_width="@dimen/round_dot_list_item_dot"
+            android:layout_height="@dimen/round_dot_list_item_dot"
+            android:layout_gravity="right|top"
+            android:id="@+id/select_dot"/>
+    <ImageView android:layout_width="@dimen/select_radio"
+               android:layout_height="@dimen/select_radio"
+               android:id="@+id/select_radio"
+               android:layout_marginEnd="@dimen/activity_horizontal_margin"
+               android:src="@drawable/selective"
+               android:layout_gravity="center_vertical|right"></ImageView>
+</FrameLayout>

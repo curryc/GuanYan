@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.ThemeActivity">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+        <TextView
+                android:layout_width="@dimen/theme_hint_width"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/MiddleTextAppearance"
+                android:layout_centerVertical="true"
+                android:text="R: "
+                app:layout_constraintEnd_toStartOf="@id/red" android:id="@+id/textView"
+                app:layout_constraintTop_toTopOf="@+id/red"
+                app:layout_constraintBottom_toBottomOf="@+id/red"></TextView>
+        <EditText
+                android:layout_width="@dimen/theme_edit_width"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppNumberEditText"
+                android:id="@+id/red"
+                android:hint="0-255"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/green"></EditText>
+        <TextView
+                android:layout_width="@dimen/theme_hint_width"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/MiddleTextAppearance"
+                android:layout_centerVertical="true"
+                android:text="G: "
+                app:layout_constraintEnd_toStartOf="@id/green"
+                app:layout_constraintBottom_toBottomOf="@+id/green"
+                app:layout_constraintTop_toBottomOf="@+id/red" android:id="@+id/textView3"></TextView>
+        <EditText
+                android:layout_width="@dimen/theme_edit_width"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppNumberEditText"
+                android:id="@+id/green"
+                android:hint="0-255"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/red"
+                app:layout_constraintBottom_toBottomOf="@id/red"></EditText>
+        <TextView
+                android:layout_width="@dimen/theme_hint_width"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/MiddleTextAppearance"
+                android:layout_centerVertical="true"
+                android:text="B: "
+                app:layout_constraintEnd_toStartOf="@id/blue" android:id="@+id/textView2"
+                app:layout_constraintBottom_toBottomOf="@+id/blue"
+                app:layout_constraintTop_toBottomOf="@+id/green"></TextView>
+        <EditText
+                android:layout_width="@dimen/theme_edit_width"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppNumberEditText"
+                android:id="@+id/blue"
+                android:hint="0-255"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/green"
+                app:layout_constraintBottom_toBottomOf="parent"></EditText>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button android:layout_width="@dimen/theme_edit_width"
+            android:layout_height="wrap_content"
+            android:background="@color/light_gray"
+            android:id="@+id/save"
+            android:theme="@style/AppButton"
+            android:text="@string/save"
+            android:layout_marginBottom="@dimen/bottom_padding"
+            android:layout_gravity="center_horizontal|bottom"></Button>
+
+</FrameLayout>

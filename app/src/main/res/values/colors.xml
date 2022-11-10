@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="translucent">#33000000</color>
+
+    <color name="light_black">#191919</color>
+    <color name="dkgray">#80808FF0</color>
+    <color name="yello">#F8F8FF00</color>
+    <color name="darkgray">#938192</color>
+    <color name="lightgreen">#7cd12e</color>
+    <color name="cyan">#ff00ffff</color>
+    <color name="ltgray">#ffcccccc</color>
+    <color name="magenta">#ffff00ff</color>
+
+    <color name="rainbow_red">#bf0c43</color>
+    <color name="rainbow_yellow">#f9ba15</color>
+    <color name="rainbow_green">#8eac00</color>
+    <color name="rainbow_blue">#127a97</color>
+    <color name="rainbow_purple">#452b72</color>
+
+    <integer-array name="rainbow">
+        <item>@color/rainbow_red</item>
+        <item>@color/rainbow_yellow</item>
+        <item>@color/rainbow_green</item>
+        <item>@color/rainbow_blue</item>
+        <item>@color/rainbow_purple</item>
+    </integer-array>
+
+    <color name="list_divider_color">#c8c7cc</color>
+    <color name="user_info_message_notice">#E35B5A</color>
+    <color name="tab_text_normal">#EEA9A9</color>
+
+    <color name="diy_red">#DB3937</color>
+    <color name="diy_red2">#cc6f6e</color>
+    <color name="diy_gray">#EEEEEE</color>
+    <color name="sgray">#868585</color>
+    <color name="diy_gray2">#999999</color>
+    <color name="diy_black">#070707</color>
+    <color name="diy_black2">#000000</color>
+    <color name="diy_white">#ffffff</color>
+    <color name="diy_white_bg">#F0F0F0</color>
+
+    <color name="comment_name">#6682BA</color>
+    <color name="comment_floor_bg">#F9F9ED</color>
+</resources>

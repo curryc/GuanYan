@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/drawable/horizontal_line.xml" value="0.159" />
+        <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/drawable/ic_setting.xml" value="0.1" />
+        <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/drawable/round_rec_5dp.xml" value="0.159" />
+        <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/drawable/round_rec_transparent.xml" value="0.159" />
+        <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/drawable/round_red_translucent.xml" value="0.159" />
+        <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/layout/activity_main.xml" value="0.19199999334161955" />
+        <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/layout/button_nav.xml" value="0.13963635879390512" />
+        <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/layout/fragment_home.xml" value="0.21818181061547676" />
+        <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/layout/fragment_nav.xml" value="0.2879999900124293" />
+        <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/layout/fragment_setting.xml" value="0.1859375" />
+        <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/layout/fragment_teach.xml" value="0.1859375" />
+        <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/layout/nav_main.xml" value="0.2125" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17_PREVIEW" project-jdk-name="jbr-11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

@@ -1,0 +1,102 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--ToolBar区域背景颜色-->
+        <item name="colorPrimary">@color/white</item>
+        <!--状态栏区域背景颜色-->
+        <item name="colorPrimaryDark">@color/white</item>
+        <!--控制各个控件被选中时的颜色-->
+        <item name="colorAccent">@color/white</item>
+        <!--状态栏-->
+        <!--        <item name="android:windowTranslucentStatus">true</item>-->
+        <!--        <item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
+        <!--        <item name="android:statusBarColor">@color/transparent</item>-->
+        <!--页面背景色-->
+        <item name="android:windowBackground">@color/white</item>
+        <!--api 21 可用 底部导航栏颜色-->
+        <item name="android:navigationBarColor">@color/gray</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <!--api 21 可用 各个控制控件的默认颜色-->
+        <item name="android:colorControlNormal">@color/white</item>
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+        <item name="android:windowActionBar">false</item>
+    </style>
+
+    <style name="AnimationActivity" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+    </style>
+
+    <!--CollapsingToolbarLayout样式-->
+    <style name="ToolBarTheme" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="statusBarScrim">@color/white</item>
+        <item name="contentScrim">@color/white</item>
+        <item name="titleTextColor">@color/colorPrimary</item>
+    </style>
+
+    <!--修改toolbar弹出菜单的位置-->
+    <style name="OverflowMenuStyle" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="overlapAnchor">true</item>  <!--把该属性改为false即可使menu位置位于toolbar之下-->
+    </style>
+
+    <!--edit的样式-->
+    <style name="AppNumberEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:textAlignment">center</item>
+        <item name="singleLine">true</item>
+        <item name="android:numeric">integer</item>
+        <item name="hintTextAppearance">@style/NormalTextAppearance</item>
+        <item name="android:textColorPrimary">@color/black</item>
+    </style>
+
+    <!--Button的样式-->
+    <style name="AppButton" parent="Widget.AppCompat.Button">
+        <item name="android:textAppearance">@style/BigTextAppearance</item>
+        <item name="colorAccent">@color/white</item>
+    </style>
+
+    <!--文字样式-->
+    <style name="NormalTextAppearance" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="BigTextAppearance" parent="NormalTextAppearance">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="MiddleTextAppearance" parent="NormalTextAppearance">
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="NavItemTextAppearance" parent="NormalTextAppearance">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+
+    <!--带有返回按钮的activity样式-->
+    <style name="BackAppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <!--ToolBar区域背景颜色-->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <!--状态栏区域背景颜色-->
+        <item name="colorPrimaryDark">@color/transparent</item>
+        <!--控制各个控件被选中时的颜色-->
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!--状态栏-->
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+
+        <!--页面背景色-->
+        <item name="android:windowBackground">@color/white</item>
+        <!--api 21 可用 底部导航栏颜色-->
+        <item name="android:navigationBarColor">@color/gray</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <!--api 21 可用 各个控制控件的默认颜色-->
+        <item name="android:colorControlNormal">@color/white</item>
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+        <item name="android:windowActionBar">false</item>
+    </style>
+
+</resources>

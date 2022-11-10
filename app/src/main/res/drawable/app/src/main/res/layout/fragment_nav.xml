@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:id="@+id/Nav_button_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    <com.curry.toolt.widget.NavigationButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/nav_collect"
+            android:layout_weight="1"></com.curry.toolt.widget.NavigationButton>
+    <com.curry.toolt.widget.NavigationButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/nav_home"
+            android:layout_weight="1"></com.curry.toolt.widget.NavigationButton>
+    <com.curry.toolt.widget.NavigationButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/nav_more"
+            android:layout_weight="1"></com.curry.toolt.widget.NavigationButton>
+
+</LinearLayout>
