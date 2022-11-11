@@ -2,6 +2,11 @@ package com.scu.guanyan;
 
 import android.os.Bundle;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.huawei.hms.signpal.GeneratorConstants;
+import com.huawei.hms.signpal.GeneratorSetting;
+import com.huawei.hms.signpal.SignGenerator;
+import com.huawei.hms.signpal.common.agc.SignPalApplication;
 import com.scu.guanyan.base.BaseActivity;
 import com.scu.guanyan.ui.FragmentAdapter;
 import com.scu.guanyan.ui.NavFragment;
@@ -25,7 +30,7 @@ public class MainActivity extends BaseActivity {
     protected void initView() {
         mNav = new NavFragment();
         mPager = findViewById(R.id.pager);
-
+        InitHuawei();
         mNav.setUp(new NavFragment.OnTabChanged() {
             @Override
             public void onSelect(int sequence) {
@@ -57,5 +62,18 @@ public class MainActivity extends BaseActivity {
         l.add(new FragmentAdapter.PagerInfo("TEACH", TeachFragment.class, bundle));
         l.add(new FragmentAdapter.PagerInfo("SETTING", SettingFragment.class, bundle));
         return l;
+    }
+
+    /**
+     * 手语配置
+     */
+    private void InitHuawei(){
+
+        String token="CB8AFD8B9AAD3C251F2ABF44D8F876874086C92472D7C26582E3F39510B024B8";
+        GeneratorSetting setting = new GeneratorSetting().setLanguage(GeneratorConstants.CN_CSL);
+        SignGenerator signGenerator  = new SignGenerator(setting);
+        // 过程中更新
+        signGenerator.updateSetting(setting);
+        SignPalApplication.getInstance().setAccessToken(token);
     }
 }
