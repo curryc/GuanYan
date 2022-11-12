@@ -15,7 +15,6 @@
  */
 
 package com.scu.guanyan.utils.sign;
-
 import com.huawei.hms.scene.math.Quaternion;
 import com.huawei.hms.scene.math.Vector3;
 
@@ -67,6 +66,4 @@ public class Bone {
             this.localPosition = parent.worldRotate.inverse().rotateVector3(Vector3.subtract(worldPosition, parent.worldPosition));
         }
     }
-
-
 }

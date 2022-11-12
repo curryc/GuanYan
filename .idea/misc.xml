@@ -10,10 +10,11 @@
         <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/drawable/round_red_translucent.xml" value="0.159" />
         <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/layout/activity_main.xml" value="0.19199999334161955" />
         <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/layout/button_nav.xml" value="0.13963635879390512" />
-        <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/layout/fragment_home.xml" value="0.21818181061547676" />
+        <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/layout/fragment_home.xml" value="0.2879999900124293" />
         <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/layout/fragment_nav.xml" value="0.2879999900124293" />
-        <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/layout/fragment_setting.xml" value="0.1859375" />
-        <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/layout/fragment_teach.xml" value="0.1859375" />
+        <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/layout/fragment_setting.xml" value="0.21818181061547676" />
+        <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/layout/fragment_teach.xml" value="0.21818181061547676" />
+        <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/layout/holder_teach_video.xml" value="0.19199999334161955" />
         <entry key="..\:/Program/Java/Projects/Guanyan/app/src/main/res/layout/nav_main.xml" value="0.2125" />
       </map>
     </option>
