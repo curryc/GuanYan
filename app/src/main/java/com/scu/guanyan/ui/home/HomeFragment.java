@@ -29,7 +29,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     /**
-     * 设置3个按钮功能
+     * 设置按钮功能
      */
     private void setButton(){
         translate=getActivity().findViewById(R.id.translate);
