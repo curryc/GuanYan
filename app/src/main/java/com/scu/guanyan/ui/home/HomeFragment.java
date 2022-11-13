@@ -21,4 +21,7 @@ public class HomeFragment extends BaseFragment {
     protected void initView(ViewHolder viewHolder, View root) {
 
     }
+    public void clickTranslate(View view){
+
+    }
 }

@@ -28,7 +28,7 @@ public class FragmentAdapter extends FragmentStateAdapter {
      *
      * @param fragmentManager 用来生成一个fragment
      * @param lifecycle       必要的lifeCycle
-     * @param l               pagerInfo的泪飙
+     * @param l               pagerInfo的列表
      */
     public FragmentAdapter(@NonNull @NotNull FragmentManager fragmentManager, Lifecycle lifecycle, List<PagerInfo> l) {
         super(fragmentManager, lifecycle);

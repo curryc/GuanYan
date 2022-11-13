@@ -7,26 +7,35 @@
         android:dividerPadding="20dp"
         android:showDividers="middle"
         android:orientation="vertical">
-    <Button android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="@dimen/app_padding_mid"
-            android:text=""
-            android:background="@drawable/round_rec"
-            android:layout_weight="3"/>
+
+    <Button
+        android:id="@+id/floating_window"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/app_padding_mid"
+        android:layout_weight="3"
+        android:background="@drawable/round_rec"
+        android:text="" />
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="0dp"
                   android:layout_weight="3"
                   android:orientation="horizontal">
-        <Button android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_margin="@dimen/app_padding_mid"
-                android:background="@drawable/round_rec"/>
-        <Button android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/app_padding_mid"
-                android:layout_weight="1"
-                android:background="@drawable/round_rec"/>
+
+        <Button
+            android:id="@+id/real_time_tran"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/app_padding_mid"
+            android:layout_weight="1"
+            android:background="@drawable/round_rec" />
+
+        <Button
+            android:id="@+id/translate"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/app_padding_mid"
+            android:layout_weight="1"
+            android:background="@drawable/round_rec" />
     </LinearLayout>
     <TextView android:layout_width="match_parent"
               android:layout_height="0dp"

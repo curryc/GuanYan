@@ -66,6 +66,7 @@ public class MainActivity extends BaseActivity {
 
     /**
      * 手语配置
+     * @author:  pbw
      */
     private void InitHuawei(){
 
