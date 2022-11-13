@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import com.scu.guanyan.R;
 import com.scu.guanyan.base.BaseFragment;
 import com.scu.guanyan.base.ViewHolder;
+import com.scu.guanyan.ui.translate.translate;
 
 /**
  * @program: Guanyan
@@ -53,8 +54,8 @@ public class HomeFragment extends BaseFragment {
         translate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(getActivity(),translate.class);//想调到哪个界面就把login改成界面对应的activity名
-                //startActivity(intent);
+                Intent intent = new Intent(getActivity(), com.scu.guanyan.ui.translate.translate.class);//想调到哪个界面就把login改成界面对应的activity名
+                startActivity(intent);
                 int a=0;
             }
         });
