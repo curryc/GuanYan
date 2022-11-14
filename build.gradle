@@ -12,6 +12,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:7.3.1'
         // 增加agcp插件配置，请您参见AGC插件依赖关系选择合适的agcp插件版本。
         classpath 'com.huawei.agconnect:agcp:1.7.2.300'
+
     }
 }
 // Top-level build file where you can add configuration options common to all sub-projects/modules.

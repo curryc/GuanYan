@@ -1,16 +1,14 @@
 package com.scu.guanyan.ui.translate;
 
-import static com.scu.guanyan.base.ViewHolder.TAG;
-
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.Manifest;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
+
+import androidx.core.app.ActivityCompat;
 
 import com.huawei.hms.signpal.GeneratorCallback;
 import com.huawei.hms.signpal.GeneratorConstants;
@@ -22,18 +20,20 @@ import com.huawei.hms.signpal.SignPalWarning;
 import com.huawei.hms.signpal.common.agc.SignPalApplication;
 import com.scu.guanyan.R;
 import com.scu.guanyan.base.BaseActivity;
+import com.scu.guanyan.utils.audio.real_time_words;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 
 public class translate extends BaseActivity {
+
     private static String TAG = "TranslateActivity";
     private long starTime ;
     private long costTime ;
     private SignGenerator signGenerator;
     private GeneratorSetting setting;
     private EditText input;
+    private real_time_words real_time_words;
     //处理 callback
     private GeneratorCallback callback =  new GeneratorCallback() {
         @Override
@@ -93,8 +93,20 @@ public class translate extends BaseActivity {
 
     @Override
     protected void initView() {
-        InitHuawei();
+
         input=findViewById(R.id.input);
+
+
+        ActivityCompat.requestPermissions(this, new String[]{
+                Manifest.permission.READ_PHONE_STATE
+        }, 0);
+        InitHuawei();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        real_time_words.destroy();
     }
 
     private void InitHuawei(){
@@ -122,4 +134,9 @@ public class translate extends BaseActivity {
         String id = signGenerator.text2SignMotion("我恨你", GeneratorConstants.QUEUE_MODE);
     }
 
+    private  void init_audio(){
+        real_time_words=new real_time_words();
+        real_time_words.setActivity(this,getBaseContext());
+
+    }
 }
