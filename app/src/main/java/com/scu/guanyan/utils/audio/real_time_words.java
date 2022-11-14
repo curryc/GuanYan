@@ -2,7 +2,7 @@
  * Copyright (c) Huawei Technologies Co., Ltd. 2022-2022. All rights reserved.
  */
 
-package com.scu.guanyan.unit_audio;
+package com.scu.guanyan.utils.audio;
 
 import android.Manifest;
 import android.app.Activity;
@@ -35,7 +35,7 @@ public class real_time_words {
     // 实时显示识别的结果
     private StringBuffer realTimeResult;
     Activity activity;
-    private AudioRecordService audioRecordService;
+    private com.scu.guanyan.utils.audio.AudioRecordService audioRecordService;
     private AuthInfo authInfo;
     public String words="";
 
@@ -226,8 +226,8 @@ public class real_time_words {
      * 初始化设置资源
      */
     private void initResources() {
-        authInfo = new AuthInfo(Config.AK, Config.SK, Config.REGION, Config.PROJECT_ID);
-        audioRecordService = new AudioRecordService(16000);
+        authInfo = new AuthInfo(com.scu.guanyan.utils.audio.Config.AK, com.scu.guanyan.utils.audio.Config.SK, com.scu.guanyan.utils.audio.Config.REGION, com.scu.guanyan.utils.audio.Config.PROJECT_ID);
+        audioRecordService = new com.scu.guanyan.utils.audio.AudioRecordService(16000);
         realTimeResult = new StringBuffer();
     }
 

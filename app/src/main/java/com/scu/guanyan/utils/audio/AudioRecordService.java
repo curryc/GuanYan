@@ -2,7 +2,7 @@
  * Copyright (c) Huawei Technologies Co., Ltd. 2022-2022. All rights reserved.
  */
 
-package com.scu.guanyan.unit_audio;
+package com.scu.guanyan.utils.audio;
 
 import android.annotation.SuppressLint;
 import android.media.AudioFormat;
