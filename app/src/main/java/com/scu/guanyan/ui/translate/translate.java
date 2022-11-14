@@ -5,9 +5,12 @@ import static com.scu.guanyan.base.ViewHolder.TAG;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.huawei.hms.signpal.GeneratorCallback;
 import com.huawei.hms.signpal.GeneratorConstants;
@@ -20,11 +23,17 @@ import com.huawei.hms.signpal.common.agc.SignPalApplication;
 import com.scu.guanyan.R;
 import com.scu.guanyan.base.BaseActivity;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
+
 public class translate extends BaseActivity {
+    private static String TAG = "TranslateActivity";
     private long starTime ;
     private long costTime ;
     private SignGenerator signGenerator;
     private GeneratorSetting setting;
+    private EditText input;
     //处理 callback
     private GeneratorCallback callback =  new GeneratorCallback() {
         @Override
@@ -38,10 +47,23 @@ public class translate extends BaseActivity {
         }
 
         @Override
-        public void onSignDataAvailable(String s, SignMotionFragment signMotionFragment, Pair<Integer, Integer> pair, Bundle bundle) {
-
+        public void onSignDataAvailable(String taskId, SignMotionFragment signFragment, Pair<Integer, Integer> range, Bundle bundle) {
+            // 获取手语动作数据
+            ArrayList<Map<String,float[]>> motionDataList= signFragment.getSignMotionDataMap();
+            // 获取表情数据
+            int[] faceArr = signFragment.getFaceMotion();
+            // 获取口型BlendShape驱动数据，如果不设置开启则为空数组
+            float[] faceBlendShape = signFragment.getFaceBlendShapeArray();
+            // 手语动作表情绘制，需要您自行实现
+            String str="";
+            for(Map<String,float[]> mf:motionDataList) {
+                for (float f[] :mf.values()){
+                    for(float a: f)
+                    str=str+Float.toString(a);
+                }
+            }
+            Log.e(TAG,"faceBlendShape:"+str);
         }
-
         @Override
         public void onEvent(String taskId, int eventId, Bundle bundle) {
             switch (eventId) {
@@ -49,8 +71,13 @@ public class translate extends BaseActivity {
                     starTime = System.currentTimeMillis();
                     break;
                 case GeneratorConstants.EVENT_STOP:
+                    boolean isInterrupted = bundle.getBoolean(GeneratorConstants.EVENT_STOP_INTERRUPTED);
+                    break;
+                case GeneratorConstants.EVENT_DOWNLOADING:
+                    // 任务下载中
                     costTime = System.currentTimeMillis() - starTime;
                     Log.d(TAG, String.format("task: %s ,time cost:%s", taskId, costTime));
+
                     break;
                 default:
                     break;
@@ -66,26 +93,33 @@ public class translate extends BaseActivity {
 
     @Override
     protected void initView() {
+        InitHuawei();
+        input=findViewById(R.id.input);
     }
 
     private void InitHuawei(){
-
-        String token="DAEDAKyby4AgjiQeVTi5JI4MP/pU9g7YZeCRaD3qXyLI1ckglxYM0Wavtg3RZ0fbKUpsLYoPVXJk4V6rDzfiD4xZ78loPchRlWXfWQ==";
-        SignPalApplication.getInstance().setApiKey(token);
+        String apiKEY="DAEDAKyby4AgjiQeVTi5JI4MP/pU9g7YZeCRaD3qXyLI1ckglxYM0Wavtg3RZ0fbKUpsLYoPVXJk4V6rDzfiD4xZ78loPchRlWXfWQ==";
+        //String token="";
+        SignPalApplication.getInstance().setApiKey(apiKEY);
+        //SignPalApplication.getInstance().setAccessToken(token);
         setting = new GeneratorSetting().setLanguage(GeneratorConstants.CN_CSL);
         signGenerator  = new SignGenerator(setting);
         signGenerator.setCallback(callback);
-
+        //handler.post(runnable);
     }
-    private  void permission(){
 
-    }
-    public void click(View v){
-        try{
-            InitHuawei();
-        }catch (Exception e){
-            this.finish();
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+
+            handler.post(this);
         }
+    };
+    private Handler handler = new Handler();
+
+    public void click(View v){
+        String msg=  input.getText().toString();
+        String id = signGenerator.text2SignMotion("我恨你", GeneratorConstants.QUEUE_MODE);
     }
 
 }
