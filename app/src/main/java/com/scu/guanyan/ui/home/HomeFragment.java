@@ -1,10 +1,8 @@
 package com.scu.guanyan.ui.home;
 
 
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -14,7 +12,6 @@ import androidx.annotation.Nullable;
 import com.scu.guanyan.R;
 import com.scu.guanyan.base.BaseFragment;
 import com.scu.guanyan.base.ViewHolder;
-import com.scu.guanyan.ui.translate.translate;
 
 /**
  * @program: Guanyan
@@ -76,4 +73,5 @@ public class HomeFragment extends BaseFragment {
             }
         });
     }
+
 }

@@ -1,6 +1,13 @@
 package com.scu.guanyan;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+
+import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.huawei.hms.signpal.GeneratorConstants;
@@ -64,17 +71,5 @@ public class MainActivity extends BaseActivity {
         return l;
     }
 
-    /**
-     * 手语配置
-     * @author:  pbw
-     */
-    private void InitHuawei(){
 
-        String token="CB8AFD8B9AAD3C251F2ABF44D8F876874086C92472D7C26582E3F39510B024B8";
-        GeneratorSetting setting = new GeneratorSetting().setLanguage(GeneratorConstants.CN_CSL);
-        SignGenerator signGenerator  = new SignGenerator(setting);
-        // 过程中更新
-        signGenerator.updateSetting(setting);
-        SignPalApplication.getInstance().setAccessToken(token);
-    }
 }
