@@ -20,7 +20,7 @@ import com.scu.guanyan.base.ViewHolder;
  * @description:
  **/
 public class HomeFragment extends BaseFragment {
-    private Button translate, real_time_tran, floating_window;
+    private Button mWordTrans, mAudioTrans, mFloatTrans;
 
     @Override
     protected int getLayoutId() {
@@ -43,20 +43,19 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void setButton(View view) {
-        translate = view.findViewById(R.id.translate);
-        real_time_tran = view.findViewById(R.id.audio_trans);
-        floating_window = view.findViewById(R.id.floating_window);
+        mWordTrans = view.findViewById(R.id.translate);
+        mAudioTrans = view.findViewById(R.id.audio_trans);
+        mFloatTrans = view.findViewById(R.id.floating_window);
 
-        translate.setOnClickListener(new View.OnClickListener() {
+        mWordTrans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), com.scu.guanyan.activity.translate.class);//想调到哪个界面就把login改成界面对应的activity名
+                Intent intent = new Intent(getActivity(), com.scu.guanyan.activity.WordTranslateActivity.class);//想调到哪个界面就把login改成界面对应的activity名
                 startActivity(intent);
-                int a = 0;
             }
         });
 
-        real_time_tran.setOnClickListener(new View.OnClickListener() {
+        mAudioTrans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Intent intent = new Intent(getActivity(),translate.class);//想调到哪个界面就把login改成界面对应的activity名
@@ -64,7 +63,7 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        floating_window.setOnClickListener(new View.OnClickListener() {
+        mFloatTrans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Intent intent = new Intent(getActivity(),translate.class);//想调到哪个界面就把login改成界面对应的activity名

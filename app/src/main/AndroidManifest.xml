@@ -22,6 +22,7 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.WordTranslateActivity" android:exported="true"/>
 
     </application>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 如果需要粗略定位的话请加上此权限 -->

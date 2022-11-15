@@ -6,13 +6,8 @@ package com.scu.guanyan.utils.audio;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
-
-import androidx.core.content.ContextCompat;
 
 import com.huaweicloud.sdk.core.utils.JsonUtils;
 import com.scu.guanyan.utils.base.PermissionUtils;
@@ -105,7 +100,7 @@ public class RealTimeWords {
     };
 
     /**
-     * 获取语音转化为
+     * 获取语音转化为文字
      */
     public RasrResponseListener rasrResponseListener = new RasrResponseListener() {
         /**
