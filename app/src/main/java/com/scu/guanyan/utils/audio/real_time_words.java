@@ -27,6 +27,7 @@ import sis.android.sdk.listeners.process.RasrConnProcessListener;
 
 /**
  * 实现语音功能的类
+ *
  * @浦博威 2022/11/14
  */
 
@@ -37,31 +38,31 @@ public class real_time_words {
     Activity activity;
     private com.scu.guanyan.utils.audio.AudioRecordService audioRecordService;
     private AuthInfo authInfo;
-    public String words="";
+    public String words = "";
 
 
     /**
      * 构造函数
      */
-    public real_time_words(){
+    public real_time_words() {
         initResources();
     }
 
 
-
     /**
      * 设置使用的activate 用于弹出Toast
+     *
      * @param act
      */
-    public void setActivity(Activity act,Context context){
-        activity=act;
-        checkAudioRecordingPermission(activity,  context);
+    public void setActivity(Activity act, Context context) {
+        activity = act;
+        checkAudioRecordingPermission(activity, context);
     }
 
     /**
      * 释放资源，销毁，在activity使用onDestroy之前一定要用
      */
-    public void destroy(){
+    public void destroy() {
         if (rasrClient != null) {
             rasrClient.close();
         }
@@ -142,9 +143,9 @@ public class real_time_words {
                         AsrResponse.Segment segment = message.getSegments().get(i);
                         // 实时语音识别连续模式 回调结果更新到界面UI中
                         // 这里很重要
-                        words=realTimeResult.toString() + segment.getResult().getText();
+                        words = realTimeResult.toString() + segment.getResult().getText();
                         if (segment.getIsFinal()) {
-                         realTimeResult.append(segment.getResult().getText());
+                            realTimeResult.append(segment.getResult().getText());
                         }
                     }
                 }
@@ -187,7 +188,7 @@ public class real_time_words {
      * 开始监听
      */
     public void start() {
-              realTimeResult = realTimeResult.delete(0, realTimeResult.length());
+        realTimeResult = realTimeResult.delete(0, realTimeResult.length());
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -249,6 +250,7 @@ public class real_time_words {
     }
 
     private final String[] permissions = {Manifest.permission.RECORD_AUDIO};
+
     public void checkAudioRecordingPermission(Activity activity, Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // 检查该权限是否已经获取

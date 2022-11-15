@@ -50,7 +50,7 @@ public class HomeFragment extends BaseFragment {
         translate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), com.scu.guanyan.ui.translate.translate.class);//想调到哪个界面就把login改成界面对应的activity名
+                Intent intent = new Intent(getActivity(), com.scu.guanyan.activity.translate.class);//想调到哪个界面就把login改成界面对应的activity名
                 startActivity(intent);
                 int a = 0;
             }

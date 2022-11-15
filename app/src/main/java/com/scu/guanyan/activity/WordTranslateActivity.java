@@ -1,9 +1,6 @@
-package com.scu.guanyan.ui.translate;
+package com.scu.guanyan.activity;
 
-import static com.scu.guanyan.base.ViewHolder.TAG;
-
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.Manifest;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -22,12 +19,13 @@ import com.huawei.hms.signpal.SignPalWarning;
 import com.huawei.hms.signpal.common.agc.SignPalApplication;
 import com.scu.guanyan.R;
 import com.scu.guanyan.base.BaseActivity;
+import com.scu.guanyan.utils.base.PermissionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
-public class translate extends BaseActivity {
+public class WordTranslateActivity extends BaseActivity {
     private static String TAG = "TranslateActivity";
     private long starTime ;
     private long costTime ;
@@ -59,7 +57,7 @@ public class translate extends BaseActivity {
             for(Map<String,float[]> mf:motionDataList) {
                 for (float f[] :mf.values()){
                     for(float a: f)
-                    str=str+Float.toString(a);
+                        str=str+Float.toString(a);
                 }
             }
             Log.e(TAG,"faceBlendShape:"+str);
@@ -98,6 +96,7 @@ public class translate extends BaseActivity {
     }
 
     private void InitHuawei(){
+        PermissionUtils.checkPermissionSecond(this,0, new String[]{Manifest.permission.READ_PHONE_STATE});
         String apiKEY="DAEDAKyby4AgjiQeVTi5JI4MP/pU9g7YZeCRaD3qXyLI1ckglxYM0Wavtg3RZ0fbKUpsLYoPVXJk4V6rDzfiD4xZ78loPchRlWXfWQ==";
         //String token="";
         SignPalApplication.getInstance().setApiKey(apiKEY);
@@ -111,7 +110,6 @@ public class translate extends BaseActivity {
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
-
             handler.post(this);
         }
     };
