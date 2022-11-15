@@ -37,7 +37,7 @@ public class MainActivity extends BaseActivity {
     protected void initView() {
         mNav = new NavFragment();
         mPager = findViewById(R.id.pager);
-        //InitHuawei();
+
         mNav.setUp(new NavFragment.OnTabChanged() {
             @Override
             public void onSelect(int sequence) {
@@ -70,6 +70,4 @@ public class MainActivity extends BaseActivity {
         l.add(new FragmentAdapter.PagerInfo("SETTING", SettingFragment.class, bundle));
         return l;
     }
-
-
 }

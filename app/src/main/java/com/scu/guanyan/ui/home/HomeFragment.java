@@ -20,9 +20,8 @@ import com.scu.guanyan.base.ViewHolder;
  * @description:
  **/
 public class HomeFragment extends BaseFragment {
-    Button translate;
-    Button real_time_tran;
-    Button floating_window;
+    private Button translate, real_time_tran, floating_window;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_home;
@@ -43,17 +42,17 @@ public class HomeFragment extends BaseFragment {
         setButton(view);
     }
 
-        private void setButton(View view){
-        translate=view.findViewById(R.id.translate);
-        real_time_tran=view.findViewById(R.id.real_time_tran);
-        floating_window=view.findViewById(R.id.floating_window);
+    private void setButton(View view) {
+        translate = view.findViewById(R.id.translate);
+        real_time_tran = view.findViewById(R.id.audio_trans);
+        floating_window = view.findViewById(R.id.floating_window);
 
         translate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), com.scu.guanyan.ui.translate.translate.class);//想调到哪个界面就把login改成界面对应的activity名
                 startActivity(intent);
-                int a=0;
+                int a = 0;
             }
         });
 
