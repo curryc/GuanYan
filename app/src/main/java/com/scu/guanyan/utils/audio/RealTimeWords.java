@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 
 import com.huaweicloud.sdk.core.utils.JsonUtils;
+import com.scu.guanyan.utils.base.PermissionUtils;
 
 import sis.android.sdk.RasrClient;
 import sis.android.sdk.bean.AuthInfo;
@@ -31,11 +32,11 @@ import sis.android.sdk.listeners.process.RasrConnProcessListener;
  * @浦博威 2022/11/14
  */
 
-public class real_time_words {
+public class RealTimeWords {
     private RasrClient rasrClient;
     // 实时显示识别的结果
     private StringBuffer realTimeResult;
-    Activity activity;
+    private Activity activity;
     private com.scu.guanyan.utils.audio.AudioRecordService audioRecordService;
     private AuthInfo authInfo;
     public String words = "";
@@ -44,19 +45,10 @@ public class real_time_words {
     /**
      * 构造函数
      */
-    public real_time_words() {
+    public RealTimeWords(Activity context) {
+        activity = context;
+        PermissionUtils.checkPermissionSecond(context, 0, new String[]{Manifest.permission.RECORD_AUDIO});
         initResources();
-    }
-
-
-    /**
-     * 设置使用的activate 用于弹出Toast
-     *
-     * @param act
-     */
-    public void setActivity(Activity act, Context context) {
-        activity = act;
-        checkAudioRecordingPermission(activity, context);
     }
 
     /**
@@ -247,26 +239,5 @@ public class real_time_words {
         config.setInterimResults("yes");
         rasrRequest.setConfig(config);
         return rasrRequest;
-    }
-
-    private final String[] permissions = {Manifest.permission.RECORD_AUDIO};
-
-    public void checkAudioRecordingPermission(Activity activity, Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // 检查该权限是否已经获取
-            int state = ContextCompat.checkSelfPermission(context, permissions[0]);
-            // 权限是否已经 授权 GRANTED---授权  DINIED---拒绝
-            if (state != PackageManager.PERMISSION_GRANTED) {
-                // 如果没有授予该权限，就去提示用户请求
-                activity.requestPermissions(permissions, 321);
-            }
-            while (true) {
-                state = ContextCompat.checkSelfPermission(context, permissions[0]);
-                // 权限是否已经 授权 GRANTED---授权  DINIED---拒绝
-                if (state == PackageManager.PERMISSION_GRANTED) {
-                    break;
-                }
-            }
-        }
     }
 }
