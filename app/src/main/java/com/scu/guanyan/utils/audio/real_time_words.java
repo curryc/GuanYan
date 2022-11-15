@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
@@ -38,25 +39,18 @@ public class real_time_words {
     private com.scu.guanyan.utils.audio.AudioRecordService audioRecordService;
     private AuthInfo authInfo;
     public String words="";
-
+    TextView view;
 
     /**
      * 构造函数
      */
-    public real_time_words(){
+    public real_time_words(Activity act,Context context,TextView text){
+        view=text;
+        activity=act;
+        checkAudioRecordingPermission(activity,  context);
         initResources();
     }
 
-
-
-    /**
-     * 设置使用的activate 用于弹出Toast
-     * @param act
-     */
-    public void setActivity(Activity act,Context context){
-        activity=act;
-        checkAudioRecordingPermission(activity,  context);
-    }
 
     /**
      * 释放资源，销毁，在activity使用onDestroy之前一定要用
@@ -143,9 +137,7 @@ public class real_time_words {
                         // 实时语音识别连续模式 回调结果更新到界面UI中
                         // 这里很重要
                         words=realTimeResult.toString() + segment.getResult().getText();
-                        if (segment.getIsFinal()) {
-                         realTimeResult.append(segment.getResult().getText());
-                        }
+                        view.setText(segment.getResult().getText());
                     }
                 }
             });
@@ -187,7 +179,7 @@ public class real_time_words {
      * 开始监听
      */
     public void start() {
-              realTimeResult = realTimeResult.delete(0, realTimeResult.length());
+        realTimeResult = realTimeResult.delete(0, realTimeResult.length());
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -203,7 +195,7 @@ public class real_time_words {
                 }
             }
         }).start();
-        Toast.makeText(activity.getApplicationContext(), "正在进行录音中...", Toast.LENGTH_SHORT).show();
+       Toast.makeText(activity.getApplicationContext(), "正在进行录音中...", Toast.LENGTH_SHORT).show();
     }
 
     /**

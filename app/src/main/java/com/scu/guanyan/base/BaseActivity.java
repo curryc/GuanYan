@@ -188,7 +188,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 for(int i = 0; i < permissions.length; i++) {
                     Log.d("activity", permissions[i] + ":" + grantResults[i]);
                 }
-
             }catch(Exception e){
                 e.printStackTrace();
             }

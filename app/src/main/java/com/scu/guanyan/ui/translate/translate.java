@@ -6,7 +6,9 @@ import android.os.Handler;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.core.app.ActivityCompat;
 
@@ -30,6 +32,9 @@ public class translate extends BaseActivity {
     private static String TAG = "TranslateActivity";
     private long starTime ;
     private long costTime ;
+    private TextView text;
+    private Button start;
+    private Button end;
     private SignGenerator signGenerator;
     private GeneratorSetting setting;
     private EditText input;
@@ -59,7 +64,9 @@ public class translate extends BaseActivity {
             for(Map<String,float[]> mf:motionDataList) {
                 for (float f[] :mf.values()){
                     for(float a: f)
-                    str=str+Float.toString(a);
+                    {
+                        str=str+Float.toString(a);
+                    }
                 }
             }
             Log.e(TAG,"faceBlendShape:"+str);
@@ -95,8 +102,10 @@ public class translate extends BaseActivity {
     protected void initView() {
 
         input=findViewById(R.id.input);
-
-
+        start=findViewById(R.id.start);
+        end=findViewById(R.id.end);
+        text=findViewById(R.id.text);
+        init_audio();
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.READ_PHONE_STATE
         }, 0);
@@ -135,8 +144,13 @@ public class translate extends BaseActivity {
     }
 
     private  void init_audio(){
-        real_time_words=new real_time_words();
-        real_time_words.setActivity(this,getBaseContext());
+        real_time_words=new real_time_words(this,getBaseContext(),text);
 
     }
+    public void start(View v){
+        real_time_words.start();
+         }
+    public void end(View v){
+        real_time_words.end();
+        }
 }
