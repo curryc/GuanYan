@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.scu.guanyan.R;
+import com.scu.guanyan.activity.AudioTranslateActivity;
 import com.scu.guanyan.base.BaseFragment;
 import com.scu.guanyan.base.ViewHolder;
 
@@ -50,7 +51,7 @@ public class HomeFragment extends BaseFragment {
         mWordTrans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), com.scu.guanyan.activity.WordTranslateActivity.class);//想调到哪个界面就把login改成界面对应的activity名
+                Intent intent = new Intent(getActivity(), com.scu.guanyan.activity.WordTranslateActivity.class);
                 startActivity(intent);
             }
         });
@@ -58,16 +59,15 @@ public class HomeFragment extends BaseFragment {
         mAudioTrans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(getActivity(),translate.class);//想调到哪个界面就把login改成界面对应的activity名
-                //startActivity(intent);
+                Intent intent = new Intent(getActivity(), AudioTranslateActivity.class);
+                startActivity(intent);
             }
         });
 
         mFloatTrans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(getActivity(),translate.class);//想调到哪个界面就把login改成界面对应的activity名
-                //startActivity(intent);
+                // 调用悬浮窗服务
             }
         });
     }

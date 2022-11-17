@@ -4,13 +4,15 @@
 
 package com.scu.guanyan.utils.audio;
 
-import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.huaweicloud.sdk.core.utils.JsonUtils;
-import com.scu.guanyan.utils.base.PermissionUtils;
+import com.scu.guanyan.event.AudioEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import sis.android.sdk.RasrClient;
 import sis.android.sdk.bean.AuthInfo;
@@ -31,18 +33,20 @@ public class RealTimeWords {
     private RasrClient rasrClient;
     // 实时显示识别的结果
     private StringBuffer realTimeResult;
-    private Activity activity;
-    private com.scu.guanyan.utils.audio.AudioRecordService audioRecordService;
+    private Context mContext;
+    private AudioRecordService audioRecordService;
     private AuthInfo authInfo;
     public String words = "";
+
+    private String flag;
 
 
     /**
      * 构造函数
      */
-    public RealTimeWords(Activity context) {
-        activity = context;
-        PermissionUtils.checkPermissionSecond(context, 0, new String[]{Manifest.permission.RECORD_AUDIO});
+    public RealTimeWords(Activity context, String flag) {
+        mContext = context;
+        this.flag = flag;
         initResources();
     }
 
@@ -89,12 +93,13 @@ public class RealTimeWords {
         public void onTranscriptionFail(AsrResponse asrResponse) {
             Log.i("info", "长连接异常");
             // 调用失败给用户提示
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(activity.getApplicationContext(), "实时语音单句模式长连接失败" + JsonUtils.toJSON(asrResponse), Toast.LENGTH_SHORT).show();
-                }
-            });
+//            mContext.runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    Toast.makeText(mContext.getApplicationContext(), "实时语音单句模式长连接失败" + JsonUtils.toJSON(asrResponse), Toast.LENGTH_SHORT).show();
+//                }
+//            });
+            EventBus.getDefault().post(new AudioEvent(flag, "error", false, "实时语音单句模式长连接失败"));
             rasrClient.close();
         }
     };
@@ -123,20 +128,30 @@ public class RealTimeWords {
          */
         @Override
         public void onResponseMessage(AsrResponse message) {
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    for (int i = 0; i < message.getSegments().size(); i++) {
-                        AsrResponse.Segment segment = message.getSegments().get(i);
-                        // 实时语音识别连续模式 回调结果更新到界面UI中
-                        // 这里很重要
-                        words = realTimeResult.toString() + segment.getResult().getText();
-                        if (segment.getIsFinal()) {
-                            realTimeResult.append(segment.getResult().getText());
-                        }
-                    }
+//            mContext.runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    for (int i = 0; i < message.getSegments().size(); i++) {
+//                        AsrResponse.Segment segment = message.getSegments().get(i);
+//                        // 实时语音识别连续模式 回调结果更新到界面UI中
+//                        // 这里很重要
+//                        words = realTimeResult.toString() + segment.getResult().getText();
+//                        if (segment.getIsFinal()) {
+//                            realTimeResult.append(segment.getResult().getText());
+//                        }
+//                    }
+//                }
+//            });
+            for (int i = 0; i < message.getSegments().size(); i++) {
+                AsrResponse.Segment segment = message.getSegments().get(i);
+                // 实时语音识别连续模式 回调结果更新到界面UI中
+                // 这里很重要
+                words = realTimeResult.toString() + segment.getResult().getText();
+                if (segment.getIsFinal()) {
+                    realTimeResult.append(segment.getResult().getText());
                 }
-            });
+            }
+            EventBus.getDefault().post(new AudioEvent(flag, "done", true, realTimeResult.toString()));
         }
 
         /**
@@ -161,12 +176,13 @@ public class RealTimeWords {
 
         @Override
         public void onResponseError(AsrResponse response) {
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(activity.getApplicationContext(), "实时语音识别连续模式，错误响应:" + JsonUtils.toJSON(response), Toast.LENGTH_SHORT).show();
-                }
-            });
+//            mContext.runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    Toast.makeText(mContext.getApplicationContext(), "实时语音识别连续模式，错误响应:" + JsonUtils.toJSON(response), Toast.LENGTH_SHORT).show();
+//                }
+//            });
+            EventBus.getDefault().post(new AudioEvent(flag, "error",false, "实时语音识别连续模式，错误响应:" + JsonUtils.toJSON(response)));
             rasrClient.close();
         }
     };
@@ -191,7 +207,6 @@ public class RealTimeWords {
                 }
             }
         }).start();
-        Toast.makeText(activity.getApplicationContext(), "正在进行录音中...", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -200,7 +215,7 @@ public class RealTimeWords {
     public void end() {
         if (audioRecordService.getIsRecording().get()) {
             audioRecordService.stopAudioRecord();
-            Toast.makeText(activity.getApplicationContext(), "识别结束...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "识别结束...", Toast.LENGTH_SHORT).show();
         }
         try {
             rasrClient.sendEnd();

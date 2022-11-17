@@ -37,7 +37,7 @@ public class WordTranslateActivity extends BaseActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_translate;
+        return R.layout.activity_trans_word;
     }
 
     @Override

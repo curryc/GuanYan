@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.WordTranslateActivity" android:exported="true"/>
+        <activity android:name=".activity.AudioTranslateActivity" android:exported="true"/>
 
     </application>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 如果需要粗略定位的话请加上此权限 -->
@@ -32,6 +33,9 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
 
 </manifest>
