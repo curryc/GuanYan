@@ -40,6 +40,15 @@ public class SignTranslator {
     private GeneratorSetting mSetting;
     private Activity mContext;
     private String mFlag;
+    private int mMode;
+
+    public int getMode() {
+        return mMode;
+    }
+
+    public void setMode(int mode) {
+        mMode = mode;
+    }
 
     public SignTranslator(Activity context, String flag){
         mContext = context;
@@ -83,20 +92,6 @@ public class SignTranslator {
             }
 
             EventBus.getDefault().post(new SignEvent(mFlag, "available", true, frameDataList));
-
-
-            // 手语动作表情绘制，需要您自行实现
-//            String str = "";
-//            for (Map<String, float[]> mf : motionDataList) {
-//                for (float f[] : mf.values()) {
-//                    for (float a : f)
-//                        str = str + Float.toString(a);
-//                }
-//            }
-//            Log.e(TAG, "faceBlendShape:" + str);
-            // Developers need to render sign language animations themselves.The sample code provides an example of drawing a matchman.
-
-
         }
 
         @Override
@@ -122,6 +117,17 @@ public class SignTranslator {
     };
 
     public void translate(String text, int mode){
-        mSignGenerator.text2SignMotion(text,GeneratorConstants.FLUSH_MODE);
+        mMode = mode;
+        mSignGenerator.text2SignMotion(text,mode);
+        Avatar.getInstance().initBone();
+    }
+
+    public void translate(String text){
+        mSignGenerator.text2SignMotion(text,mMode);
+        Avatar.getInstance().initBone();
+    }
+
+    public void destroy(){
+        mSignGenerator.shutdown();
     }
 }

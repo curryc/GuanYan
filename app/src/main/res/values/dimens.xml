@@ -9,6 +9,9 @@
 
     <dimen name="app_padding_sml">5dp</dimen>
     <dimen name="app_padding_mid">10dp</dimen>
+    <dimen name="app_padding_big">18dp</dimen>
+    <dimen name="app_annotation_height_sml">15dp</dimen>
+    <dimen name="app_margin_bottom">100dp</dimen>
 
     <dimen name="video_height_mid">160dp</dimen>
 </resources>

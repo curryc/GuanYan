@@ -80,4 +80,24 @@ public class PermissionUtils {
             return true;
         }
     }
+
+    /**
+     * 第二次检查权限，用在某个操作需要某个权限的时候调用
+     *
+     * @param context
+     * @param requestCode 请求码
+     * @param permission  权限
+     * @return
+     */
+    public static boolean checkPermissionSecond(Context context, int requestCode, String permission, Intent intent) {
+        int permissionCode = ActivityCompat.checkSelfPermission(context, permission);
+        if (permissionCode != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) context, new String[]{permission}, requestCode);
+            context.startActivity(intent);
+            return false;
+        } else {
+            return true;
+        }
+
+    }
 }
