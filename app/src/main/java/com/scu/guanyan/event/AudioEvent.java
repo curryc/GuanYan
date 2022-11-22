@@ -6,33 +6,13 @@ package com.scu.guanyan.event;
  * @create: 2022/11/15 15:48
  * @description:语音识别转文字的Event
  **/
-public class AudioEvent {
-    private String flag;
-    private String msg;
-    private boolean ok;
+public class AudioEvent extends BaseEvent{
     private String data;
 
     public AudioEvent(String flag, String msg, boolean ok, String data) {
-        this.flag = flag;
-        this.msg = msg;
-        this.ok = ok;
+        super(flag, msg, ok);
         this.data = data;
     }
-
-    public String getFlag() {
-        return flag;
-    }
-
-
-    public String getMsg() {
-        return msg;
-    }
-
-
-    public boolean isOk() {
-        return ok;
-    }
-
 
     public String getData() {
         return data;

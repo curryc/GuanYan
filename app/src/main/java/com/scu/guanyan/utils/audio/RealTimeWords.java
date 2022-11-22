@@ -44,7 +44,7 @@ public class RealTimeWords {
     /**
      * 构造函数
      */
-    public RealTimeWords(Activity context, String flag) {
+    public RealTimeWords(Context context, String flag) {
         mContext = context;
         this.flag = flag;
         initResources();

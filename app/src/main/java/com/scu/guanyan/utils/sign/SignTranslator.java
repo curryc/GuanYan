@@ -2,6 +2,7 @@ package com.scu.guanyan.utils.sign;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -38,7 +39,7 @@ public class SignTranslator {
     private long mStartTime,mCostTime;
     private SignGenerator mSignGenerator;
     private GeneratorSetting mSetting;
-    private Activity mContext;
+    private Context mContext;
     private String mFlag;
     private int mMode;
 
@@ -50,15 +51,20 @@ public class SignTranslator {
         mMode = mode;
     }
 
-    public SignTranslator(Activity context, String flag){
+    public SignTranslator(Context context, String flag, int mode){
+        mMode = mode;
         mContext = context;
         this.mFlag = flag;
-        PermissionUtils.checkPermissionFirst(context, 0, new String[]{Manifest.permission.READ_PHONE_STATE});
         SignPalApplication.getInstance().setApiKey(apiKEY);
         //SignPalApplication.getInstance().setAccessToken(token);
         mSetting = new GeneratorSetting().setLanguage(GeneratorConstants.CN_CSL);
         mSignGenerator = new SignGenerator(mSetting);
         mSignGenerator.setCallback(callback);
+    }
+
+
+    public SignTranslator(Context context, String flag) {
+    this(context, flag, GeneratorConstants.QUEUE_MODE);
     }
 
     private GeneratorCallback callback = new GeneratorCallback() {

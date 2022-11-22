@@ -3,18 +3,31 @@ package com.scu.guanyan.service;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.PixelFormat;
-import android.media.MediaPlayer;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
 import com.scu.guanyan.R;
+import com.scu.guanyan.event.AudioEvent;
+import com.scu.guanyan.event.BaseEvent;
+import com.scu.guanyan.event.SignEvent;
+import com.scu.guanyan.utils.audio.RealTimeWords;
+import com.scu.guanyan.utils.sign.AvatarPaint;
+import com.scu.guanyan.utils.sign.SignTranslator;
+import com.scu.guanyan.widget.SignView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * @program: Guanyan
@@ -24,20 +37,45 @@ import com.scu.guanyan.R;
  **/
 public class FloatWindowService extends Service {
     private final String TAG = "FloatWindowService";
-    public static boolean isStarted = false;
     private WindowManager windowManager;
     private WindowManager.LayoutParams layoutParams;
-    private View mDisplayView;
+    private SignTranslator mTranslator;
+    private AvatarPaint mPainter;
+    private RealTimeWords mAudioUtils;
+    private Handler mHandler;
+    private Runnable mViewChecker;
 
-    private final int INITIAL_WIDTH = 800;
-    private final int INITIAL_HEIGHT = 450;
-    private final int INITIAL_X = 300;
-    private final int INITIAL_Y = 300;
+    private final int INITIAL_WIDTH = 300;
+    private final int INITIAL_HEIGHT = 400;
+    private final int INITIAL_X = 0;
+    private final int INITIAL_Y = 400;
+    private final int VIEW_CHECK_TIME_MILLIS = 2000;
+
+    private View mDisplayView;
+    private SignView mSignView;
+    private ImageView mAudio;
+
+    private boolean isRecord = false;
+    public boolean isStarted = false;
 
     @Override
     public void onCreate() {
         super.onCreate();
         isStarted = true;
+        isRecord = false;
+        mAudioUtils = new RealTimeWords(this, TAG);
+        mTranslator = new SignTranslator(this, TAG);
+        mPainter = new AvatarPaint(mSignView, mTranslator.getMode());
+        mHandler = new Handler();
+        mViewChecker = new Runnable() {
+            @Override
+            public void run() {
+                if(mAudio.getVisibility() == View.VISIBLE){
+                    mAudio.setVisibility(View.GONE);
+                }
+            }
+        };
+
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         layoutParams = new WindowManager.LayoutParams();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -52,13 +90,12 @@ public class FloatWindowService extends Service {
         layoutParams.height = INITIAL_HEIGHT;
         layoutParams.x = INITIAL_X;
         layoutParams.y = INITIAL_Y;
-
-
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+        EventBus.getDefault().register(this);
         return null;
     }
 
@@ -71,6 +108,7 @@ public class FloatWindowService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
         windowManager.removeView(mDisplayView);
         windowManager = null;
     }
@@ -78,22 +116,63 @@ public class FloatWindowService extends Service {
     private void showFloatingWindow() {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         mDisplayView = layoutInflater.inflate(R.layout.float_sign, null);
+        mAudio = mDisplayView.findViewById(R.id.audio);
+        mSignView = mDisplayView.findViewById(R.id.sign);
+
         mDisplayView.setOnTouchListener(new FloatingOnTouchListener());
 
+        mAudio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!isRecord) {
+                    isRecord = true;
+                    mAudio.setImageResource(R.drawable.ic_pause);
+                    mAudioUtils.start();
+                    checkViewAfter();
+//                    toastShort("正在录音...");
+                }else{
+                    isRecord = false;
+                    mAudio.setImageResource(R.drawable.ic_play);
+                    mAudioUtils.end();
+                }
+            }
+        });
 
         windowManager.addView(mDisplayView, layoutParams);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handleData(BaseEvent event){
+        if(event.getFlag().equals(TAG)) {
+            if(event instanceof AudioEvent){
+                Log.i(TAG, ((AudioEvent)event).getData());
+                mTranslator.translate(((AudioEvent)event).getData());
+            }else if(event instanceof SignEvent){
+                // 模式不同， 可能会clear所有帧（flush模式）
+//                    if(mTranslator.getMode() == 1){
+//                        mPainter.clearFrameData();
+//                    }
+                mPainter.addFrameDataList(((SignEvent) event).getFrames());
+                mPainter.startAndPlay();
+            }
+        }
+    }
+
+    private void checkViewAfter(){
+        mHandler.postDelayed(mViewChecker, VIEW_CHECK_TIME_MILLIS);
+    }
+
+
     private class FloatingOnTouchListener implements View.OnTouchListener {
-        private int x;
-        private int y;
+        private int x,y;
+        private int ini_x, ini_y;
 
         @Override
         public boolean onTouch(View view, MotionEvent event) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    x = (int) event.getRawX();
-                    y = (int) event.getRawY();
+                    ini_x = x = (int) event.getRawX();
+                    ini_y = y = (int) event.getRawY();
                     break;
                 case MotionEvent.ACTION_MOVE:
                     int nowX = (int) event.getRawX();
@@ -103,6 +182,17 @@ public class FloatWindowService extends Service {
                     windowManager.updateViewLayout(view, layoutParams);
                     x = nowX;
                     y = nowY;
+                    break;
+                case MotionEvent.ACTION_UP:
+                    if(Math.abs((int)event.getRawX() - ini_x) < 10 &&
+                            Math.abs((int)event.getRawY() - ini_y) < 10){
+                        if(mAudio.getVisibility() != View.VISIBLE){
+                            mAudio.setVisibility(View.VISIBLE);
+                            checkViewAfter();
+                        }else if(mAudio.getVisibility() == View.VISIBLE){
+                            mAudio.setVisibility(View.GONE);
+                        }
+                    }
                     break;
                 default:
                     break;

@@ -10,29 +10,12 @@ import java.util.List;
  * @create: 2022/11/15 15:37
  * @description:手语动作的event
  **/
-public class SignEvent {
-    private String flag;
-    private String msg;
-    private boolean ok;
+public class SignEvent extends BaseEvent{
     private List<FrameData> frames;
 
     public SignEvent(String flag, String msg, boolean ok, List<FrameData> frames) {
-        this.flag = flag;
-        this.msg = msg;
-        this.ok = ok;
+        super(flag, msg, ok);
         this.frames = frames;
-    }
-
-    public String getFlag() {
-        return flag;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public boolean isOk() {
-        return ok;
     }
 
     public List<FrameData> getFrames() {

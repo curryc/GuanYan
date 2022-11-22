@@ -13,5 +13,11 @@
     <dimen name="app_annotation_height_sml">15dp</dimen>
     <dimen name="app_margin_bottom">100dp</dimen>
 
+    <dimen name="text_area_height_big">225dp</dimen>
+
     <dimen name="video_height_mid">160dp</dimen>
+
+    <dimen name="button_size_big">75dp</dimen>
+    <dimen name="button_size_mid">50dp</dimen>
+    <dimen name="button_size_sml">25dp</dimen>
 </resources>

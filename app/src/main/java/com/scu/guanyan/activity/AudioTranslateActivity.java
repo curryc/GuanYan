@@ -4,14 +4,19 @@ import android.Manifest;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.scu.guanyan.R;
 import com.scu.guanyan.base.BaseActivity;
 import com.scu.guanyan.event.AudioEvent;
+import com.scu.guanyan.event.BaseEvent;
+import com.scu.guanyan.event.SignEvent;
 import com.scu.guanyan.utils.audio.RealTimeWords;
 import com.scu.guanyan.utils.base.PermissionUtils;
+import com.scu.guanyan.utils.sign.AvatarPaint;
+import com.scu.guanyan.utils.sign.SignTranslator;
+import com.scu.guanyan.widget.SignView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -26,8 +31,16 @@ import org.greenrobot.eventbus.ThreadMode;
 public class AudioTranslateActivity extends BaseActivity {
     private static String TAG = "AudioTranslateActivity";
 
-    private Button mBegin,mEnd;
+    private ImageView mAudio, mStop;
+    private TextView mHint;
+    private SignView mSignView;
+
     private RealTimeWords mAudioUtils;
+    private SignTranslator mTranslator;
+    private AvatarPaint mPainter;
+
+    private boolean isRecord;
+    private String mWords;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +48,12 @@ public class AudioTranslateActivity extends BaseActivity {
         EventBus.getDefault().register(this);
         if(!PermissionUtils.checkPermissionFirst(AudioTranslateActivity.this, 0, new String[]{Manifest.permission.RECORD_AUDIO})){
             // 用户不给权限
-            mBegin.setEnabled(false);
-            mEnd.setEnabled(false);
+            mAudio.setEnabled(false);
         }
+        mTranslator = new SignTranslator(this, TAG);
         mAudioUtils = new RealTimeWords(AudioTranslateActivity.this, TAG);
+        mPainter = new AvatarPaint(mSignView, mTranslator.getMode());
+        isRecord = false;
     }
 
     @Override
@@ -55,30 +70,43 @@ public class AudioTranslateActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        mBegin = findViewById(R.id.begin);
-        mEnd = findViewById(R.id.end);
-        mBegin.setOnClickListener(new View.OnClickListener() {
+        mAudio = findViewById(R.id.audio);
+        mStop = findViewById(R.id.stop);
+        mSignView = findViewById(R.id.sign);
+        mHint = findViewById(R.id.hint);
+
+        mAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAudioUtils.start();
-                Toast.makeText(AudioTranslateActivity.this, "正在进行录音中...", Toast.LENGTH_SHORT).show();
-            }
-        });
-        mEnd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAudioUtils.end();
+                if(!isRecord) {
+                    isRecord = true;
+                    mAudio.setImageResource(R.drawable.ic_pause);
+                    mAudioUtils.start();
+                    toastShort("正在录音...");
+                }else{
+                    isRecord = false;
+                    mAudio.setImageResource(R.drawable.ic_play);
+                    mAudioUtils.end();
+                }
             }
         });
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void handleData(AudioEvent event){
-        if(event.isOk()){
-            Log.i(TAG,event.getData());
-        }else{
-            if(event.getMsg().equals("error")){
-                Log.e(TAG, event.getData());
+    public void handleData(BaseEvent event){
+        if(event.getFlag().equals(TAG)) {
+            if(event instanceof AudioEvent){
+                Log.i(TAG, ((AudioEvent)event).getData());
+                mWords = ((AudioEvent)event).getData();
+                mHint.setText(mWords);
+                mTranslator.translate(mWords);
+            }else if(event instanceof SignEvent){
+                // 模式不同， 可能会clear所有帧（flush模式）
+//                    if(mTranslator.getMode() == 1){
+//                        mPainter.clearFrameData();
+//                    }
+                mPainter.addFrameDataList(((SignEvent) event).getFrames());
+                mPainter.startAndPlay();
             }
         }
     }

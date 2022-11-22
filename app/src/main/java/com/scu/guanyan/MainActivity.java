@@ -20,6 +20,7 @@ import com.scu.guanyan.ui.NavFragment;
 import com.scu.guanyan.ui.home.HomeFragment;
 import com.scu.guanyan.ui.setting.SettingFragment;
 import com.scu.guanyan.ui.teach.TeachFragment;
+import com.scu.guanyan.utils.base.PermissionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,12 @@ public class MainActivity extends BaseActivity {
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        PermissionUtils.checkPermissionFirst(this, 0, new String[]{Manifest.permission.READ_PHONE_STATE});
     }
 
     @Override

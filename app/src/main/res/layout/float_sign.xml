@@ -2,8 +2,14 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ImageView
+    <com.scu.guanyan.widget.SignView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/round_rec"/>
+    <ImageView
+        android:layout_width="@dimen/button_size_sml"
+        android:layout_height="@dimen/button_size_sml"
+        android:id="@+id/audio"
+        android:src="@drawable/ic_play"
+        android:layout_gravity="center"/>
 </FrameLayout>
