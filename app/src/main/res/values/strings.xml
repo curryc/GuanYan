@@ -11,6 +11,7 @@
     <string name="share_app">Share App</string>
     <string name="feedback">FeedBack</string>
     <string name="contact_us">Contact Us</string>
+    <string name="permission_denied">Permission Denied</string>
 
 
     <string name="common_words">Other Functions</string>

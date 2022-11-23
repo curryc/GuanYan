@@ -175,7 +175,7 @@ public class AvatarPaint {
 
 
     public void destroy() {
-        mFrameCreator.shutdown();
+        mFrameCreator.shutdownNow();
         mAnimator.removeCallbacks(mAnimatorThread);
     }
 }

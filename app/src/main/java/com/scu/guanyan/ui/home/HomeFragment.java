@@ -74,7 +74,7 @@ public class HomeFragment extends BaseFragment {
                     if (canFloat) {
                         getActivity().startService(new Intent(getActivity(), FloatWindowService.class));
                     } else {
-                        Toast.makeText(getActivity(), "permission denied", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getResources().getString(R.string.permission_denied), Toast.LENGTH_SHORT).show();
                         startActivity(i);
                     }
                     // 设置状态

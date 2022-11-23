@@ -109,12 +109,12 @@ public class FloatWindowService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
-        windowManager.removeView(mDisplayView);
-        windowManager = null;
         mAudioUtils.destroy();
         mTranslator.destroy();
         mPainter.destroy();
+        EventBus.getDefault().unregister(this);
+        windowManager.removeView(mDisplayView);
+        windowManager = null;
     }
 
     private void showFloatingWindow() {
