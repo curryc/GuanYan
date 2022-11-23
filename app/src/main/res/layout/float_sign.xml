@@ -5,6 +5,7 @@
     <com.scu.guanyan.widget.SignView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/sign"
         android:src="@drawable/round_rec"/>
     <ImageView
         android:layout_width="@dimen/button_size_sml"

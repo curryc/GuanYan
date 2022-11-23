@@ -51,7 +51,7 @@ public class SignView extends FrameLayout {
 
         mImageView.setImageResource(R.color.ltgray);
         mFace.setText("face type");
-        mMouth.setText("mouth type");
+//        mMouth.setText("mouth type");
     }
 
     public void setSign(Bitmap bitmap){

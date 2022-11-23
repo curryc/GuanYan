@@ -45,8 +45,8 @@ public class FloatWindowService extends Service {
     private Handler mHandler;
     private Runnable mViewChecker;
 
-    private final int INITIAL_WIDTH = 300;
-    private final int INITIAL_HEIGHT = 400;
+    private final int INITIAL_WIDTH = 400;
+    private final int INITIAL_HEIGHT = 600;
     private final int INITIAL_X = 0;
     private final int INITIAL_Y = 400;
     private final int VIEW_CHECK_TIME_MILLIS = 2000;
@@ -65,12 +65,12 @@ public class FloatWindowService extends Service {
         isRecord = false;
         mAudioUtils = new RealTimeWords(this, TAG);
         mTranslator = new SignTranslator(this, TAG);
-        mPainter = new AvatarPaint(mSignView, mTranslator.getMode());
         mHandler = new Handler();
+
         mViewChecker = new Runnable() {
             @Override
             public void run() {
-                if(mAudio.getVisibility() == View.VISIBLE){
+                if (mAudio.getVisibility() == View.VISIBLE) {
                     mAudio.setVisibility(View.GONE);
                 }
             }
@@ -95,13 +95,14 @@ public class FloatWindowService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        EventBus.getDefault().register(this);
         return null;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        EventBus.getDefault().register(this);
         showFloatingWindow();
+        mPainter = new AvatarPaint(mSignView, mTranslator.getMode());
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -127,13 +128,13 @@ public class FloatWindowService extends Service {
         mAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!isRecord) {
+                if (!isRecord) {
                     isRecord = true;
                     mAudio.setImageResource(R.drawable.ic_pause);
                     mAudioUtils.start();
                     checkViewAfter();
 //                    toastShort("正在录音...");
-                }else{
+                } else {
                     isRecord = false;
                     mAudio.setImageResource(R.drawable.ic_play);
                     mAudioUtils.end();
@@ -144,30 +145,35 @@ public class FloatWindowService extends Service {
         windowManager.addView(mDisplayView, layoutParams);
     }
 
+
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void handleData(BaseEvent event){
-        if(event.getFlag().equals(TAG)) {
-            if(event instanceof AudioEvent){
-                Log.i(TAG, ((AudioEvent)event).getData());
-                mTranslator.translate(((AudioEvent)event).getData());
-            }else if(event instanceof SignEvent){
-                // 模式不同， 可能会clear所有帧（flush模式）
+    public void handleData(BaseEvent event) {
+        if (event.getFlag().equals(TAG)) {
+            if (event instanceof AudioEvent) {
+                if (event.isOk() && !((AudioEvent) event).getData().equals("")) {
+                    Log.i(TAG, ((AudioEvent) event).getData());
+                    mTranslator.translate(((AudioEvent) event).getData());
+                }
+            } else if (event instanceof SignEvent) {
+                if (event.isOk() && ((SignEvent) event).getFrames().size() != 0) {
+                    // 模式不同， 可能会clear所有帧（flush模式）
 //                    if(mTranslator.getMode() == 1){
 //                        mPainter.clearFrameData();
 //                    }
-                mPainter.addFrameDataList(((SignEvent) event).getFrames());
-                mPainter.startAndPlay();
+                    mPainter.addFrameDataList(((SignEvent) event).getFrames());
+                    mPainter.startAndPlay();
+                }
             }
         }
     }
 
-    private void checkViewAfter(){
+    private void checkViewAfter() {
         mHandler.postDelayed(mViewChecker, VIEW_CHECK_TIME_MILLIS);
     }
 
 
     private class FloatingOnTouchListener implements View.OnTouchListener {
-        private int x,y;
+        private int x, y;
         private int ini_x, ini_y;
 
         @Override
@@ -187,12 +193,12 @@ public class FloatWindowService extends Service {
                     y = nowY;
                     break;
                 case MotionEvent.ACTION_UP:
-                    if(Math.abs((int)event.getRawX() - ini_x) < 10 &&
-                            Math.abs((int)event.getRawY() - ini_y) < 10){
-                        if(mAudio.getVisibility() != View.VISIBLE){
+                    if (Math.abs((int) event.getRawX() - ini_x) < 10 &&
+                            Math.abs((int) event.getRawY() - ini_y) < 10) {
+                        if (mAudio.getVisibility() != View.VISIBLE) {
                             mAudio.setVisibility(View.VISIBLE);
                             checkViewAfter();
-                        }else if(mAudio.getVisibility() == View.VISIBLE){
+                        } else if (mAudio.getVisibility() == View.VISIBLE) {
                             mAudio.setVisibility(View.GONE);
                         }
                     }
