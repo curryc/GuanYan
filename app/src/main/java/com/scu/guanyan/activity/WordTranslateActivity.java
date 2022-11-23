@@ -49,6 +49,7 @@ public class WordTranslateActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        mTranslator.destroy();
         mPainter.destroy();
     }
 

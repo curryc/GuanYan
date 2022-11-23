@@ -111,6 +111,9 @@ public class FloatWindowService extends Service {
         EventBus.getDefault().unregister(this);
         windowManager.removeView(mDisplayView);
         windowManager = null;
+        mAudioUtils.destroy();
+        mTranslator.destroy();
+        mPainter.destroy();
     }
 
     private void showFloatingWindow() {

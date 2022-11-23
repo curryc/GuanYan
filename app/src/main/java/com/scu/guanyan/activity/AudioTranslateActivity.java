@@ -61,6 +61,8 @@ public class AudioTranslateActivity extends BaseActivity {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
         mAudioUtils.destroy();
+        mTranslator.destroy();
+        mPainter.destroy();
     }
 
     @Override

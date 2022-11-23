@@ -4,6 +4,13 @@
     <string name="tip_double_click_exit">double click to leave</string>
     <string name="submit">Submit</string>
     <string name="save">Save</string>
+    <string name="tutorial">Tutorial</string>
+    <string name="setting">Setting</string>
+
+    <string name="about_app">About App</string>
+    <string name="share_app">Share App</string>
+    <string name="feedback">FeedBack</string>
+    <string name="contact_us">Contact Us</string>
 
 
     <string name="common_words">Other Functions</string>

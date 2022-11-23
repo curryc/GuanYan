@@ -19,7 +19,7 @@
                 android:layout_height="@dimen/nav_icon_size"
                 android:layout_marginEnd="@dimen/nav_button_padding"
                 android:layout_marginStart="@dimen/nav_button_padding"
-                android:src="@drawable/ic_setting"
+                android:src="@drawable/user"
                 android:visibility="visible"
                 android:id="@+id/home"/>
         <ImageView
@@ -27,7 +27,7 @@
                 android:layout_height="@dimen/nav_icon_size"
                 android:layout_marginEnd="@dimen/nav_button_padding"
                 android:layout_marginStart="@dimen/nav_button_padding"
-                android:src="@drawable/ic_setting"
+                android:src="@drawable/video"
                 android:visibility="visible"
                 android:id="@+id/teach"/>
         <ImageView
@@ -35,7 +35,7 @@
                 android:layout_height="@dimen/nav_icon_size"
                 android:layout_marginEnd="@dimen/nav_button_padding"
                 android:layout_marginStart="@dimen/nav_button_padding"
-                android:src="@drawable/ic_setting"
+                android:src="@drawable/setting"
                 android:visibility="visible"
                 android:id="@+id/setting"/>
     </LinearLayout>

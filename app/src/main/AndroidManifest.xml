@@ -27,6 +27,8 @@
         <service
             android:name=".service.FloatWindowService"
             android:exported="true"/>
+        <activity android:name=".activity.AboutAppActivity"
+            android:exported="true"/>
 
     </application>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 如果需要粗略定位的话请加上此权限 -->
