@@ -78,7 +78,7 @@ public class HomeFragment extends BaseFragment {
                         startActivity(i);
                     }
                     // 设置状态
-                    mFloatTrans.setText("FLOATING");
+                    mFloatTrans.setText(getResources().getText(R.string.floating));
                     mFloatingFlag = 1;
                 } else if (mFloatingFlag == 1) {
                     getActivity().stopService(new Intent(getActivity(), FloatWindowService.class));

@@ -73,7 +73,7 @@ public class AudioTranslateActivity extends BaseActivity {
     @Override
     protected void initView() {
         mAudio = findViewById(R.id.audio);
-        mStop = findViewById(R.id.stop);
+//        mStop = findViewById(R.id.stop);
         mSignView = findViewById(R.id.sign);
         mHint = findViewById(R.id.hint);
 
@@ -84,6 +84,7 @@ public class AudioTranslateActivity extends BaseActivity {
                     isRecord = true;
                     mAudio.setImageResource(R.drawable.ic_pause);
                     mAudioUtils.start();
+                    mPainter.startAndPlay();
                     toastShort("正在录音...");
                 }else{
                     isRecord = false;
@@ -108,7 +109,6 @@ public class AudioTranslateActivity extends BaseActivity {
 //                        mPainter.clearFrameData();
 //                    }
                 mPainter.addFrameDataList(((SignEvent) event).getFrames());
-                mPainter.startAndPlay();
             }
         }
     }

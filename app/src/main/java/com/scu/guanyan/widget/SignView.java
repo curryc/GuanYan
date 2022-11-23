@@ -49,7 +49,7 @@ public class SignView extends FrameLayout {
         mFace = mRootView.findViewById(R.id.face_type);
         mMouth = mRootView.findViewById(R.id.mouth_type);
 
-        mImageView.setImageResource(R.color.ltgray);
+        mImageView.setImageResource(R.color.light_gray);
         mFace.setText("face type");
 //        mMouth.setText("mouth type");
     }

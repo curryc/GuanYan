@@ -9,6 +9,9 @@
     <color name="transparent">#00000000</color>
     <color name="translucent">#33000000</color>
 
-    <color name="ltgray">#ffcccccc</color>
+    <color name="light_gray">#F0F0F0</color>
+
+    <color name="app_color">#ded7cd</color>
+    <color name="app_color_variant">#3e5d79</color>
 
 </resources>

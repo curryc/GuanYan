@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.huawei.hms.signpal.GeneratorConstants;
 import com.scu.guanyan.R;
 import com.scu.guanyan.base.BaseActivity;
 import com.scu.guanyan.event.BaseEvent;
@@ -43,6 +44,7 @@ public class WordTranslateActivity extends BaseActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN| WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         mTranslator = new SignTranslator(this, TAG);
         mPainter = new AvatarPaint(mSignView, mTranslator.getMode());
+        mPainter.startAndPlay();
     }
 
     @Override
@@ -104,13 +106,12 @@ public class WordTranslateActivity extends BaseActivity {
         if(event.getFlag().equals(TAG)) {
             if (event instanceof SignEvent) {
                 if(event.isOk()) {
-                    Log.e(TAG, event.getMsg());
+//                    Log.e(TAG, event.getMsg());
                     // 模式不同， 可能会clear所有帧（flush模式）
-//                    if(mTranslator.getMode() == 1){
+//                    if(mTranslator.getMode() == GeneratorConstants.FLUSH_MODE){
 //                        mPainter.clearFrameData();
 //                    }
                     mPainter.addFrameDataList(((SignEvent) event).getFrames());
-                    mPainter.startAndPlay();
                 }else{
                     Log.e(TAG, event.getMsg());
                 }

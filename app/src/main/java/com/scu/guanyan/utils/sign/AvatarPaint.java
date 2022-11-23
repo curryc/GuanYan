@@ -22,6 +22,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -48,9 +49,10 @@ public class AvatarPaint {
     private SignView mView;
     private int mFps;
     private int mBackGround = Color.WHITE;
+    private long mTimeStamp = new Date().getTime();
 
     private Handler mAnimator = new Handler();
-    private ExecutorService mFrameCreator = Executors.newSingleThreadExecutor();
+    private Handler mFrameCreator = new Handler();
     private Runnable mAnimatorThread, mFrameCreatorThread;
 
     public AvatarPaint(SignView view, int mode){
@@ -66,7 +68,8 @@ public class AvatarPaint {
     }
 
     public void addFrameDataList(List<FrameData> frameDataList){
-        this.frameDataQueue.addAll(frameDataList);
+            this.frameDataQueue.addAll(frameDataList);
+            mTimeStamp = new Date().getTime();
     }
 
     public void clearFrameData(){
@@ -83,12 +86,12 @@ public class AvatarPaint {
                     mView.setSign(frameDataPair.first);
                     mView.setFace(frameDataPair.second);
                 }
-                try {
-                    Thread.sleep(1000 / FPS_30);
-                    mAnimator.post(this);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                mAnimator.post(this);
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
             }
         };
         mFrameCreatorThread = new Runnable() {
@@ -97,14 +100,7 @@ public class AvatarPaint {
                 if (!frameDataQueue.isEmpty()) {
                     drawFrame(frameDataQueue.poll());
                 }
-                try {
-                    if(!mFrameCreator.isShutdown()) {
-                        Thread.sleep(1000 / mFps);
-                        mFrameCreator.execute(this);
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                mFrameCreator.postDelayed(this, 1000/mFps);
             }
         };
     }
@@ -144,8 +140,8 @@ public class AvatarPaint {
             Avatar.boneMap.put(name, endBone); // update endBone pose
             Point start = transTobitMapPoint(startBone.worldPosition.x, startBone.worldPosition.y);
             Point end = transTobitMapPoint(endBone.worldPosition.x, endBone.worldPosition.y);
-            Log.i(TAG, String.format("start:%s(%s,%s) end:%s(%s,%s)", startBone.name, start.x, start.y,
-                    endBone.name, end.x, end.y));
+//            Log.i(TAG, String.format("start:%s(%s,%s) end:%s(%s,%s)", startBone.name, start.x, start.y,
+//                    endBone.name, end.x, end.y));
             drawLine(canvas, start, end, paint);
         }
         frameQueue.offer(new Pair<>(scaleBitmap(bitmap), data.getFaceType()));
@@ -169,13 +165,13 @@ public class AvatarPaint {
     }
 
     public void startAndPlay() {
-        mFrameCreator.execute(mFrameCreatorThread);
+        mFrameCreator.post(mFrameCreatorThread);
         mAnimator.post(mAnimatorThread);
     }
 
 
     public void destroy() {
-        mFrameCreator.shutdownNow();
+        mFrameCreator.removeCallbacks(mFrameCreatorThread);
         mAnimator.removeCallbacks(mAnimatorThread);
     }
 }

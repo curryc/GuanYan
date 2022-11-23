@@ -28,13 +28,13 @@
         android:gravity="center"
         android:layout_marginTop="@dimen/app_padding_sml"
         android:layout_marginBottom="@dimen/app_margin_bottom">
-        <ImageView
-            android:layout_width="@dimen/button_size_mid"
-            android:layout_height="@dimen/button_size_mid"
-            android:layout_gravity="center"
-            android:layout_marginRight="@dimen/button_size_big"
-            android:id="@+id/stop"
-            android:src="@drawable/ic_stop"/>
+<!--        <ImageView-->
+<!--            android:layout_width="@dimen/button_size_mid"-->
+<!--            android:layout_height="@dimen/button_size_mid"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginRight="@dimen/button_size_big"-->
+<!--            android:id="@+id/stop"-->
+<!--            android:src="@drawable/ic_stop"/>-->
         <ImageView
             android:layout_width="@dimen/button_size_big"
             android:layout_height="@dimen/button_size_big"

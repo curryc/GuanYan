@@ -36,7 +36,7 @@ public class SignTranslator {
 
     private String TAG = "signTranslate";
 
-    private long mStartTime,mCostTime;
+    private long mStartTime, mCostTime;
     private SignGenerator mSignGenerator;
     private GeneratorSetting mSetting;
     private Context mContext;
@@ -51,7 +51,7 @@ public class SignTranslator {
         mMode = mode;
     }
 
-    public SignTranslator(Context context, String flag, int mode){
+    public SignTranslator(Context context, String flag, int mode) {
         mMode = mode;
         mContext = context;
         this.mFlag = flag;
@@ -64,7 +64,7 @@ public class SignTranslator {
 
 
     public SignTranslator(Context context, String flag) {
-    this(context, flag, GeneratorConstants.QUEUE_MODE);
+        this(context, flag, GeneratorConstants.QUEUE_MODE);
     }
 
     private GeneratorCallback callback = new GeneratorCallback() {
@@ -88,7 +88,7 @@ public class SignTranslator {
             float[] faceBlendShape = signFragment.getFaceBlendShapeArray();
             // 获取骨骼数据
             ArrayList<FrameData> frameDataList = new ArrayList<>();
-            for(int i =0;i<signFragment.getFrameCount();i++) {
+            for (int i = 0; i < signFragment.getFrameCount(); i++) {
                 FrameData frameData = new FrameData();
                 frameData.setMotionData(motionDataList.get(i));
                 frameData.setMouthType(faceBlendShape[i]);
@@ -96,7 +96,6 @@ public class SignTranslator {
                 frameData.setFrameIdx(i);
                 frameDataList.add(frameData);
             }
-
             EventBus.getDefault().post(new SignEvent(mFlag, "available", true, frameDataList));
         }
 
@@ -122,18 +121,18 @@ public class SignTranslator {
         }
     };
 
-    public void translate(String text, int mode){
+    public void translate(String text, int mode) {
         mMode = mode;
-        mSignGenerator.text2SignMotion(text,mode);
+        mSignGenerator.text2SignMotion(text, mode);
         Avatar.getInstance().initBone();
     }
 
-    public void translate(String text){
-        mSignGenerator.text2SignMotion(text,mMode);
+    public void translate(String text) {
+        mSignGenerator.text2SignMotion(text, mMode);
         Avatar.getInstance().initBone();
     }
 
-    public void destroy(){
+    public void destroy() {
         mSignGenerator.shutdown();
     }
 }

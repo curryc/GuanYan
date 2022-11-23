@@ -18,6 +18,7 @@
     <string name="audio_trans">实时翻译</string>
     <string name="word_trans">文字翻译</string>
     <string name="float_trans">悬浮翻译</string>
+    <string name="floating">关闭悬浮</string>
 
     <string name="begin_audio">开始</string>
     <string name="end_audio">结束</string>

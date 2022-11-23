@@ -18,6 +18,7 @@
     <string name="audio_trans">Audio Translate</string>
     <string name="word_trans">Word Translate</string>
     <string name="float_trans">Float Translate</string>
+    <string name="floating">Floating</string>
 
     <string name="begin_audio">Begin</string>
     <string name="end_audio">End</string>

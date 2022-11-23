@@ -68,7 +68,6 @@ public class FrameData {
     }
 
     public Quaternion getDataByBoneName(String boneName) {
-
         try {
             return motionData.get(boneName);
         } catch (NullPointerException e) {

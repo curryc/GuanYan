@@ -27,6 +27,8 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 
 public class Avatar {
+    private boolean shouldInit;
+
     public static HashMap<String, Bone> boneMap = new HashMap<>();
     public static  String[] boneNames =  new String[]{"Pelvis","Spine1","Spine2","Spine3","Spine4",
             "LeftShoulder","LeftArm","LeftForeArm", "LeftHand",
@@ -47,7 +49,7 @@ public class Avatar {
         initBone();
     }
 
-    public  Avatar(){
+    private  Avatar(){
         this.context = SignPalApplication.getInstance().getAppContext();
         initSkeletalStructure();
     }
