@@ -149,9 +149,9 @@ public class RealTimeWords {
                 words = realTimeResult.toString() + segment.getResult().getText();
                 if (segment.getIsFinal()) {
                     realTimeResult.append(segment.getResult().getText());
+                    EventBus.getDefault().post(new AudioEvent(flag, "done", true, segment.getResult().getText()));
                 }
             }
-            EventBus.getDefault().post(new AudioEvent(flag, "done", true, realTimeResult.toString()));
         }
 
         /**

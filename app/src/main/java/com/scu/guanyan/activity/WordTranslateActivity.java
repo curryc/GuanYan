@@ -87,11 +87,12 @@ public class WordTranslateActivity extends BaseActivity {
     private TextView generateBubble(String text){
         if(mBubbleParams == null){
             mBubbleParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
+//            mBubbleParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
         TextView bubble = new Button(this);
         bubble.setText(text);
         bubble.setLayoutParams(mBubbleParams);
-        bubble.setPadding(5, 2, 5,2);
+        bubble.setPadding(15, 2, 15,2);
         bubble.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -83,6 +83,7 @@ public class HomeFragment extends BaseFragment {
                 } else if (mFloatingFlag == 1) {
                     getActivity().stopService(new Intent(getActivity(), FloatWindowService.class));
                     mFloatingFlag = 0;
+                    mFloatTrans.setText(getResources().getText(R.string.float_trans));
                 }
             }
         });
