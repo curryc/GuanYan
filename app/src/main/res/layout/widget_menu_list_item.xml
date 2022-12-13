@@ -3,10 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/app_list_item_height">
 
+    <ImageView
+        android:layout_width="@dimen/app_list_item_icon"
+        android:layout_height="@dimen/app_list_item_icon"
+        android:layout_gravity="left|center"
+        android:id="@+id/icon"
+        android:src="@drawable/round_rec_deep"/>
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical|left"
+        android:layout_marginLeft="@dimen/app_list_item_height"
         android:id="@+id/title"
         android:gravity="center"
         android:text="hello"

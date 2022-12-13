@@ -1,12 +1,14 @@
 package com.scu.guanyan.bean;
 
+import java.io.Serializable;
+
 /**
  * @program: Guanyan
  * @author: 陈博文
  * @create: 2022-11-12 16:20
  * @description: 教学视频类，一个教学视频的各种信息
  **/
-public class TeachVideo {
+public class TeachVideo implements Serializable {
     private String title;// 标题
     private String cover;// 封面地址
     private String video;// 视频地址

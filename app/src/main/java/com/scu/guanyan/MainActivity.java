@@ -37,7 +37,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PermissionUtils.checkPermissionFirst(this, 0, new String[]{Manifest.permission.READ_PHONE_STATE});
     }
 
     @Override

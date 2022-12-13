@@ -12,7 +12,7 @@
         android:layout_margin="@dimen/app_padding_mid"
         android:layout_weight="2"
         android:text="@string/tutorial"
-        android:textSize="30sp" />
+        android:textAppearance="@style/TitleTextAppearance" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/data"

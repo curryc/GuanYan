@@ -24,23 +24,29 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAlignment="gravity"
+            android:theme="@style/NormalEditText"
             android:layout_margin="@dimen/app_padding_big"/>
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/app_padding_sml"
         android:layout_marginTop="@dimen/app_padding_sml">
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/round_rec"
+            android:textAppearance="@style/ButtonTextAppearance"
             android:text="@string/save"
             android:id="@+id/save"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/round_rec"
+            android:textAppearance="@style/ButtonTextAppearance"
             android:text="@string/submit"
             android:id="@+id/submit"/>
     </LinearLayout>

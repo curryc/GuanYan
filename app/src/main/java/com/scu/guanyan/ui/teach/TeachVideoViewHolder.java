@@ -1,10 +1,16 @@
 package com.scu.guanyan.ui.teach;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
+
 import androidx.annotation.NonNull;
+
 import com.scu.guanyan.R;
+import com.scu.guanyan.activity.VideoPlayActivity;
 import com.scu.guanyan.base.RecyclerViewHolder;
 import com.scu.guanyan.bean.TeachVideo;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -14,8 +20,8 @@ import org.jetbrains.annotations.NotNull;
  * @description:
  **/
 public class TeachVideoViewHolder extends RecyclerViewHolder {
-    public TeachVideoViewHolder(@NonNull @NotNull View itemView) {
-        super(itemView);
+    public TeachVideoViewHolder(Context context, @NonNull @NotNull View itemView) {
+        super(context, itemView);
     }
 
     @Override
@@ -23,5 +29,11 @@ public class TeachVideoViewHolder extends RecyclerViewHolder {
         TeachVideo video = (TeachVideo) data;
         // 待写,绑定view
         setText(R.id.title, ((TeachVideo) data).getTitle());
+        setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mContext.startActivity(VideoPlayActivity.createActivity(mContext,video));
+            }
+        }, itemView);
     }
 }

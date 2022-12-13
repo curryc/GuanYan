@@ -28,7 +28,7 @@ public class TeachFragment extends BaseFragment {
 
     @Override
     protected void initView(ViewHolder viewHolder, View root) {
-        mAdapter = new TeachVideoAdapter();
+        mAdapter = new TeachVideoAdapter(getContext());
         mAdapter.addData(getSample());
 
         mRecyclerView = viewHolder.getViewById(R.id.data);

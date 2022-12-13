@@ -19,11 +19,12 @@ import org.jetbrains.annotations.NotNull;
  **/
 public abstract class RecyclerViewHolder extends RecyclerView.ViewHolder{
     private final String TAG = "base recycler view holder";
-
     private final SparseArray<View> mViews = new SparseArray<>();
+    protected Context mContext;
 
-    public RecyclerViewHolder(@NonNull @NotNull View itemView) {
+    public RecyclerViewHolder(Context context, @NotNull View itemView) {
         super(itemView);
+        this.mContext = context;
     }
 
 

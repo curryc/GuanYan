@@ -10,8 +10,12 @@
     <color name="translucent">#33000000</color>
 
     <color name="light_gray">#F0F0F0</color>
+    <color name="gray">#505050</color>
 
     <color name="app_color">#ded7cd</color>
+    <color name="app_color_deep">#D6CABA</color>
+
     <color name="app_color_variant">#3e5d79</color>
+    <color name="app_color_variant_deep">#325A7E</color>
 
 </resources>

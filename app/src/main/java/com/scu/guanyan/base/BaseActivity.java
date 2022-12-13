@@ -25,6 +25,7 @@ import java.util.List;
  * 在任意位置添加删除一个fragment
  * 点击右上角回退
  */
+
 public abstract class BaseActivity extends AppCompatActivity {
 
     private Fragment mFragment;
@@ -35,14 +36,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 改进: 继承不彻底
         setContentView(getLayoutId());
         initData();
         initView();
-//        IMMLeaks.fixFocusedViewLeak(this.getApplication()); // 修复 InputMethodManager 引发的内存泄漏
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            getWindow().getInsetsController().setSystemBarsAppearance(WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS, WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS);
-        }
     }
 
     @Override

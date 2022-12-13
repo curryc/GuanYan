@@ -1,5 +1,6 @@
 package com.scu.guanyan.ui.teach;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +21,12 @@ import java.util.List;
  * @description:
  **/
 public class TeachVideoAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
+    private Context mContext;
     private List<TeachVideo> mItems;
 
-    public TeachVideoAdapter() {
+    public TeachVideoAdapter(Context context) {
         super();
+        this.mContext = context;
         mItems = new ArrayList<>();
     }
 
@@ -32,7 +35,7 @@ public class TeachVideoAdapter extends RecyclerView.Adapter<RecyclerViewHolder> 
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.holder_teach_video, parent, false);
-        return new TeachVideoViewHolder(view);
+        return new TeachVideoViewHolder(mContext,view);
     }
 
     @Override

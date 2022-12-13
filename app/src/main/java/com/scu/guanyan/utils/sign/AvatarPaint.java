@@ -48,7 +48,7 @@ public class AvatarPaint {
 
     private SignView mView;
     private int mFps;
-    private int mBackGround = Color.WHITE;
+    private int mBackGround;
     private long mTimeStamp = new Date().getTime();
 
     private Handler mAnimator = new Handler();

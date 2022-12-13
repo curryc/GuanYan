@@ -24,6 +24,7 @@
         </activity>
         <activity android:name=".activity.WordTranslateActivity" android:exported="true"/>
         <activity android:name=".activity.AudioTranslateActivity" android:exported="true"/>
+        <activity android:name=".activity.VideoPlayActivity" android:exported="true"/>
         <service
             android:name=".service.FloatWindowService"
             android:exported="true"/>
