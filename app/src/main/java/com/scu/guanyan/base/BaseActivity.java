@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.WindowInsetsController;
 import android.widget.Toast;
@@ -174,4 +175,19 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 初始化视图
      */
     protected abstract void initView();
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == 0) {
+            try {
+                for(int i = 0; i < permissions.length; i++) {
+                    Log.d("activity", permissions[i] + ":" + grantResults[i]);
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+
+    }
 }

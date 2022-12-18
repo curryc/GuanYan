@@ -25,11 +25,11 @@ public class Config {
      * 功能描述
      * 定义区域
      */
-    public static final String REGION = "cn-north-4";
+    public static final String REGION = "cn-east-3";
     /**
      * 功能描述
      * 定义projectId
      */
-    public static final String PROJECT_ID = "0e2a8ca20b00912f2f69c0063e4e4c5e";
+    public static final String PROJECT_ID = "5d69abd32884476b8c4c62236bd75ec2";
 
 }
