@@ -1,26 +1,15 @@
 package com.scu.guanyan;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 
-import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.huawei.hms.signpal.GeneratorConstants;
-import com.huawei.hms.signpal.GeneratorSetting;
-import com.huawei.hms.signpal.SignGenerator;
-import com.huawei.hms.signpal.common.agc.SignPalApplication;
 import com.scu.guanyan.base.BaseActivity;
-import com.scu.guanyan.ui.FragmentAdapter;
+import com.scu.guanyan.base.FragmentAdapter;
 import com.scu.guanyan.ui.NavFragment;
 import com.scu.guanyan.ui.home.HomeFragment;
 import com.scu.guanyan.ui.setting.SettingFragment;
 import com.scu.guanyan.ui.teach.TeachFragment;
-import com.scu.guanyan.utils.base.PermissionUtils;
 
 import java.util.ArrayList;
 import java.util.List;

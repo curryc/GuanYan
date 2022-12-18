@@ -1,4 +1,4 @@
-package com.scu.guanyan.ui;
+package com.scu.guanyan.base;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -80,6 +80,14 @@ public class FragmentAdapter extends FragmentStateAdapter {
     }
 
     /**
+     * 得到所有数据（慎用）
+     * @return
+     */
+    public List<PagerInfo> getData(){
+        return list;
+    }
+
+    /**
      * 一个类用来确定一个ViewPager2中展示的fragment
      */
     public static class PagerInfo {
@@ -91,6 +99,10 @@ public class FragmentAdapter extends FragmentStateAdapter {
             this.title = title;
             this.clz = clx;
             this.args = args;
+        }
+
+        public String getTitle(){
+            return title;
         }
     }
 }
