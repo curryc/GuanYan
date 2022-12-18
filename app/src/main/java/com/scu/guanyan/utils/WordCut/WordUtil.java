@@ -12,11 +12,13 @@ import com.chaquo.python.PyException;
  * @description: python解释器，构造函数传入activity
  **/
 public class WordUtil {
+
    public WordUtil(Activity activity){
        if (! Python.isStarted()) {
            Python.start(new AndroidPlatform(activity));
        }
    }
+
    public String cut(String seq){
        Python py = Python.getInstance();
        return py.getModule("lcut").callAttr("lcutseq",seq).toString();

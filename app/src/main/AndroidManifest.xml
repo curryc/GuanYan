@@ -25,6 +25,11 @@
         <activity android:name=".activity.WordTranslateActivity" android:exported="true"/>
         <activity android:name=".activity.AudioTranslateActivity" android:exported="true"/>
         <activity android:name=".activity.VideoPlayActivity" android:exported="true"/>
+        <activity android:name=".activity.unity" android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <service
             android:name=".service.FloatWindowService"
             android:exported="true"/>

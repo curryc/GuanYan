@@ -3,6 +3,7 @@ package com.scu.guanyan;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import com.huawei.hms.signpal.GeneratorConstants;
 import com.huawei.hms.signpal.GeneratorSetting;
 import com.huawei.hms.signpal.SignGenerator;
 import com.huawei.hms.signpal.common.agc.SignPalApplication;
+import com.scu.guanyan.activity.unity;
 import com.scu.guanyan.base.BaseActivity;
 import com.scu.guanyan.ui.FragmentAdapter;
 import com.scu.guanyan.ui.NavFragment;
@@ -64,7 +66,7 @@ public class MainActivity extends BaseActivity {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 mNav.doSelect(position);
-            }
+               }
         });
     }
 
