@@ -25,7 +25,11 @@
         <activity android:name=".activity.WordTranslateActivity" android:exported="true"/>
         <activity android:name=".activity.AudioTranslateActivity" android:exported="true"/>
         <activity android:name=".activity.VideoPlayActivity" android:exported="true"/>
-        <activity android:name=".activity.ShareAppActivity" android:exported="true"/>
+        <activity android:name=".activity.unity" android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <service
             android:name=".service.FloatWindowService"
             android:exported="true"/>
@@ -35,7 +39,7 @@
     </application>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 如果需要粗略定位的话请加上此权限 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
