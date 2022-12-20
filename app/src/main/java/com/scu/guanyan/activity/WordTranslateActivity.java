@@ -54,7 +54,7 @@ public class WordTranslateActivity extends BaseActivity {
     private String mFirstWord;
     private List<String> mBubbles;
 
-    private Handler mHandler;
+    private MsgHandler mHandler;
 
     private SignTranslator mTranslator;
     private AvatarPaint mPainter;
@@ -83,13 +83,14 @@ public class WordTranslateActivity extends BaseActivity {
     @Override
     protected void initData() {
         super.initData();
-        mTranslator = new SignTranslator(this, TAG);
+        mHandler = new MsgHandler();
+        mBubbles = new ArrayList<>();
+
+        mTranslator = new SignTranslator(this, mHandler);
         mPainter = new AvatarPaint(mUnityPlayer, mTranslator.getMode());
 //        mPainter.startAndPlay();
-        mBubbles = new ArrayList<>();
         mBubbles = SharedPreferencesHelper.getListString(this, BUBBLE_KEY);
 
-        mHandler = new Handler();
     }
 
     @Override
@@ -97,7 +98,7 @@ public class WordTranslateActivity extends BaseActivity {
         mEditText = findViewById(R.id.input);
         mSave = findViewById(R.id.save);
         mSubmit = findViewById(R.id.submit);
-        mUnityPlayer = new SignPlayer(this, findViewById(R.id.sign));
+        mUnityPlayer = SignPlayer.with(this).setContainer(findViewById(R.id.sign));
         mCommonWords = findViewById(R.id.common_words);
 
         mSubmit.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +163,32 @@ public class WordTranslateActivity extends BaseActivity {
         }
     }
 
+    class MsgHandler extends Handler{
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            BaseEvent event = (BaseEvent) msg.obj;
+            System.out.println("test handler");
+//            if (event.getFlag().equals(TAG)) {
+//                if (event instanceof SignEvent) {
+//                    if (event.isOk()) {
+////                    Log.e(TAG, event.getMsg());
+//                        // 模式不同， 可能会clear所有帧（flush模式）
+////                    if(mTranslator.getMode() == GeneratorConstants.FLUSH_MODE){
+////                        mPainter.clearFrameData();
+////                    }
+//                        mPainter.addFrameDataList(((SignEvent) event).getFrames());
+//                    } else {
+//                        Log.e(TAG, event.getMsg());
+//                    }
+//                }
+//            }
+        }
+    }
+
+
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -190,65 +217,4 @@ public class WordTranslateActivity extends BaseActivity {
     }
 
 
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        setIntent(intent);
-    }
-
-
-    // Pause Unity
-    @Override protected void onPause()
-    {
-        super.onPause();
-        mUnityPlayer.pause();
-    }
-
-    // Resume Unity
-    @Override protected void onResume()
-    {
-        super.onResume();
-        mUnityPlayer.resume();
-    }
-
-    // Low Memory Unity
-    @Override public void onLowMemory()
-    {
-        super.onLowMemory();
-        mUnityPlayer.lowMemory();
-    }
-
-    // Trim Memory Unity
-    @Override public void onTrimMemory(int level)
-    {
-        super.onTrimMemory(level);
-        if (level == TRIM_MEMORY_RUNNING_CRITICAL)
-        {
-            mUnityPlayer.lowMemory();
-        }
-    }
-
-    // This ensures the layout will be correct.
-    @Override public void onConfigurationChanged(Configuration newConfig)
-    {
-        super.onConfigurationChanged(newConfig);
-        mUnityPlayer.configurationChanged(newConfig);
-    }
-
-    // Notify Unity of the focus change.
-    @Override public void onWindowFocusChanged(boolean hasFocus)
-    {
-        super.onWindowFocusChanged(hasFocus);
-        mUnityPlayer.windowFocusChanged(hasFocus);
-    }
-
-    // For some reason the multiple keyevent type is not supported by the ndk.
-    // Force event injection by overriding dispatchKeyEvent().
-    @Override public boolean dispatchKeyEvent(KeyEvent event)
-    {
-        if (event.getAction() == KeyEvent.ACTION_MULTIPLE)
-            return mUnityPlayer.injectEvent(event);
-        return super.dispatchKeyEvent(event);
-    }
 }

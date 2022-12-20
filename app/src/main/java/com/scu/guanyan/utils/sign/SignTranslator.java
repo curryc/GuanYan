@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.util.Pair;
 
@@ -43,6 +45,8 @@ public class SignTranslator {
     private String mFlag;
     private int mMode;
 
+    private Handler mHandler;
+
     public int getMode() {
         return mMode;
     }
@@ -62,6 +66,10 @@ public class SignTranslator {
         mSignGenerator.setCallback(callback);
     }
 
+    public SignTranslator(Context context, Handler handler){
+        this(context, "", GeneratorConstants.QUEUE_MODE);
+        mHandler = handler;
+    }
 
     public SignTranslator(Context context, String flag) {
         this(context, flag, GeneratorConstants.QUEUE_MODE);
@@ -96,7 +104,10 @@ public class SignTranslator {
                 frameData.setFrameIdx(i);
                 frameDataList.add(frameData);
             }
-            EventBus.getDefault().post(new SignEvent(mFlag, "available", true, frameDataList));
+//            EventBus.getDefault().post(new SignEvent(mFlag, "available", true, frameDataList));
+            Message msg = new Message();
+            msg.obj = new SignEvent(mFlag, "available", true, frameDataList);
+            mHandler.sendMessage(msg);
         }
 
         @Override
@@ -133,6 +144,7 @@ public class SignTranslator {
     }
 
     public void destroy() {
+        mSignGenerator.stop();
         mSignGenerator.shutdown();
     }
 }

@@ -1,6 +1,12 @@
 package com.scu.guanyan.base;
 
 import android.app.Application;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.view.KeyEvent;
+
+import com.scu.guanyan.utils.sign.SignPlayer;
+import com.scu.guanyan.utils.sign.SignTranslator;
 
 /**
  * @program: Toolt

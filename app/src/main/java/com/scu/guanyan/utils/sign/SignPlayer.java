@@ -23,6 +23,16 @@ public class SignPlayer {
     private UnityPlayer mUnityPlayer;
     private ViewGroup mContainer;
 
+    private static SignPlayer sSignPlayer;
+
+    public static SignPlayer with(Context context){
+        if(sSignPlayer == null) {
+            sSignPlayer = new SignPlayer(context);
+            sSignPlayer.resume();
+        }
+        return sSignPlayer;
+    }
+
     public SignPlayer(Context context, ViewGroup container) {
         mContext = context;
         mContainer = container;
@@ -32,6 +42,18 @@ public class SignPlayer {
         mUnityPlayer.requestFocus();
     }
 
+    public SignPlayer(Context context){
+        mContext = context;
+        mUnityPlayer = new UnityPlayer(mContext);
+    }
+
+    public SignPlayer setContainer(ViewGroup container){
+        mContainer = container;
+        View mView = mUnityPlayer.getView();
+        container.addView(mView);
+        mUnityPlayer.requestFocus();
+        return this;
+    }
 
     /**
      * 向模型发送消息
