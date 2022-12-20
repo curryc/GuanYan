@@ -1,10 +1,9 @@
-package com.scu.guanyan.utils.WordCut;
+package com.scu.guanyan.utils.word;
 
 import android.app.Activity;
 
 import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
-import com.chaquo.python.PyException;
 
 /**
  * @author: 浦博威
@@ -24,3 +23,4 @@ public class WordUtil {
        return py.getModule("lcut").callAttr("lcutseq",seq).toString();
    }
 }
+

@@ -3,26 +3,26 @@ package com.scu.guanyan.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.huawei.hms.signpal.GeneratorConstants;
 import com.scu.guanyan.R;
 import com.scu.guanyan.base.BaseActivity;
 import com.scu.guanyan.event.BaseEvent;
@@ -30,9 +30,9 @@ import com.scu.guanyan.event.SignEvent;
 import com.scu.guanyan.utils.base.PermissionUtils;
 import com.scu.guanyan.utils.base.SharedPreferencesHelper;
 import com.scu.guanyan.utils.sign.AvatarPaint;
+import com.scu.guanyan.utils.sign.SignPlayer;
 import com.scu.guanyan.utils.sign.SignTranslator;
 import com.scu.guanyan.widget.FlowLayout;
-import com.scu.guanyan.widget.SignView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -46,7 +46,7 @@ public class WordTranslateActivity extends BaseActivity {
     private static String BUBBLE_KEY = "save_words";
     private int READ_PHONE_STATE_CODE = 0x001;
 
-    private SignView mSignView;
+    private SignPlayer mUnityPlayer;
     private EditText mEditText;
     private Button mSave, mSubmit;
     private FlowLayout mCommonWords;
@@ -54,22 +54,25 @@ public class WordTranslateActivity extends BaseActivity {
     private String mFirstWord;
     private List<String> mBubbles;
 
+    private Handler mHandler;
+
     private SignTranslator mTranslator;
     private AvatarPaint mPainter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);  // 这一语句建立在activity不是单独的线程，而unity必须在单独的进程中存在
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        super.onCreate(savedInstanceState);
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
+//        EventBus.getDefault().unregister(this);
         mTranslator.destroy();
         mPainter.destroy();
+        mUnityPlayer.destroy();
+        super.onDestroy();
     }
 
     @Override
@@ -81,10 +84,12 @@ public class WordTranslateActivity extends BaseActivity {
     protected void initData() {
         super.initData();
         mTranslator = new SignTranslator(this, TAG);
-        mPainter = new AvatarPaint(mSignView, mTranslator.getMode());
-        mPainter.startAndPlay();
+        mPainter = new AvatarPaint(mUnityPlayer, mTranslator.getMode());
+//        mPainter.startAndPlay();
         mBubbles = new ArrayList<>();
         mBubbles = SharedPreferencesHelper.getListString(this, BUBBLE_KEY);
+
+        mHandler = new Handler();
     }
 
     @Override
@@ -92,8 +97,9 @@ public class WordTranslateActivity extends BaseActivity {
         mEditText = findViewById(R.id.input);
         mSave = findViewById(R.id.save);
         mSubmit = findViewById(R.id.submit);
-        mSignView = findViewById(R.id.sign);
+        mUnityPlayer = new SignPlayer(this, findViewById(R.id.sign));
         mCommonWords = findViewById(R.id.common_words);
+
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -173,7 +179,7 @@ public class WordTranslateActivity extends BaseActivity {
             PermissionUtils.checkPermissionFirst(WordTranslateActivity.this, READ_PHONE_STATE_CODE, new String[]{Manifest.permission.READ_PHONE_STATE});
 
             mFirstWord = text;
-            Snackbar snack = Snackbar.make(mSignView, "需要权限", Snackbar.LENGTH_LONG);
+            Snackbar snack = Snackbar.make(findViewById(R.id.sign), "需要权限", Snackbar.LENGTH_LONG);
             snack.setAnimationMode(Snackbar.ANIMATION_MODE_FADE);
             View v = snack.getView();
             FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) v.getLayoutParams();
@@ -181,5 +187,68 @@ public class WordTranslateActivity extends BaseActivity {
             v.setLayoutParams(params);
             snack.show();
         }
+    }
+
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
+
+
+    // Pause Unity
+    @Override protected void onPause()
+    {
+        super.onPause();
+        mUnityPlayer.pause();
+    }
+
+    // Resume Unity
+    @Override protected void onResume()
+    {
+        super.onResume();
+        mUnityPlayer.resume();
+    }
+
+    // Low Memory Unity
+    @Override public void onLowMemory()
+    {
+        super.onLowMemory();
+        mUnityPlayer.lowMemory();
+    }
+
+    // Trim Memory Unity
+    @Override public void onTrimMemory(int level)
+    {
+        super.onTrimMemory(level);
+        if (level == TRIM_MEMORY_RUNNING_CRITICAL)
+        {
+            mUnityPlayer.lowMemory();
+        }
+    }
+
+    // This ensures the layout will be correct.
+    @Override public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+        mUnityPlayer.configurationChanged(newConfig);
+    }
+
+    // Notify Unity of the focus change.
+    @Override public void onWindowFocusChanged(boolean hasFocus)
+    {
+        super.onWindowFocusChanged(hasFocus);
+        mUnityPlayer.windowFocusChanged(hasFocus);
+    }
+
+    // For some reason the multiple keyevent type is not supported by the ndk.
+    // Force event injection by overriding dispatchKeyEvent().
+    @Override public boolean dispatchKeyEvent(KeyEvent event)
+    {
+        if (event.getAction() == KeyEvent.ACTION_MULTIPLE)
+            return mUnityPlayer.injectEvent(event);
+        return super.dispatchKeyEvent(event);
     }
 }

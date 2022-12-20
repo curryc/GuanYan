@@ -1,10 +1,8 @@
 package com.scu.guanyan.activity;
 
 import android.Manifest;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -24,8 +22,8 @@ import com.scu.guanyan.event.SignEvent;
 import com.scu.guanyan.utils.audio.RealTimeWords;
 import com.scu.guanyan.utils.base.PermissionUtils;
 import com.scu.guanyan.utils.sign.AvatarPaint;
+import com.scu.guanyan.utils.sign.SignPlayer;
 import com.scu.guanyan.utils.sign.SignTranslator;
-import com.scu.guanyan.widget.SignView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -43,7 +41,7 @@ public class AudioTranslateActivity extends BaseActivity {
 
     private ImageView mAudio;
     private TextView mHint;
-    private SignView mSignView;
+    private SignPlayer mSignPlayer;
 
     private RealTimeWords mAudioUtils;
     private SignTranslator mTranslator;
@@ -77,7 +75,7 @@ public class AudioTranslateActivity extends BaseActivity {
         super.initData();
         mTranslator = new SignTranslator(this, TAG);
         mAudioUtils = new RealTimeWords(AudioTranslateActivity.this, TAG);
-        mPainter = new AvatarPaint(mSignView, mTranslator.getMode());
+        mPainter = new AvatarPaint(mSignPlayer, mTranslator.getMode());
         isRecord = false;
     }
 
@@ -85,7 +83,7 @@ public class AudioTranslateActivity extends BaseActivity {
     protected void initView() {
         mAudio = findViewById(R.id.audio);
 //        mStop = findViewById(R.id.stop);
-        mSignView = findViewById(R.id.sign);
+        mSignPlayer = new SignPlayer(this,findViewById(R.id.sign));
         mHint = findViewById(R.id.hint);
 
         mAudio.setOnClickListener(new View.OnClickListener() {
@@ -101,7 +99,7 @@ public class AudioTranslateActivity extends BaseActivity {
                         mPainter.startAndPlay();
                         toastShort("正在录音...");
                     } else {
-                        Snackbar snack = Snackbar.make(mSignView, "需要权限", Snackbar.LENGTH_LONG);
+                        Snackbar snack = Snackbar.make(findViewById(R.id.sign), "需要权限", Snackbar.LENGTH_LONG);
                         snack.setAnimationMode(Snackbar.ANIMATION_MODE_FADE);
                         View v = snack.getView();
                         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) v.getLayoutParams();

@@ -19,19 +19,12 @@ package com.scu.guanyan.utils.sign;
 import android.graphics.*;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Pair;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import static com.huawei.hms.signpal.GeneratorConstants.FPS_30;
-
-import com.scu.guanyan.widget.SignView;
 
 
 public class AvatarPaint {
@@ -46,7 +39,7 @@ public class AvatarPaint {
     private Queue<FrameData> frameDataQueue = new ConcurrentLinkedQueue<>();
     private Avatar avatar = Avatar.getInstance();
 
-    private SignView mView;
+    private SignPlayer mPlayer;
     private int mFps;
     private int mBackGround;
     private long mTimeStamp = new Date().getTime();
@@ -55,13 +48,13 @@ public class AvatarPaint {
     private Handler mFrameCreator = new Handler();
     private Runnable mAnimatorThread, mFrameCreatorThread;
 
-    public AvatarPaint(SignView view, int mode){
-        this(view, mode, 30, Color.WHITE, false);
+    public AvatarPaint(SignPlayer player, int mode){
+        this(player, mode, 30, Color.WHITE, false);
     }
 
-    public AvatarPaint(SignView view,int mode, int fps, int backGroundColor, boolean startup) {
+    public AvatarPaint(SignPlayer player, int mode, int fps, int backGroundColor, boolean startup) {
         init();
-        this.mView = view;
+        this.mPlayer = player;
         this.mFps = fps;
         this.mBackGround = backGroundColor;
         if (startup) startAndPlay();
@@ -83,8 +76,8 @@ public class AvatarPaint {
             public void run() {
                 if (!frameQueue.isEmpty()) {
                     Pair<Bitmap, Integer> frameDataPair = frameQueue.poll();
-                    mView.setSign(frameDataPair.first);
-                    mView.setFace(frameDataPair.second);
+                    mPlayer.sendMessage(frameDataPair.toString());// 需纠正 ---cbw
+//                    mPlayer.setFace(frameDataPair.second);
                 }
                 mAnimator.post(this);
 //                try {
@@ -151,7 +144,7 @@ public class AvatarPaint {
         if (src == null) {
             return null;
         }
-        Bitmap dst = Bitmap.createScaledBitmap(src, mView.getWidth(), mView.getHeight(), false);
+        Bitmap dst = Bitmap.createScaledBitmap(src, mPlayer.getView().getWidth(), mPlayer.getView().getHeight(), false);
         if (dst.equals(src)) {
             return dst;
         }

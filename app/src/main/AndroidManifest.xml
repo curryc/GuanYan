@@ -22,10 +22,11 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.WordTranslateActivity" android:exported="true"/>
+        <activity android:name=".activity.WordTranslateActivity" android:process=":word" android:exported="true">
+        </activity>
         <activity android:name=".activity.AudioTranslateActivity" android:exported="true"/>
         <activity android:name=".activity.VideoPlayActivity" android:exported="true"/>
-        <activity android:name=".activity.unity" android:exported="true">
+        <activity android:name=".base.UnityBaseActivity" android:process=":unity" android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

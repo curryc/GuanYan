@@ -22,8 +22,8 @@ import com.scu.guanyan.event.BaseEvent;
 import com.scu.guanyan.event.SignEvent;
 import com.scu.guanyan.utils.audio.RealTimeWords;
 import com.scu.guanyan.utils.sign.AvatarPaint;
+import com.scu.guanyan.utils.sign.SignPlayer;
 import com.scu.guanyan.utils.sign.SignTranslator;
-import com.scu.guanyan.widget.SignView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -52,7 +52,7 @@ public class FloatWindowService extends Service {
     private final int VIEW_CHECK_TIME_MILLIS = 2000;
 
     private View mDisplayView;
-    private SignView mSignView;
+    private SignPlayer mSignPlayer;
     private ImageView mAudio;
 
     private boolean isRecord = false;
@@ -102,7 +102,7 @@ public class FloatWindowService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         EventBus.getDefault().register(this);
         showFloatingWindow();
-        mPainter = new AvatarPaint(mSignView, mTranslator.getMode());
+        mPainter = new AvatarPaint(mSignPlayer, mTranslator.getMode());
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -121,7 +121,7 @@ public class FloatWindowService extends Service {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         mDisplayView = layoutInflater.inflate(R.layout.float_sign, null);
         mAudio = mDisplayView.findViewById(R.id.audio);
-        mSignView = mDisplayView.findViewById(R.id.sign);
+        mSignPlayer = new SignPlayer(this,mDisplayView.findViewById(R.id.sign));
 
         mDisplayView.setOnTouchListener(new FloatingOnTouchListener());
 

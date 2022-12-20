@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".activity.unity">
+    tools:context=".base.UnityBaseActivity">
 
     <LinearLayout
         android:id="@+id/MainLayout"
@@ -89,12 +89,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onclick"
-            android:text="Button" />
+            android:text="hello" />
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/unity"
             android:layout_width="match_parent"
             android:layout_height="373dp"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical"></FrameLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
