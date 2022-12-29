@@ -14,7 +14,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.scu.guanyan.R;
 import com.scu.guanyan.activity.AudioTranslateActivity;
-import com.scu.guanyan.base.UnityBaseActivity;
+import com.scu.guanyan.base.BaseUnityActivity;
 import com.scu.guanyan.base.BaseDialog;
 import com.scu.guanyan.base.BaseFragment;
 import com.scu.guanyan.base.ViewHolder;
@@ -107,7 +107,7 @@ public class HomeFragment extends BaseFragment {
         unity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), UnityBaseActivity.class);
+                Intent intent = new Intent(getActivity(), BaseUnityActivity.class);
                 intent.putExtra("name", "Activity");
                 startActivity(intent);
             }

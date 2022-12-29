@@ -1,16 +1,11 @@
 package com.scu.guanyan.activity;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -24,7 +19,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.scu.guanyan.R;
-import com.scu.guanyan.base.BaseActivity;
+import com.scu.guanyan.base.BaseUnityActivity;
 import com.scu.guanyan.event.BaseEvent;
 import com.scu.guanyan.event.SignEvent;
 import com.scu.guanyan.utils.base.PermissionUtils;
@@ -41,12 +36,11 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WordTranslateActivity extends BaseActivity {
+public class WordTranslateActivity extends BaseUnityActivity {
     private static String TAG = "TranslateActivity";
     private static String BUBBLE_KEY = "save_words";
     private int READ_PHONE_STATE_CODE = 0x001;
 
-    private SignPlayer mUnityPlayer;
     private EditText mEditText;
     private Button mSave, mSubmit;
     private FlowLayout mCommonWords;
@@ -54,21 +48,19 @@ public class WordTranslateActivity extends BaseActivity {
     private String mFirstWord;
     private List<String> mBubbles;
 
-    private MsgHandler mHandler;
-
     private SignTranslator mTranslator;
     private AvatarPaint mPainter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        EventBus.getDefault().register(this);  // 这一语句建立在activity不是单独的线程，而unity必须在单独的进程中存在
+        EventBus.getDefault().register(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         super.onCreate(savedInstanceState);
     }
 
     @Override
     protected void onDestroy() {
-//        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
         mTranslator.destroy();
         mPainter.destroy();
         mUnityPlayer.destroy();
@@ -83,10 +75,9 @@ public class WordTranslateActivity extends BaseActivity {
     @Override
     protected void initData() {
         super.initData();
-        mHandler = new MsgHandler();
         mBubbles = new ArrayList<>();
 
-        mTranslator = new SignTranslator(this, mHandler);
+        mTranslator = new SignTranslator(this, TAG);
         mPainter = new AvatarPaint(mUnityPlayer, mTranslator.getMode());
 //        mPainter.startAndPlay();
         mBubbles = SharedPreferencesHelper.getListString(this, BUBBLE_KEY);
@@ -94,7 +85,12 @@ public class WordTranslateActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
+    protected int getUnityContainerId() {
+        return R.id.sign;
+    }
+
+    @Override
+    protected void initOtherViews() {
         mEditText = findViewById(R.id.input);
         mSave = findViewById(R.id.save);
         mSubmit = findViewById(R.id.submit);
@@ -104,7 +100,7 @@ public class WordTranslateActivity extends BaseActivity {
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              translate(mEditText.getText().toString());
+                translate(mEditText.getText().toString());
             }
         });
         mSave.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +145,7 @@ public class WordTranslateActivity extends BaseActivity {
     public void handleData(BaseEvent event) {
         if (event.getFlag().equals(TAG)) {
             if (event instanceof SignEvent) {
+                toastShort("hello world");
                 if (event.isOk()) {
 //                    Log.e(TAG, event.getMsg());
                     // 模式不同， 可能会clear所有帧（flush模式）
@@ -162,31 +159,6 @@ public class WordTranslateActivity extends BaseActivity {
             }
         }
     }
-
-    class MsgHandler extends Handler{
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            BaseEvent event = (BaseEvent) msg.obj;
-            System.out.println("test handler");
-//            if (event.getFlag().equals(TAG)) {
-//                if (event instanceof SignEvent) {
-//                    if (event.isOk()) {
-////                    Log.e(TAG, event.getMsg());
-//                        // 模式不同， 可能会clear所有帧（flush模式）
-////                    if(mTranslator.getMode() == GeneratorConstants.FLUSH_MODE){
-////                        mPainter.clearFrameData();
-////                    }
-//                        mPainter.addFrameDataList(((SignEvent) event).getFrames());
-//                    } else {
-//                        Log.e(TAG, event.getMsg());
-//                    }
-//                }
-//            }
-        }
-    }
-
-
 
 
     @Override
@@ -215,6 +187,4 @@ public class WordTranslateActivity extends BaseActivity {
             snack.show();
         }
     }
-
-
 }

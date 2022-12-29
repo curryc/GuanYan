@@ -2,12 +2,14 @@ package com.scu.guanyan.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -45,14 +47,14 @@ public class FloatWindowService extends Service {
     private Handler mHandler;
     private Runnable mViewChecker;
 
-    private final int INITIAL_WIDTH = 400;
-    private final int INITIAL_HEIGHT = 600;
+    private final int INITIAL_WIDTH = 800;
+    private final int INITIAL_HEIGHT = 1000;
     private final int INITIAL_X = 0;
-    private final int INITIAL_Y = 400;
+    private final int INITIAL_Y = 900;
     private final int VIEW_CHECK_TIME_MILLIS = 2000;
 
     private View mDisplayView;
-    private SignPlayer mSignPlayer;
+    private SignPlayer mUnityPlayer;
     private ImageView mAudio;
 
     private boolean isRecord = false;
@@ -60,11 +62,14 @@ public class FloatWindowService extends Service {
 
     @Override
     public void onCreate() {
+        EventBus.getDefault().register(this);
         super.onCreate();
         isStarted = true;
         isRecord = false;
         mAudioUtils = new RealTimeWords(this, TAG);
         mTranslator = new SignTranslator(this, TAG);
+
+
         mHandler = new Handler();
 
         mViewChecker = new Runnable() {
@@ -90,7 +95,12 @@ public class FloatWindowService extends Service {
         layoutParams.height = INITIAL_HEIGHT;
         layoutParams.x = INITIAL_X;
         layoutParams.y = INITIAL_Y;
+
+        showFloatingWindow();
+        mPainter = new AvatarPaint(mUnityPlayer, mTranslator.getMode());
     }
+
+
 
     @Nullable
     @Override
@@ -100,28 +110,29 @@ public class FloatWindowService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        EventBus.getDefault().register(this);
-        showFloatingWindow();
-        mPainter = new AvatarPaint(mSignPlayer, mTranslator.getMode());
+        mUnityPlayer.resume();
         return super.onStartCommand(intent, flags, startId);
     }
 
+
     @Override
     public void onDestroy() {
-        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+        mUnityPlayer.destroy();
         mAudioUtils.destroy();
         mTranslator.destroy();
         mPainter.destroy();
-        EventBus.getDefault().unregister(this);
         windowManager.removeView(mDisplayView);
         windowManager = null;
+        super.onDestroy();
     }
 
     private void showFloatingWindow() {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         mDisplayView = layoutInflater.inflate(R.layout.float_sign, null);
+        windowManager.addView(mDisplayView, layoutParams);
+        mUnityPlayer = SignPlayer.with(this).setContainer(mDisplayView.findViewById(R.id.sign));
         mAudio = mDisplayView.findViewById(R.id.audio);
-        mSignPlayer = new SignPlayer(this,mDisplayView.findViewById(R.id.sign));
 
         mDisplayView.setOnTouchListener(new FloatingOnTouchListener());
 
@@ -142,7 +153,6 @@ public class FloatWindowService extends Service {
             }
         });
 
-        windowManager.addView(mDisplayView, layoutParams);
     }
 
 
@@ -208,5 +218,30 @@ public class FloatWindowService extends Service {
             }
             return true;
         }
+    }
+
+
+    // Low Memory Unity
+    @Override public void onLowMemory()
+    {
+        super.onLowMemory();
+        mUnityPlayer.lowMemory();
+    }
+
+    // Trim Memory Unity
+    @Override public void onTrimMemory(int level)
+    {
+        super.onTrimMemory(level);
+        if (level == TRIM_MEMORY_RUNNING_CRITICAL)
+        {
+            mUnityPlayer.lowMemory();
+        }
+    }
+
+    // This ensures the layout will be correct.
+    @Override public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+        mUnityPlayer.configurationChanged(newConfig);
     }
 }

@@ -16,6 +16,7 @@ import androidx.core.app.ActivityCompat;
 import com.google.android.material.snackbar.Snackbar;
 import com.scu.guanyan.R;
 import com.scu.guanyan.base.BaseActivity;
+import com.scu.guanyan.base.BaseUnityActivity;
 import com.scu.guanyan.event.AudioEvent;
 import com.scu.guanyan.event.BaseEvent;
 import com.scu.guanyan.event.SignEvent;
@@ -35,13 +36,12 @@ import org.greenrobot.eventbus.ThreadMode;
  * @create: 2022/11/17 15:36
  * @description:音频翻译
  **/
-public class AudioTranslateActivity extends BaseActivity {
+public class AudioTranslateActivity extends BaseUnityActivity {
     private static String TAG = "AudioTranslateActivity";
     private static int REQUEST_CODE = 0x002;
 
     private ImageView mAudio;
     private TextView mHint;
-    private SignPlayer mSignPlayer;
 
     private RealTimeWords mAudioUtils;
     private SignTranslator mTranslator;
@@ -75,15 +75,20 @@ public class AudioTranslateActivity extends BaseActivity {
         super.initData();
         mTranslator = new SignTranslator(this, TAG);
         mAudioUtils = new RealTimeWords(AudioTranslateActivity.this, TAG);
-        mPainter = new AvatarPaint(mSignPlayer, mTranslator.getMode());
+        mPainter = new AvatarPaint(mUnityPlayer, mTranslator.getMode());
         isRecord = false;
     }
 
     @Override
-    protected void initView() {
+    protected int getUnityContainerId() {
+        return R.id.sign;
+    }
+
+    @Override
+    protected void initOtherViews() {
         mAudio = findViewById(R.id.audio);
 //        mStop = findViewById(R.id.stop);
-        mSignPlayer = new SignPlayer(this,findViewById(R.id.sign));
+//        mSignPlayer = new SignPlayer(this,findViewById(R.id.sign));
         mHint = findViewById(R.id.hint);
 
         mAudio.setOnClickListener(new View.OnClickListener() {

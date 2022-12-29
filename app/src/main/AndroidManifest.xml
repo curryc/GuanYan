@@ -3,6 +3,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.scu.guanyan">
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Guanyan"
         tools:targetApi="31">
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -22,20 +24,26 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.WordTranslateActivity" android:exported="true">
-        </activity>
-        <activity android:name=".activity.AudioTranslateActivity" android:process=":word" android:exported="true"/>
-        <activity android:name=".activity.VideoPlayActivity" android:exported="true"/>
-        <activity android:name=".base.UnityBaseActivity" android:process=":unity" android:exported="true">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+
+        <activity
+            android:name=".activity.WordTranslateActivity"
+            android:exported="true"
+            android:process=":word" />
+        <activity
+            android:name=".activity.AudioTranslateActivity"
+            android:exported="true"
+            android:process=":audio" />
+        <activity
+            android:name=".activity.VideoPlayActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.AboutAppActivity"
+            android:exported="true" />
+
         <service
             android:name=".service.FloatWindowService"
-            android:exported="true"/>
-        <activity android:name=".activity.AboutAppActivity"
-            android:exported="true"/>
+            android:process=":float"
+            android:exported="true" />
 
     </application>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 如果需要粗略定位的话请加上此权限 -->
@@ -43,13 +51,14 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT"
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission
+        android:name="android.permission.CAPTURE_AUDIO_OUTPUT"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
 
 

@@ -229,8 +229,8 @@ public class RealTimeWords {
      * 初始化设置资源
      */
     private void initResources() {
-        authInfo = new AuthInfo(com.scu.guanyan.utils.audio.Config.AK, com.scu.guanyan.utils.audio.Config.SK, com.scu.guanyan.utils.audio.Config.REGION, com.scu.guanyan.utils.audio.Config.PROJECT_ID);
-        audioRecordService = new com.scu.guanyan.utils.audio.AudioRecordService(16000);
+        authInfo = new AuthInfo(Config.AK, Config.SK, Config.REGION, Config.PROJECT_ID);
+        audioRecordService = new AudioRecordService(16000);
         realTimeResult = new StringBuffer();
     }
 

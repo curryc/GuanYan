@@ -3,11 +3,8 @@ package com.scu.guanyan.base;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
-import com.scu.guanyan.R;
 import com.scu.guanyan.utils.sign.SignPlayer;
 
 /**
@@ -16,19 +13,20 @@ import com.scu.guanyan.utils.sign.SignPlayer;
  * @create: 2022/12/19 17:14
  * @description:仿照unityPlayActivity写的活动，提供对UnityPlayer的基础生命周期控制
  **/
-public class UnityBaseActivity extends BaseActivity{
+public abstract class BaseUnityActivity extends BaseActivity{
     protected SignPlayer mUnityPlayer;
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_unity;
-    }
+    protected abstract int getUnityContainerId();
+
+    protected abstract void initOtherViews();
 
     @Override
-    protected void initView() {
-        ViewGroup l = findViewById(R.id.unity);
+    protected final void initView() {
+        ViewGroup l = findViewById(getUnityContainerId());
         mUnityPlayer = new SignPlayer(this, l);
+        initOtherViews();
     }
+
 
     @Override
     protected void onNewIntent(Intent intent) {

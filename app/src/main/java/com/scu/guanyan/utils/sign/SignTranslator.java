@@ -59,6 +59,7 @@ public class SignTranslator {
         mMode = mode;
         mContext = context;
         this.mFlag = flag;
+        SignPalApplication.initialize(mContext);
         SignPalApplication.getInstance().setApiKey(apiKEY);
         //SignPalApplication.getInstance().setAccessToken(token);
         mSetting = new GeneratorSetting().setLanguage(GeneratorConstants.CN_CSL);
@@ -104,10 +105,10 @@ public class SignTranslator {
                 frameData.setFrameIdx(i);
                 frameDataList.add(frameData);
             }
-//            EventBus.getDefault().post(new SignEvent(mFlag, "available", true, frameDataList));
-            Message msg = new Message();
-            msg.obj = new SignEvent(mFlag, "available", true, frameDataList);
-            mHandler.sendMessage(msg);
+            EventBus.getDefault().post(new SignEvent(mFlag, "available", true, frameDataList));
+//            Message msg = new Message();
+//            msg.obj = new SignEvent(mFlag, "available", true, frameDataList);
+//            mHandler.sendMessage(msg);
         }
 
         @Override

@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.scu.guanyan.base.BaseUnityPlayer;
 import com.unity3d.player.UnityPlayer;
 
 /**
@@ -20,7 +21,7 @@ public class SignPlayer {
     private String mModelAction = "control";
 
     private Context mContext;
-    private UnityPlayer mUnityPlayer;
+    private BaseUnityPlayer mUnityPlayer;
     private ViewGroup mContainer;
 
     private static SignPlayer sSignPlayer;
@@ -36,15 +37,15 @@ public class SignPlayer {
     public SignPlayer(Context context, ViewGroup container) {
         mContext = context;
         mContainer = container;
-        mUnityPlayer = new UnityPlayer(context);
+        mUnityPlayer = new BaseUnityPlayer(context);
         View mView = mUnityPlayer.getView();
         container.addView(mView);
-        mUnityPlayer.requestFocus();
+        mUnityPlayer.setFocusable(false);
     }
 
     public SignPlayer(Context context){
         mContext = context;
-        mUnityPlayer = new UnityPlayer(mContext);
+        mUnityPlayer = new BaseUnityPlayer(mContext);
     }
 
     public SignPlayer setContainer(ViewGroup container){
@@ -95,6 +96,9 @@ public class SignPlayer {
     }
     public void newIntent(Intent intent){
         mUnityPlayer.newIntent(intent);
+    }
+    public void requestFocus(){
+        mUnityPlayer.requestFocus();
     }
 
     /**
