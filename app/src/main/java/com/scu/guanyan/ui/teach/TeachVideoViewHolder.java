@@ -28,6 +28,7 @@ public class TeachVideoViewHolder extends RecyclerViewHolder {
     public void bind(Object data) {
         TeachVideo video = (TeachVideo) data;
         // 待写,绑定view
+        loadImage(mContext, video.getCover(), R.id.cover);
         setText(R.id.title, ((TeachVideo) data).getTitle());
         setOnClickListener(new View.OnClickListener() {
             @Override

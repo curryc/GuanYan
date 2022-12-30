@@ -11,12 +11,12 @@ import java.io.Serializable;
 public class TeachVideo implements Serializable {
     private String title;// 标题
     private String cover;// 封面地址
-    private String video;// 视频地址
+    private String uri;// 视频地址
 
-    public TeachVideo(String title, String cover, String video) {
+    public TeachVideo(String title, String cover, String uri) {
         this.title = title;
         this.cover = cover;
-        this.video = video;
+        this.uri = uri;
     }
 
     public String getTitle() {
@@ -35,11 +35,11 @@ public class TeachVideo implements Serializable {
         this.cover = cover;
     }
 
-    public String getVideo() {
-        return video;
+    public String getUri() {
+        return uri;
     }
 
-    public void setVideo(String video) {
-        this.video = video;
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 }

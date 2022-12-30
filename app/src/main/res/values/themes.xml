@@ -17,6 +17,9 @@
     <style name="NormalTextAppearance" parent="TextAppearance.AppCompat">
         <item name="android:textSize">20sp</item>
     </style>
+    <style name="SmlTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">12sp</item>
+    </style>
     <style name="HintTextAppearance" parent="TextAppearance.AppCompat">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/gray</item>
