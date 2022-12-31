@@ -1,5 +1,11 @@
 package com.scu.guanyan.activity;
 
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Bundle;
+
+import androidx.appcompat.app.ActionBar;
+
 import com.scu.guanyan.R;
 import com.scu.guanyan.base.BaseActivity;
 
@@ -16,7 +22,11 @@ public class ShareAppActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
+    @Override
+    protected void initView() {
     }
 }

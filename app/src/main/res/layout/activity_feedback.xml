@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/app_padding_sml">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="@dimen/button_size_mid"
+        android:layout_height="@dimen/button_size_mid"
+        app:fabCustomSize="@dimen/button_size_mid"
+        android:layout_marginLeft="@dimen/app_padding_mid"
+        android:layout_marginTop="@dimen/app_padding_mid"
+        android:src="@drawable/smaller"
+        app:backgroundTint="@color/white"
+        android:backgroundTint="@color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/app_bar_height"
+            android:layout_marginBottom="@dimen/app_padding_mid"
+            android:gravity="center"
+            android:text="@string/feedback"
+            android:textAppearance="@style/TitleTextAppearance" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/app_bar_height"
+            android:layout_marginBottom="@dimen/app_padding_mid"
+            app:cardCornerRadius="@dimen/app_radius_sml">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:padding="@dimen/app_padding_sml"
+                android:background="@null"
+                android:id="@+id/edit_quz"
+                android:hint="@string/edit_quz"
+                android:layout_height="match_parent" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_area_height_big"
+            android:layout_marginBottom="@dimen/app_padding_mid"
+            app:cardCornerRadius="@dimen/app_radius_sml">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/app_padding_sml"
+                android:id="@+id/edit_advise"
+                android:hint="@string/edit_advise"
+                android:background="@null"
+                android:gravity="left|top" />
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/app_bar_height"
+            android:layout_marginBottom="@dimen/app_padding_mid"
+            app:cardCornerRadius="@dimen/app_radius_sml">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:padding="@dimen/app_padding_sml"
+                android:id="@+id/edit_name"
+                android:hint="@string/edit_name"
+                android:background="@null"
+                android:layout_height="match_parent" />
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/app_bar_height"
+            android:layout_marginBottom="@dimen/app_padding_mid"
+            app:cardCornerRadius="@dimen/app_radius_sml">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:padding="@dimen/app_padding_sml"
+                android:id="@+id/edit_phone"
+                android:hint="@string/edit_phone"
+                android:background="@null"
+                android:layout_height="match_parent" />
+        </androidx.cardview.widget.CardView>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/submit"
+            android:id="@+id/submit"
+            android:background="@drawable/round_rec"/>
+    </LinearLayout>
+</FrameLayout>

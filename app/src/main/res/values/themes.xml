@@ -14,6 +14,33 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!--带返回按键的活动-->
+    <style name="BackAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--ToolBar区域背景颜色-->
+        <item name="colorPrimary">@color/white</item>
+        <!--状态栏区域背景颜色-->
+        <item name="colorPrimaryDark">@color/white</item>
+        <!--控制各个控件被选中时的颜色-->
+        <item name="colorAccent">@color/white</item>
+
+        <!--页面背景色-->
+        <item name="android:windowBackground">@color/white</item>
+        <!--api 21 可用 底部导航栏颜色-->
+        <item name="android:navigationBarColor">@color/gray</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <!--api 21 可用 各个控制控件的默认颜色-->
+        <item name="android:colorControlNormal">@color/white</item>
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+        <item name="android:windowActionBar">true</item>
+    </style>
+
+    <!--CollapsingToolbarLayout样式-->
+    <style name="ToolBarTheme" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="statusBarScrim">@color/gray</item>
+        <item name="contentScrim">@color/gray</item>
+        <item name="titleTextColor">@color/black</item>
+    </style>
+
     <style name="NormalTextAppearance" parent="TextAppearance.AppCompat">
         <item name="android:textSize">20sp</item>
     </style>
@@ -26,6 +53,7 @@
     </style>
     <style name="TitleTextAppearance" parent="TextAppearance.AppCompat">
         <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/app_color_variant</item>
     </style>
     <style name="ButtonTextAppearance" parent="TextAppearance.AppCompat">
         <item name="android:textSize">15sp</item>
@@ -43,6 +71,12 @@
         <item name="android:activityCloseEnterAnimation">@android:anim/fade_in</item>
         <item name="android:activityCloseExitAnimation">@android:anim/fade_out</item>
     </style>
+    <style name="AnimationActivity" parent="@android:style/Animation.Activity">
+    <item name="android:activityOpenEnterAnimation">@anim/slide_in_left</item>
+    <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+    <item name="android:activityCloseEnterAnimation">@anim/slide_in_right</item>
+    <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+</style>
 
     <style name="CenterDialog" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- 是否有边框 -->

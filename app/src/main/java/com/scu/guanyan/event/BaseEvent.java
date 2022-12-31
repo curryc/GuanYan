@@ -17,6 +17,8 @@ public class BaseEvent {
         this.ok = ok;
     }
 
+    public BaseEvent(){}
+
     public String getFlag() {
         return flag;
     }

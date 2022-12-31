@@ -7,13 +7,13 @@
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
-        android:usesCleartextTraffic="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Guanyan"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
         <activity
@@ -40,11 +40,17 @@
         <activity
             android:name=".activity.AboutAppActivity"
             android:exported="true" />
+        <activity
+            android:name=".activity.ShareAppActivity"
+            android:exported="true" />
+        <activity android:name=".activity.FeedbackActivity"
+            android:exported="true"/>
 
         <service
             android:name=".service.FloatWindowService"
-            android:process=":float"
-            android:exported="true" />
+            android:exported="true"
+            android:process=":float" />
+
 
     </application>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 如果需要粗略定位的话请加上此权限 -->

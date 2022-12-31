@@ -27,7 +27,7 @@ import com.scu.guanyan.service.FloatWindowService;
  * @description:
  **/
 public class HomeFragment extends BaseFragment {
-    private Button mWordTrans, mAudioTrans, mFloatTrans,unity;
+    private Button mWordTrans, mAudioTrans, mFloatTrans;
     private int mFloatingFlag;// 0:未悬浮，1：悬浮手势， 2：悬浮文字
 
     @Override
@@ -40,7 +40,6 @@ public class HomeFragment extends BaseFragment {
         mWordTrans = viewHolder.getViewById(R.id.translate);
         mAudioTrans = viewHolder.getViewById(R.id.audio_trans);
         mFloatTrans = viewHolder.getViewById(R.id.floating_window);
-        unity=viewHolder.getViewById(R.id.unity);
         mWordTrans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,14 +101,6 @@ public class HomeFragment extends BaseFragment {
                     mFloatingFlag = 0;
                     mFloatTrans.setText(getResources().getText(R.string.float_trans));
                 }
-            }
-        });
-        unity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), BaseUnityActivity.class);
-                intent.putExtra("name", "Activity");
-                startActivity(intent);
             }
         });
     }

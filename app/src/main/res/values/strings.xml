@@ -26,6 +26,10 @@
     <string name="description_floating_ask">As we would record voice to translate above other scenes, we need "floating above other apps" permission, click "Go Setting" to setting and "Cancel" to cancel</string>
     <string name="description_phone_state_ask">As we would record voice to translate above other scenes, we need "floating above other apps" permission, click "Go Setting" to setting and "Cancel" to cancel</string>
     <string name="description_record_ask">As we would record voice to translate above other scenes, we need "floating above other apps" permission, click "Go Setting" to setting and "Cancel" to cancel</string>
+    <string name="edit_quz">Please Describe the question</string>
+    <string name="edit_advise">Please enter your advise</string>
+    <string name="edit_name">What should we call you?</string>
+    <string name="edit_phone">Provide your TEL so we can contact you</string>
 
     <string name="begin_audio">Begin</string>
     <string name="end_audio">End</string>

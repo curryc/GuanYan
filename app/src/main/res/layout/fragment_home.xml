@@ -65,13 +65,7 @@
         android:layout_height="5dp"
         android:src="@drawable/horizontal_line" />
 
-    <Button
-        android:id="@+id/unity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
-
-    <androidx.constraintlayout.helper.widget.Flow
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/app_padding_mid"
