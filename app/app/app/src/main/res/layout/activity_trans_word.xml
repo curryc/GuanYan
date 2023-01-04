@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/app_padding_sml">
+
+    <com.scu.guanyan.widget.SignView
+        android:id="@+id/sign"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="@dimen/app_padding_sml"
+        android:background="@drawable/round_rec">
+        <EditText
+            android:id="@+id/input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAlignment="gravity"
+            android:theme="@style/NormalEditText"
+            android:layout_margin="@dimen/app_padding_big"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/app_padding_sml"
+        android:layout_marginTop="@dimen/app_padding_sml">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/round_rec"
+            android:textAppearance="@style/ButtonTextAppearance"
+            android:text="@string/save"
+            android:id="@+id/save"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/round_rec"
+            android:textAppearance="@style/ButtonTextAppearance"
+            android:text="@string/submit"
+            android:id="@+id/submit"/>
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_area_height_big">
+        <com.scu.guanyan.widget.FlowLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/common_words"/>
+    </ScrollView>
+
+</LinearLayout>
