@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/app_padding_sml">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5" >
+        <com.scu.guanyan.widget.SignView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/sign"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:id="@+id/hint"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/app_padding_sml"
+        android:layout_marginBottom="@dimen/app_margin_bottom">
+<!--        <ImageView-->
+<!--            android:layout_width="@dimen/button_size_mid"-->
+<!--            android:layout_height="@dimen/button_size_mid"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginRight="@dimen/button_size_big"-->
+<!--            android:id="@+id/stop"-->
+<!--            android:src="@drawable/ic_stop"/>-->
+        <ImageView
+            android:layout_width="@dimen/button_size_big"
+            android:layout_height="@dimen/button_size_big"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_play"
+            android:id="@+id/audio"/>
+    </FrameLayout>
+
+</LinearLayout>

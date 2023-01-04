@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/video_height_mid"
+        android:padding="@dimen/app_padding_sml"
+        android:orientation="vertical">
+    <ImageView android:layout_width="match_parent" android:layout_height="0dp"
+               android:src="@drawable/ic_video"
+               android:layout_weight="5" android:id="@+id/cover"/>
+    <TextView android:layout_width="match_parent" android:layout_height="0dp"
+              android:text="hello world"
+              android:gravity="left|center"
+              android:layout_weight="1" android:id="@+id/title"/>
+</LinearLayout>
