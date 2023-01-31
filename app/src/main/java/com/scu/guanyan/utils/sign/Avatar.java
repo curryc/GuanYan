@@ -74,7 +74,7 @@ public class Avatar {
 //                String x = String.valueOf(item[3]);
 //                String y = String.valueOf(item[4]);
 //                String z = String.valueOf(item[5]);
-//                MyUnityPlayer.UnitySendMessage("kong","rotates",name+"+"+x+"+"+y+"+"+z);
+                MyUnityPlayer.UnitySendMessage("kong","initRotate","");
                 Bone bone = new Bone(Float.parseFloat(item[3]),Float.parseFloat(item[4]),Float.parseFloat(item[5]));
 //                Log.v(TAG,name+"+"+x+"+"+y+"+"+z);
                 bone.color = Integer.parseInt(item[0]);
@@ -90,15 +90,17 @@ public class Avatar {
                 continue;
             }
             Bone bone = boneMap.get(name);
-//            String x = String.valueOf(bone.localRotate.x);
-//            String y = String.valueOf(bone.localRotate.y);
-//            String z = String.valueOf(bone.localRotate.z);
+//            String x = String.valueOf(bone.worldRotate.x);
+//            String y = String.valueOf(bone.worldRotate.y);
+//            String z = String.valueOf(bone.worldRotate.z);
 //            MyUnityPlayer.UnitySendMessage("kong","rotates",name+"+"+x+"+"+y+"+"+z);
             if (!TextUtils.isEmpty(bone.parentName)) {
                 bone.setLocalPosition(boneMap.get(bone.parentName));
+
             }else{
                 bone.setLocalPosition(null);
             }
+//            Log.v(TAG,name+"+"+x+"+"+y+"+"+z);
         }
     }
 

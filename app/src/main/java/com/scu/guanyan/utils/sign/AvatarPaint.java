@@ -98,11 +98,12 @@ public class AvatarPaint {
                     Pair<HashMap, Integer> frameDataPair = frameQueue.poll();
                     for (String name : Avatar.boneNames){
                         Bone endBone = boneMap.get(name);
+                        String w = String.valueOf(endBone.worldRotate.w);
                         String x = String.valueOf(endBone.worldRotate.x);
                         String y = String.valueOf(endBone.worldRotate.y);
                         String z = String.valueOf(endBone.worldRotate.z);
-                        MyUnityPlayer.UnitySendMessage("kong","rotates", name+"+"+x+"+"+y+"+"+z);
-//                        Log.v(TAG,name+"+"+x+"+"+y+"+"+z);
+                        MyUnityPlayer.UnitySendMessage("kong","rotates", endBone.parentName+"+"+w+"+"+x+"+"+y+"+"+z);
+                        //Log.v(TAG,endBone.parentName+"+"+endBone.name+"+"+w+"+"+x+"+"+y+"+"+z);
                     }
 //                    mView.setSign(frameDataPair.first);
 //                    mView.setFace(frameDataPair.second);
