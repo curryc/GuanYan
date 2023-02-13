@@ -87,8 +87,6 @@ public class AudioTranslateActivity extends BaseUnityActivity {
     @Override
     protected void initOtherViews() {
         mAudio = findViewById(R.id.audio);
-//        mStop = findViewById(R.id.stop);
-//        mSignPlayer = new SignPlayer(this,findViewById(R.id.sign));
         mHint = findViewById(R.id.hint);
 
         mAudio.setOnClickListener(new View.OnClickListener() {

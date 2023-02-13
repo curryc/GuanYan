@@ -74,7 +74,7 @@ public class Avatar {
 //                String x = String.valueOf(item[3]);
 //                String y = String.valueOf(item[4]);
 //                String z = String.valueOf(item[5]);
-                UnityPlayer.UnitySendMessage("kong","initRotate","");
+                mUnityPlayer.control("initRotate");
                 Bone bone = new Bone(Float.parseFloat(item[3]),Float.parseFloat(item[4]),Float.parseFloat(item[5]));
 //                Log.v(TAG,name+"+"+x+"+"+y+"+"+z);
                 bone.color = Integer.parseInt(item[0]);

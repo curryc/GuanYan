@@ -19,9 +19,7 @@ package com.scu.guanyan.utils.sign;
 import android.graphics.*;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Pair;
-import android.widget.Chronometer;
 import android.widget.LinearLayout;
 
 import java.util.Date;
@@ -29,15 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import static com.huawei.hms.signpal.GeneratorConstants.FPS_30;
 import static com.scu.guanyan.utils.sign.Avatar.boneMap;
-
-import com.scu.guanyan.R;
-import com.scu.guanyan.widget.SignView;
-import com.unity3d.player.UnityPlayer;
 
 
 public class AvatarPaint {
@@ -52,7 +42,6 @@ public class AvatarPaint {
     private Queue<FrameData> frameDataQueue = new ConcurrentLinkedQueue<>();
     private Avatar avatar = Avatar.getInstance();
 
-    private SignView mView;
     private int mFps;
     private int mBackGround = Color.WHITE;
     private long mTimeStamp = new Date().getTime();
@@ -101,18 +90,11 @@ public class AvatarPaint {
                         String x = String.valueOf(endBone.worldRotate.x);
                         String y = String.valueOf(endBone.worldRotate.y);
                         String z = String.valueOf(endBone.worldRotate.z);
-                        UnityPlayer.UnitySendMessage("kong","rotates", endBone.parentName+"+"+w+"+"+x+"+"+y+"+"+z);
+                        mUnityPlayer.sendMessage(endBone.parentName+"+"+w+"+"+x+"+"+y+"+"+z);
                         //Log.v(TAG,endBone.parentName+"+"+endBone.name+"+"+w+"+"+x+"+"+y+"+"+z);
                     }
-//                    mView.setSign(frameDataPair.first);
-//                    mView.setFace(frameDataPair.second);
                 }
                 mAnimator.post(this);
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
             }
         };
         mFrameCreatorThread = new Runnable() {
@@ -153,9 +135,6 @@ public class AvatarPaint {
             }
             Bone startBone = boneMap.get(endBone.parentName);
 
-            // get paint setting
-//            Paint paint = avatar.getBoneColor(endBone.color);
-
             // draw bone
             endBone.setRotate(data.getDataByBoneName(startBone.name), startBone);
             boneMap.put(name, endBone); // update endBone pose
@@ -167,18 +146,6 @@ public class AvatarPaint {
 
         }
         frameQueue.offer(new Pair<>(boneMap, data.getFaceType()));
-    }
-
-    private Bitmap scaleBitmap(Bitmap src) {
-        if (src == null) {
-            return null;
-        }
-        Bitmap dst = Bitmap.createScaledBitmap(src, mView.getWidth(), mView.getHeight(), false);
-        if (dst.equals(src)) {
-            return dst;
-        }
-        src.recycle();
-        return dst;
     }
 
 

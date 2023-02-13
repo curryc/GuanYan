@@ -79,9 +79,7 @@ public class WordTranslateActivity extends BaseUnityActivity {
 
         mTranslator = new SignTranslator(this, TAG);
         mPainter = new AvatarPaint(mUnityPlayer, mTranslator.getMode());
-//        mPainter.startAndPlay();
         mBubbles = SharedPreferencesHelper.getListString(this, BUBBLE_KEY);
-
     }
 
     @Override
@@ -101,6 +99,7 @@ public class WordTranslateActivity extends BaseUnityActivity {
             @Override
             public void onClick(View view) {
                 translate(mEditText.getText().toString());
+                mPainter.startAndPlay();
             }
         });
         mSave.setOnClickListener(new View.OnClickListener() {
@@ -145,7 +144,7 @@ public class WordTranslateActivity extends BaseUnityActivity {
     public void handleData(BaseEvent event) {
         if (event.getFlag().equals(TAG)) {
             if (event instanceof SignEvent) {
-                toastShort(event.toString());
+                toastShort("" + ((SignEvent) event).getFrames().size());
                 if (event.isOk()) {
 //                    Log.e(TAG, event.getMsg());
                     // 模式不同， 可能会clear所有帧（flush模式）

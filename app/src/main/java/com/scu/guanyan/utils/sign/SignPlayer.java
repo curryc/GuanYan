@@ -18,7 +18,7 @@ import com.unity3d.player.UnityPlayer;
  **/
 public class SignPlayer {
     private String mModelName = "kong";// 可以改变的模型名称
-    private String mModelAction = "control";
+    private String mModelAction = "rotates";
 
     private Context mContext;
     private BaseUnityPlayer mUnityPlayer;
@@ -65,6 +65,13 @@ public class SignPlayer {
                 mModelName,
                 mModelAction,
                 text);
+    }
+    public void control(String control){
+        UnityPlayer.UnitySendMessage(
+                mModelName,
+                control,
+                ""
+        );
     }
     public View getView(){
         return mContainer;
