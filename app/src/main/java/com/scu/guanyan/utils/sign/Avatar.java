@@ -21,13 +21,18 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.text.TextUtils;
 import com.huawei.hms.signpal.common.agc.SignPalApplication;
+import com.unity3d.player.UnityPlayer;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import android.util.Log;
+
 
 public class Avatar {
     private boolean shouldInit;
+    private SignPlayer mUnityPlayer;
+    private static final String TAG="Avatar";
 
     public static HashMap<String, Bone> boneMap = new HashMap<>();
     public static  String[] boneNames =  new String[]{"Pelvis","Spine1","Spine2","Spine3","Spine4",
@@ -65,7 +70,13 @@ public class Avatar {
                 if (item.length !=6){
                     continue;
                 }
+//                String name = String.valueOf(item[1]);
+//                String x = String.valueOf(item[3]);
+//                String y = String.valueOf(item[4]);
+//                String z = String.valueOf(item[5]);
+                UnityPlayer.UnitySendMessage("kong","initRotate","");
                 Bone bone = new Bone(Float.parseFloat(item[3]),Float.parseFloat(item[4]),Float.parseFloat(item[5]));
+//                Log.v(TAG,name+"+"+x+"+"+y+"+"+z);
                 bone.color = Integer.parseInt(item[0]);
                 bone.parentName = item[1];
                 bone.name = item[2];
@@ -79,11 +90,17 @@ public class Avatar {
                 continue;
             }
             Bone bone = boneMap.get(name);
+//            String x = String.valueOf(bone.worldRotate.x);
+//            String y = String.valueOf(bone.worldRotate.y);
+//            String z = String.valueOf(bone.worldRotate.z);
+//            MyUnityPlayer.UnitySendMessage("kong","rotates",name+"+"+x+"+"+y+"+"+z);
             if (!TextUtils.isEmpty(bone.parentName)) {
                 bone.setLocalPosition(boneMap.get(bone.parentName));
+
             }else{
                 bone.setLocalPosition(null);
             }
+//            Log.v(TAG,name+"+"+x+"+"+y+"+"+z);
         }
     }
 

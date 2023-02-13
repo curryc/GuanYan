@@ -19,12 +19,25 @@ package com.scu.guanyan.utils.sign;
 import android.graphics.*;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
+import android.widget.Chronometer;
+import android.widget.LinearLayout;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import static com.huawei.hms.signpal.GeneratorConstants.FPS_30;
+import static com.scu.guanyan.utils.sign.Avatar.boneMap;
+
+import com.scu.guanyan.R;
+import com.scu.guanyan.widget.SignView;
+import com.unity3d.player.UnityPlayer;
 
 
 public class AvatarPaint {
@@ -35,26 +48,32 @@ public class AvatarPaint {
     private final int HEIGHT_OFFSET = 4250;
     private final float SCALE = 10;
 
-    private Queue<Pair<Bitmap, Integer>> frameQueue = new ConcurrentLinkedQueue<>();
+    private Queue<Pair<HashMap, Integer>> frameQueue = new ConcurrentLinkedQueue<>();
     private Queue<FrameData> frameDataQueue = new ConcurrentLinkedQueue<>();
     private Avatar avatar = Avatar.getInstance();
 
-    private SignPlayer mPlayer;
+    private SignView mView;
     private int mFps;
-    private int mBackGround;
+    private int mBackGround = Color.WHITE;
     private long mTimeStamp = new Date().getTime();
 
     private Handler mAnimator = new Handler();
     private Handler mFrameCreator = new Handler();
     private Runnable mAnimatorThread, mFrameCreatorThread;
 
-    public AvatarPaint(SignPlayer player, int mode){
-        this(player, mode, 30, Color.WHITE, false);
+    private LinearLayout unityLayout;
+    private SignPlayer mUnityPlayer;
+
+    public AvatarPaint(SignPlayer kong, int mode){
+        this(kong, mode, 30, Color.WHITE, false);
+
     }
 
-    public AvatarPaint(SignPlayer player, int mode, int fps, int backGroundColor, boolean startup) {
+
+    public AvatarPaint(SignPlayer kong,int mode, int fps, int backGroundColor, boolean startup) {
         init();
-        this.mPlayer = player;
+//        this.mView = view;
+        this.mUnityPlayer = kong;
         this.mFps = fps;
         this.mBackGround = backGroundColor;
         if (startup) startAndPlay();
@@ -75,9 +94,18 @@ public class AvatarPaint {
             @Override
             public void run() {
                 if (!frameQueue.isEmpty()) {
-                    Pair<Bitmap, Integer> frameDataPair = frameQueue.poll();
-                    mPlayer.sendMessage(frameDataPair.toString());// 需纠正 ---cbw
-//                    mPlayer.setFace(frameDataPair.second);
+                    Pair<HashMap, Integer> frameDataPair = frameQueue.poll();
+                    for (String name : Avatar.boneNames){
+                        Bone endBone = boneMap.get(name);
+                        String w = String.valueOf(endBone.worldRotate.w);
+                        String x = String.valueOf(endBone.worldRotate.x);
+                        String y = String.valueOf(endBone.worldRotate.y);
+                        String z = String.valueOf(endBone.worldRotate.z);
+                        UnityPlayer.UnitySendMessage("kong","rotates", endBone.parentName+"+"+w+"+"+x+"+"+y+"+"+z);
+                        //Log.v(TAG,endBone.parentName+"+"+endBone.name+"+"+w+"+"+x+"+"+y+"+"+z);
+                    }
+//                    mView.setSign(frameDataPair.first);
+//                    mView.setFace(frameDataPair.second);
                 }
                 mAnimator.post(this);
 //                try {
@@ -115,36 +143,37 @@ public class AvatarPaint {
 
 
     public void drawFrame(FrameData data) {
-        Bitmap bitmap = getBitMapWithBackground(mBackGround);
-        // init canvas
-        Canvas canvas = new Canvas(bitmap);
+//        Bitmap bitmap = getBitMapWithBackground(mBackGround);
+//        // init canvas
+//        Canvas canvas = new Canvas(bitmap);
         for (String name : Avatar.boneNames) {
-            Bone endBone = Avatar.boneMap.get(name);
+            Bone endBone = boneMap.get(name);
             if (TextUtils.isEmpty(endBone.parentName)) {
                 continue;
             }
-            Bone startBone = Avatar.boneMap.get(endBone.parentName);
+            Bone startBone = boneMap.get(endBone.parentName);
 
             // get paint setting
-            Paint paint = avatar.getBoneColor(endBone.color);
+//            Paint paint = avatar.getBoneColor(endBone.color);
 
             // draw bone
             endBone.setRotate(data.getDataByBoneName(startBone.name), startBone);
-            Avatar.boneMap.put(name, endBone); // update endBone pose
-            Point start = transTobitMapPoint(startBone.worldPosition.x, startBone.worldPosition.y);
-            Point end = transTobitMapPoint(endBone.worldPosition.x, endBone.worldPosition.y);
+            boneMap.put(name, endBone); // update endBone pose
+//            Point start = transTobitMapPoint(startBone.worldPosition.x, startBone.worldPosition.y);
+//            Point end = transTobitMapPoint(endBone.worldPosition.x, endBone.worldPosition.y);
 //            Log.i(TAG, String.format("start:%s(%s,%s) end:%s(%s,%s)", startBone.name, start.x, start.y,
 //                    endBone.name, end.x, end.y));
-            drawLine(canvas, start, end, paint);
+//            drawLine(canvas, start, end, paint);
+
         }
-        frameQueue.offer(new Pair<>(scaleBitmap(bitmap), data.getFaceType()));
+        frameQueue.offer(new Pair<>(boneMap, data.getFaceType()));
     }
 
     private Bitmap scaleBitmap(Bitmap src) {
         if (src == null) {
             return null;
         }
-        Bitmap dst = Bitmap.createScaledBitmap(src, mPlayer.getView().getWidth(), mPlayer.getView().getHeight(), false);
+        Bitmap dst = Bitmap.createScaledBitmap(src, mView.getWidth(), mView.getHeight(), false);
         if (dst.equals(src)) {
             return dst;
         }
