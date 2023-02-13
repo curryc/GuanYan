@@ -78,8 +78,7 @@ dependencies {
     implementation 'com.huawei.hms:signpal-signpalgeneration-sdk:1.5.0.300'
 
     //unity
-    implementation project(':unityLibrary')
-    implementation fileTree(dir: project(':unityLibrary').getProjectDir().toString() + ('\\libs'), include: ['*.jar'])
+    implementation files('libs/guanyan-debug.aar')
 
 
 }

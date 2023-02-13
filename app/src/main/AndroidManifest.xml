@@ -29,7 +29,7 @@
         <activity
             android:name=".activity.WordTranslateActivity"
             android:exported="true"
-            android:process=":word" />
+            android:process=":word"/>
         <activity
             android:name=".activity.AudioTranslateActivity"
             android:exported="true"

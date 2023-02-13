@@ -1,5 +1,7 @@
 package com.scu.guanyan.event;
 
+import androidx.annotation.NonNull;
+
 /**
  * @program: Guanyan
  * @author: cbw
@@ -29,5 +31,11 @@ public class BaseEvent {
 
     public boolean isOk() {
         return ok;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "flag: " + flag + ",msg: " + msg + "," + ok;
     }
 }

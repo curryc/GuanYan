@@ -145,7 +145,7 @@ public class WordTranslateActivity extends BaseUnityActivity {
     public void handleData(BaseEvent event) {
         if (event.getFlag().equals(TAG)) {
             if (event instanceof SignEvent) {
-                toastShort("hello world");
+                toastShort(event.toString());
                 if (event.isOk()) {
 //                    Log.e(TAG, event.getMsg());
                     // 模式不同， 可能会clear所有帧（flush模式）
