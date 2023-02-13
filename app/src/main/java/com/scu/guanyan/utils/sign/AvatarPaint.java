@@ -19,6 +19,7 @@ package com.scu.guanyan.utils.sign;
 import android.graphics.*;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 import android.widget.LinearLayout;
 
@@ -106,6 +107,7 @@ public class AvatarPaint {
                 mFrameCreator.postDelayed(this, 1000/mFps);
             }
         };
+        avatar.initBone();
     }
 
 
@@ -128,12 +130,23 @@ public class AvatarPaint {
 //        Bitmap bitmap = getBitMapWithBackground(mBackGround);
 //        // init canvas
 //        Canvas canvas = new Canvas(bitmap);
+
+        Log.e(TAG, "hello2");
         for (String name : Avatar.boneNames) {
+            Log.e(TAG, boneMap.keySet().size() + "");
             Bone endBone = boneMap.get(name);
+            Log.e(TAG, endBone.toString());
             if (TextUtils.isEmpty(endBone.parentName)) {
                 continue;
             }
             Bone startBone = boneMap.get(endBone.parentName);
+
+            String w = String.valueOf(endBone.worldRotate.w);
+            String x = String.valueOf(endBone.worldRotate.x);
+            String y = String.valueOf(endBone.worldRotate.y);
+            String z = String.valueOf(endBone.worldRotate.z);
+            Log.e(TAG, "hello3");
+            mUnityPlayer.sendMessage(endBone.parentName+"+"+w+"+"+x+"+"+y+"+"+z);
 
             // draw bone
             endBone.setRotate(data.getDataByBoneName(startBone.name), startBone);
@@ -145,7 +158,7 @@ public class AvatarPaint {
 //            drawLine(canvas, start, end, paint);
 
         }
-        frameQueue.offer(new Pair<>(boneMap, data.getFaceType()));
+//        frameQueue.offer(new Pair<>(boneMap, data.getFaceType()));
     }
 
 
@@ -155,12 +168,12 @@ public class AvatarPaint {
 
     public void startAndPlay() {
         mFrameCreator.post(mFrameCreatorThread);
-        mAnimator.post(mAnimatorThread);
+//        mAnimator.post(mAnimatorThread);
     }
 
 
     public void destroy() {
         mFrameCreator.removeCallbacks(mFrameCreatorThread);
-        mAnimator.removeCallbacks(mAnimatorThread);
+//        mAnimator.removeCallbacks(mAnimatorThread);
     }
 }

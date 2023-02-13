@@ -2,6 +2,7 @@ package com.scu.guanyan.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Gravity;
@@ -49,10 +50,10 @@ public class VideoPlayActivity extends BaseActivity {
     private FragmentAdapter mAdapter;
 
     public static Intent createActivity(Context context, TeachVideo video) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(VIDEO_DATA, video);
-        Intent intent = new Intent(context, VideoPlayActivity.class);
-        intent.putExtras(bundle);
+        Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse(video.getUri()));
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable(VIDEO_DATA, video);
+//        intent.putExtras(bundle);
         return intent;
     }
 

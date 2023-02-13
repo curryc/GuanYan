@@ -15,6 +15,8 @@
  */
 
 package com.scu.guanyan.utils.sign;
+import androidx.annotation.NonNull;
+
 import com.huawei.hms.scene.math.Quaternion;
 import com.huawei.hms.scene.math.Vector3;
 
@@ -65,5 +67,11 @@ public class Bone {
             // Calculate local position
             this.localPosition = parent.worldRotate.inverse().rotateVector3(Vector3.subtract(worldPosition, parent.worldPosition));
         }
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "name:" + name + ", parent:" + parentName;
     }
 }
