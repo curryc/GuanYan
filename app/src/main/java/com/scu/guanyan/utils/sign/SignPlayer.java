@@ -94,9 +94,6 @@ public class SignPlayer {
     public boolean injectEvent(KeyEvent event){
         return mUnityPlayer.injectEvent(event);
     }
-    public void newIntent(Intent intent){
-        mUnityPlayer.newIntent(intent);
-    }
     public void requestFocus(){
         mUnityPlayer.requestFocus();
     }

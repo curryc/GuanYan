@@ -30,4 +30,9 @@ public class BaseUnityPlayer extends UnityPlayer {
     public BaseUnityPlayer(Context context) {
         super(context);
     }
+
+    @Override
+    protected void kill() {
+        return;
+    }
 }
