@@ -45,7 +45,7 @@ public class AvatarPaint {
     private Context mContext;
     private final int mSpeed= 1000/30;
     private int mMode;
-    private long mTimeStamp = new Date().getTime();
+    private boolean playing;
 
     private Timer mFrameCreator;
     private Runnable mFrameCreatorThread;
@@ -59,16 +59,17 @@ public class AvatarPaint {
         this.mContext = player.getContext();
         this.mUnityPlayer = player;
         this.mMode = mode;
+        this.mFrameCreator = new Timer();
+        this.playing = startup;
         if (startup) startAndPlay();
         init();
     }
 
-    public void addFrameDataList(List<FrameData> frameDataList){
+    public synchronized void addFrameDataList(List<FrameData> frameDataList){
             this.frameDataQueue.addAll(frameDataList);
-            mTimeStamp = new Date().getTime();
     }
 
-    public void clearFrameData(){
+    public synchronized void clearFrameData(){
         this.frameDataQueue.clear();
         this.frameQueue.clear();
     }
@@ -105,7 +106,7 @@ public class AvatarPaint {
     }
 
 
-    public void drawFrame(FrameData data) {
+    public synchronized void drawFrame(FrameData data) {
         for (String name : Avatar.boneNames) {
             Bone endBone = boneMap.get(name);
             if (TextUtils.isEmpty(endBone.parentName)) {
@@ -126,23 +127,32 @@ public class AvatarPaint {
     }
 
     public void startAndPlay() {
-        mFrameCreator = new Timer();
         mFrameCreator.schedule(new TimerTask() {
             @Override
             public void run() {
                 if (!frameDataQueue.isEmpty()) {
-                    Log.e(TAG, "timer");
+                    Log.e(TAG, "timer" + new Date().getTime());
                     drawFrame(frameDataQueue.poll());
                 }
             }
         }, 1000,100);
 //        mAnimator.post(mAnimatorThread);
+        setPlaying(true);
     }
 
 
     public void destroy() {
         mFrameCreator.cancel();
         mFrameCreator = null;
+        setPlaying(false);
 //        mAnimator.removeCallbacks(mAnimatorThread);
+    }
+
+    public boolean isPlaying() {
+        return playing;
+    }
+
+    public void setPlaying(boolean playing) {
+        this.playing = playing;
     }
 }

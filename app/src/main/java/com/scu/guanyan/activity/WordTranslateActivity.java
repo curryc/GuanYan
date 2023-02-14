@@ -99,7 +99,8 @@ public class WordTranslateActivity extends BaseUnityActivity {
             @Override
             public void onClick(View view) {
                 translate(mEditText.getText().toString());
-                mPainter.startAndPlay();
+                if (!mPainter.isPlaying())
+                    mPainter.startAndPlay();
             }
         });
         mSave.setOnClickListener(new View.OnClickListener() {
@@ -135,7 +136,8 @@ public class WordTranslateActivity extends BaseUnityActivity {
             @Override
             public void onClick(View view) {
                 translate(text);
-                mPainter.startAndPlay();
+                if (!mPainter.isPlaying())
+                    mPainter.startAndPlay();
             }
         });
         return bubble;
@@ -165,14 +167,14 @@ public class WordTranslateActivity extends BaseUnityActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == READ_PHONE_STATE_CODE) {
-            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 translate(mFirstWord);
             }
         }
     }
 
-    private void translate(String text){
-        if (ActivityCompat.checkSelfPermission(WordTranslateActivity.this,  Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+    private void translate(String text) {
+        if (ActivityCompat.checkSelfPermission(WordTranslateActivity.this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
             mTranslator.translate(text);
         } else {
             PermissionUtils.checkPermissionFirst(WordTranslateActivity.this, READ_PHONE_STATE_CODE, new String[]{Manifest.permission.READ_PHONE_STATE});
