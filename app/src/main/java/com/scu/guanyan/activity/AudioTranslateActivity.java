@@ -75,6 +75,7 @@ public class AudioTranslateActivity extends BaseUnityActivity {
         super.initData();
         mTranslator = new SignTranslator(this, TAG);
         mAudioUtils = new RealTimeWords(AudioTranslateActivity.this, TAG);
+        mUnityPlayer = SignPlayer.with(this).setContainer(findViewById(R.id.sign));
         mPainter = new AvatarPaint(mUnityPlayer, mTranslator.getMode());
         isRecord = false;
     }
@@ -99,7 +100,8 @@ public class AudioTranslateActivity extends BaseUnityActivity {
                         isRecord = true;
                         mAudio.setImageResource(R.drawable.ic_pause);
                         mAudioUtils.start();
-                        mPainter.startAndPlay();
+                        if (!mPainter.isPlaying())
+                            mPainter.startAndPlay();
                         toastShort("正在录音...");
                     } else {
                         Snackbar snack = Snackbar.make(findViewById(R.id.sign), "需要权限", Snackbar.LENGTH_LONG);
@@ -148,7 +150,8 @@ public class AudioTranslateActivity extends BaseUnityActivity {
                 isRecord = true;
                 mAudio.setImageResource(R.drawable.ic_pause);
                 mAudioUtils.start();
-                mPainter.startAndPlay();
+                if (!mPainter.isPlaying())
+                    mPainter.startAndPlay();
                 toastShort("正在录音...");
             }
         }

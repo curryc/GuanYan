@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,7 +34,8 @@ import org.greenrobot.eventbus.ThreadMode;
  * @program: Guanyan
  * @author: cbw
  * @create: 2022/1/17 16:20
- * * @description:悬浮窗管理，悬浮翻译调用此服务
+ * @description:
+ * 悬浮窗管理，悬浮翻译调用此服务
  **/
 public class FloatWindowService extends Service {
     private final String TAG = "FloatWindowService";
@@ -97,7 +97,6 @@ public class FloatWindowService extends Service {
         layoutParams.y = INITIAL_Y;
 
         showFloatingWindow();
-        mPainter = new AvatarPaint(mUnityPlayer, mTranslator.getMode());
     }
 
 
@@ -110,7 +109,6 @@ public class FloatWindowService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        mUnityPlayer.resume();
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -131,25 +129,29 @@ public class FloatWindowService extends Service {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         mDisplayView = layoutInflater.inflate(R.layout.float_sign, null);
         windowManager.addView(mDisplayView, layoutParams);
-        mUnityPlayer = SignPlayer.with(this).setContainer(mDisplayView.findViewById(R.id.sign));
+        mUnityPlayer = new SignPlayer(getApplicationContext(), mDisplayView.findViewById(R.id.sign));
         mAudio = mDisplayView.findViewById(R.id.audio);
+        mPainter = new AvatarPaint(mUnityPlayer, mTranslator.getMode());
 
         mDisplayView.setOnTouchListener(new FloatingOnTouchListener());
 
         mAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isRecord) {
-                    isRecord = true;
-                    mAudio.setImageResource(R.drawable.ic_pause);
-                    mAudioUtils.start();
-                    checkViewAfter();
-//                    toastShort("正在录音...");
-                } else {
-                    isRecord = false;
-                    mAudio.setImageResource(R.drawable.ic_play);
-                    mAudioUtils.end();
-                }
+//                if (!isRecord) {
+//                    isRecord = true;
+//                    mAudio.setImageResource(R.drawable.ic_pause);
+//                    mAudioUtils.start();
+//                    checkViewAfter();
+////                    toastShort("正在录音...");
+//                } else {
+//                    isRecord = false;
+//                    mAudio.setImageResource(R.drawable.ic_play);
+//                    mAudioUtils.end();
+//                }
+
+                mUnityPlayer.resume();
+                Log.e(TAG, "resume player");
             }
         });
 
@@ -219,6 +221,7 @@ public class FloatWindowService extends Service {
             return true;
         }
     }
+
 
 
     // Low Memory Unity
