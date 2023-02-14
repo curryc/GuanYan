@@ -78,6 +78,7 @@ public class WordTranslateActivity extends BaseUnityActivity {
         mBubbles = new ArrayList<>();
 
         mTranslator = new SignTranslator(this, TAG);
+        mUnityPlayer = SignPlayer.with(this).setContainer(findViewById(R.id.sign));
         mPainter = new AvatarPaint(mUnityPlayer, mTranslator.getMode());
         mBubbles = SharedPreferencesHelper.getListString(this, BUBBLE_KEY);
     }
@@ -92,7 +93,6 @@ public class WordTranslateActivity extends BaseUnityActivity {
         mEditText = findViewById(R.id.input);
         mSave = findViewById(R.id.save);
         mSubmit = findViewById(R.id.submit);
-        mUnityPlayer = SignPlayer.with(this).setContainer(findViewById(R.id.sign));
         mCommonWords = findViewById(R.id.common_words);
 
         mSubmit.setOnClickListener(new View.OnClickListener() {
@@ -135,6 +135,7 @@ public class WordTranslateActivity extends BaseUnityActivity {
             @Override
             public void onClick(View view) {
                 translate(text);
+                mPainter.startAndPlay();
             }
         });
         return bubble;

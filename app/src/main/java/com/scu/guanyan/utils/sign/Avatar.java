@@ -31,7 +31,6 @@ import android.util.Log;
 
 public class Avatar {
     private boolean shouldInit;
-    private SignPlayer mUnityPlayer;
     private static final String TAG="Avatar";
 
     public static HashMap<String, Bone> boneMap = new HashMap<>();
@@ -70,13 +69,13 @@ public class Avatar {
                 if (item.length !=6){
                     continue;
                 }
-//                String name = String.valueOf(item[1]);
-//                String x = String.valueOf(item[3]);
-//                String y = String.valueOf(item[4]);
-//                String z = String.valueOf(item[5]);
-                mUnityPlayer.control("initRotate");
+                String name = String.valueOf(item[1]);
+                String x = String.valueOf(item[3]);
+                String y = String.valueOf(item[4]);
+                String z = String.valueOf(item[5]);
+                SignPlayer.sendMessage("kong","initRotate", "");
                 Bone bone = new Bone(Float.parseFloat(item[3]),Float.parseFloat(item[4]),Float.parseFloat(item[5]));
-//                Log.v(TAG,name+"+"+x+"+"+y+"+"+z);
+                Log.e(TAG,name+"+"+x+"+"+y+"+"+z);
                 bone.color = Integer.parseInt(item[0]);
                 bone.parentName = item[1];
                 bone.name = item[2];

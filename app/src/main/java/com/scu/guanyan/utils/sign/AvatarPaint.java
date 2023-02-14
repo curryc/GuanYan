@@ -16,57 +16,51 @@
 
 package com.scu.guanyan.utils.sign;
 
+import android.content.Context;
 import android.graphics.*;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
-import android.widget.LinearLayout;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Queue;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import static com.scu.guanyan.utils.sign.Avatar.boneMap;
+
+import com.scu.guanyan.utils.base.SharedPreferencesHelper;
 
 
 public class AvatarPaint {
     private final static String TAG = "AvatarPaint";
-    private final int DEFAULT_CANVAS_WIDTH = 650;
-    private final int DEFAULT_CANVAS_HEIGHT = 650;
-    private final int WIDTH_OFFSET = 300;
-    private final int HEIGHT_OFFSET = 4250;
-    private final float SCALE = 10;
+    private final static String ANIM_SPEED = "anim_speed";
 
     private Queue<Pair<HashMap, Integer>> frameQueue = new ConcurrentLinkedQueue<>();
     private Queue<FrameData> frameDataQueue = new ConcurrentLinkedQueue<>();
-    private Avatar avatar = Avatar.getInstance();
 
-    private int mFps;
-    private int mBackGround = Color.WHITE;
+    private Context mContext;
+    private final int mSpeed= 1000/30;
+    private int mMode;
     private long mTimeStamp = new Date().getTime();
 
-    private Handler mAnimator = new Handler();
-    private Handler mFrameCreator = new Handler();
-    private Runnable mAnimatorThread, mFrameCreatorThread;
-
-    private LinearLayout unityLayout;
+    private Timer mFrameCreator;
+    private Runnable mFrameCreatorThread;
     private SignPlayer mUnityPlayer;
 
-    public AvatarPaint(SignPlayer kong, int mode){
-        this(kong, mode, 30, Color.WHITE, false);
-
+    public AvatarPaint(SignPlayer player, int mode){
+        this(player, mode, false);
     }
 
-
-    public AvatarPaint(SignPlayer kong,int mode, int fps, int backGroundColor, boolean startup) {
-        init();
-//        this.mView = view;
-        this.mUnityPlayer = kong;
-        this.mFps = fps;
-        this.mBackGround = backGroundColor;
+    public AvatarPaint(SignPlayer player,int mode,  boolean startup) {
+        this.mContext = player.getContext();
+        this.mUnityPlayer = player;
+        this.mMode = mode;
         if (startup) startAndPlay();
+        init();
     }
 
     public void addFrameDataList(List<FrameData> frameDataList){
@@ -80,62 +74,40 @@ public class AvatarPaint {
     }
 
     private void init(){
-        mAnimatorThread = new Runnable() {
-            @Override
-            public void run() {
-                if (!frameQueue.isEmpty()) {
-                    Pair<HashMap, Integer> frameDataPair = frameQueue.poll();
-                    for (String name : Avatar.boneNames){
-                        Bone endBone = boneMap.get(name);
-                        String w = String.valueOf(endBone.worldRotate.w);
-                        String x = String.valueOf(endBone.worldRotate.x);
-                        String y = String.valueOf(endBone.worldRotate.y);
-                        String z = String.valueOf(endBone.worldRotate.z);
-                        mUnityPlayer.sendMessage(endBone.parentName+"+"+w+"+"+x+"+"+y+"+"+z);
-                        //Log.v(TAG,endBone.parentName+"+"+endBone.name+"+"+w+"+"+x+"+"+y+"+"+z);
-                    }
-                }
-                mAnimator.post(this);
-            }
-        };
-        mFrameCreatorThread = new Runnable() {
-            @Override
-            public void run() {
-                if (!frameDataQueue.isEmpty()) {
-                    drawFrame(frameDataQueue.poll());
-                }
-                mFrameCreator.postDelayed(this, 1000/mFps);
-            }
-        };
-        avatar.initBone();
-    }
-
-
-    public Bitmap getBitMapWithBackground(int color) {
-        Paint paint = new Paint();
-        paint.setColor(color);
-        Bitmap bitmap = Bitmap.createBitmap(DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        canvas.drawRect(0, 0, bitmap.getWidth(), bitmap.getHeight(), paint);
-        canvas.drawBitmap(bitmap, 0, 0, paint);
-        return bitmap;
-    }
-
-    public void drawLine(Canvas canvas, Point start, Point end, Paint paint) {
-        canvas.drawLine(start.x, start.y, end.x, end.y, paint);
+//        mAnimatorThread = new Runnable() {
+//            @Override
+//            public void run() {
+//                if (!frameQueue.isEmpty()) {
+//                    Pair<HashMap, Integer> frameDataPair = frameQueue.poll();
+//                    for (String name : Avatar.boneNames){
+//                        Bone endBone = (Bone) frameDataPair.first.get(name);
+//                        String w = String.valueOf(endBone.worldRotate.w);
+//                        String x = String.valueOf(endBone.worldRotate.x);
+//                        String y = String.valueOf(endBone.worldRotate.y);
+//                        String z = String.valueOf(endBone.worldRotate.z);
+//                        mUnityPlayer.sendMessage("kong","rotates",endBone.parentName+"+"+w+"+"+x+"+"+y+"+"+z);
+//                    }
+//
+//                }
+//                mAnimator.post(this);
+//            }
+//        };
+//        mFrameCreatorThread = new Runnable() {
+//            @Override
+//            public void run() {
+//                if (!frameDataQueue.isEmpty()) {
+//                    drawFrame(frameDataQueue.poll());
+//                }
+//                mFrameCreator.postDelayed(this, 100);
+//            }
+//        };
+//        mSpeed = SharedPreferencesHelper.getObject(mContext, ANIM_SPEED);
     }
 
 
     public void drawFrame(FrameData data) {
-//        Bitmap bitmap = getBitMapWithBackground(mBackGround);
-//        // init canvas
-//        Canvas canvas = new Canvas(bitmap);
-
-        Log.e(TAG, "hello2");
         for (String name : Avatar.boneNames) {
-            Log.e(TAG, boneMap.keySet().size() + "");
             Bone endBone = boneMap.get(name);
-            Log.e(TAG, endBone.toString());
             if (TextUtils.isEmpty(endBone.parentName)) {
                 continue;
             }
@@ -145,35 +117,32 @@ public class AvatarPaint {
             String x = String.valueOf(endBone.worldRotate.x);
             String y = String.valueOf(endBone.worldRotate.y);
             String z = String.valueOf(endBone.worldRotate.z);
-            Log.e(TAG, "hello3");
-            mUnityPlayer.sendMessage(endBone.parentName+"+"+w+"+"+x+"+"+y+"+"+z);
+            mUnityPlayer.sendMessage("kong","rotates",endBone.parentName+"+"+w+"+"+x+"+"+y+"+"+z);
 
             // draw bone
             endBone.setRotate(data.getDataByBoneName(startBone.name), startBone);
             boneMap.put(name, endBone); // update endBone pose
-//            Point start = transTobitMapPoint(startBone.worldPosition.x, startBone.worldPosition.y);
-//            Point end = transTobitMapPoint(endBone.worldPosition.x, endBone.worldPosition.y);
-//            Log.i(TAG, String.format("start:%s(%s,%s) end:%s(%s,%s)", startBone.name, start.x, start.y,
-//                    endBone.name, end.x, end.y));
-//            drawLine(canvas, start, end, paint);
-
         }
-//        frameQueue.offer(new Pair<>(boneMap, data.getFaceType()));
-    }
-
-
-    private Point transTobitMapPoint(float x1, float y1) {
-        return new Point((int) (SCALE * x1 + WIDTH_OFFSET), DEFAULT_CANVAS_HEIGHT - (int) (SCALE * y1 + HEIGHT_OFFSET));
     }
 
     public void startAndPlay() {
-        mFrameCreator.post(mFrameCreatorThread);
+        mFrameCreator = new Timer();
+        mFrameCreator.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (!frameDataQueue.isEmpty()) {
+                    Log.e(TAG, "timer");
+                    drawFrame(frameDataQueue.poll());
+                }
+            }
+        }, 1000,100);
 //        mAnimator.post(mAnimatorThread);
     }
 
 
     public void destroy() {
-        mFrameCreator.removeCallbacks(mFrameCreatorThread);
+        mFrameCreator.cancel();
+        mFrameCreator = null;
 //        mAnimator.removeCallbacks(mAnimatorThread);
     }
 }

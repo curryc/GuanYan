@@ -17,8 +17,6 @@ import com.unity3d.player.UnityPlayer;
  * @description:播放手语动画的工具
  **/
 public class SignPlayer {
-    private String mModelName = "kong";// 可以改变的模型名称
-    private String mModelAction = "rotates";
 
     private Context mContext;
     private BaseUnityPlayer mUnityPlayer;
@@ -60,17 +58,12 @@ public class SignPlayer {
      * 向模型发送消息
      * @param text
      */
-    public void sendMessage(String text){
+
+    public static void sendMessage(String modelName, String action, String text){
         UnityPlayer.UnitySendMessage(
-                mModelName,
-                mModelAction,
-                text);
-    }
-    public void control(String control){
-        UnityPlayer.UnitySendMessage(
-                mModelName,
-                control,
-                ""
+                modelName,
+                action,
+                text
         );
     }
     public View getView(){
@@ -105,11 +98,7 @@ public class SignPlayer {
         mUnityPlayer.requestFocus();
     }
 
-    /**
-     * 设置播放器的模型
-     * @param modelName
-     */
-    public void setModel(String modelName){
-        this.mModelName = modelName;
+    public Context getContext() {
+        return mContext;
     }
 }

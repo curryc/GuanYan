@@ -41,7 +41,7 @@
             android:name=".activity.AboutAppActivity"
             android:exported="true" />
         <activity
-            android:name=".activity.ShareAppActivity"
+            android:name=".activity.MoreSettingActivity"
             android:exported="true" />
         <activity android:name=".activity.FeedbackActivity"
             android:exported="true"/>
