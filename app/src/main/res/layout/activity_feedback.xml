@@ -8,6 +8,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="@dimen/button_size_mid"
         android:layout_height="@dimen/button_size_mid"
+        android:id="@+id/back"
         app:fabCustomSize="@dimen/button_size_mid"
         android:layout_marginLeft="@dimen/app_padding_mid"
         android:layout_marginTop="@dimen/app_padding_mid"

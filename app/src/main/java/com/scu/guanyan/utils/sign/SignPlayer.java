@@ -76,6 +76,9 @@ public class SignPlayer {
     public void pause(){
         mUnityPlayer.pause();
     }
+    public void start(){
+        mUnityPlayer.start();
+    }
     public void resume(){
         mUnityPlayer.resume();
     }

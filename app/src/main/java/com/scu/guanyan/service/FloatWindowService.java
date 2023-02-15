@@ -47,8 +47,8 @@ public class FloatWindowService extends Service {
     private Handler mHandler;
     private Runnable mViewChecker;
 
-    private final int INITIAL_WIDTH = 800;
-    private final int INITIAL_HEIGHT = 1000;
+    private final int INITIAL_WIDTH = 500;
+    private final int INITIAL_HEIGHT = 700;
     private final int INITIAL_X = 0;
     private final int INITIAL_Y = 900;
     private final int VIEW_CHECK_TIME_MILLIS = 2000;
@@ -109,6 +109,7 @@ public class FloatWindowService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        mUnityPlayer.windowFocusChanged(true);
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -132,6 +133,8 @@ public class FloatWindowService extends Service {
         mUnityPlayer = new SignPlayer(getApplicationContext(), mDisplayView.findViewById(R.id.sign));
         mAudio = mDisplayView.findViewById(R.id.audio);
         mPainter = new AvatarPaint(mUnityPlayer, mTranslator.getMode());
+        mUnityPlayer.start();
+        mUnityPlayer.resume();
 
         mDisplayView.setOnTouchListener(new FloatingOnTouchListener());
 
@@ -150,8 +153,6 @@ public class FloatWindowService extends Service {
 //                    mAudioUtils.end();
 //                }
 
-                mUnityPlayer.resume();
-                Log.e(TAG, "resume player");
             }
         });
 

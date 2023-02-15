@@ -61,6 +61,13 @@ public class FeedbackActivity extends BaseActivity {
                 }
             }
         });
+
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
