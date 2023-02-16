@@ -35,8 +35,9 @@ import java.util.Map;
  **/
 public class SignTranslator {
     private String apiKEY = "DAEDAKyby4AgjiQeVTi5JI4MP/pU9g7YZeCRaD3qXyLI1ckglxYM0Wavtg3RZ0fbKUpsLYoPVXJk4V6rDzfiD4xZ78loPchRlWXfWQ==";
-
     private String TAG = "signTranslate";
+
+    public static final String FLASH_KEY =  "flash_or_not";
 
     private long mStartTime, mCostTime;
     private SignGenerator mSignGenerator;

@@ -14,8 +14,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.scu.guanyan.R;
 import com.scu.guanyan.activity.AudioTranslateActivity;
-import com.scu.guanyan.base.BaseUnityActivity;
-import com.scu.guanyan.base.BaseDialog;
+import com.scu.guanyan.widget.DialogMessage;
 import com.scu.guanyan.base.BaseFragment;
 import com.scu.guanyan.base.ViewHolder;
 import com.scu.guanyan.service.FloatWindowService;
@@ -64,7 +63,7 @@ public class HomeFragment extends BaseFragment {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         canFloat = Settings.canDrawOverlays(getActivity());
                     } else {
-                        startActivity(new Intent(getContext(), BaseDialog.class));
+                        startActivity(new Intent(getContext(), DialogMessage.class));
                         canFloat = ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.SYSTEM_ALERT_WINDOW) == PackageManager.PERMISSION_GRANTED;
                     }
 
@@ -74,17 +73,17 @@ public class HomeFragment extends BaseFragment {
                         mFloatingFlag = 1;
                         mFloatTrans.setText(getResources().getText(R.string.floating));
                     } else {
-                        BaseDialog dialog = new BaseDialog(getContext());
+                        DialogMessage dialog = new DialogMessage(getContext());
                         dialog.setTitle(getString(R.string.floating_permission));
                         dialog.setMessage(getString(R.string.description_floating_ask));
-                        dialog.setNoOnclickListener(getString(R.string.cancel), new BaseDialog.onNoOnclickListener() {
+                        dialog.setNoOnclickListener(getString(R.string.cancel), new DialogMessage.onNoOnclickListener() {
                             @Override
                             public void onNoClick() {
                                 dialog.dismiss();
                                 return;
                             }
                         });
-                        dialog.setYesOnclickListener(getString(R.string.go_setting), new BaseDialog.onYesOnclickListener() {
+                        dialog.setYesOnclickListener(getString(R.string.go_setting), new DialogMessage.onYesOnclickListener() {
                             @Override
                             public void onYesClick() {
                                 // 开启悬浮窗权限

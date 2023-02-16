@@ -1,4 +1,4 @@
-package com.scu.guanyan.base;
+package com.scu.guanyan.widget;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -15,7 +15,7 @@ import com.scu.guanyan.R;
  * @create: 2022/12/12 21:37
  * @description:dialog
  **/
-public class BaseDialog extends Dialog {
+public class DialogMessage extends Dialog {
     private Button yes;//确定按钮
     private Button no;//取消按钮
     private TextView titleTv;//消息标题文本
@@ -54,14 +54,14 @@ public class BaseDialog extends Dialog {
         this.yesOnclickListener = onYesOnclickListener;
     }
 
-    public BaseDialog(Context context) {
+    public DialogMessage(Context context) {
         super(context, R.style.CenterDialog);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_base);
+        setContentView(R.layout.dialog_message);
         //按空白处不能取消动画
         setCanceledOnTouchOutside(true);
         //初始化界面控件

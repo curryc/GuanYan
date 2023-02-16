@@ -30,20 +30,22 @@ import java.util.Queue;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
 import static com.scu.guanyan.utils.sign.Avatar.boneMap;
 
+import com.huawei.hms.signpal.GeneratorConstants;
 import com.scu.guanyan.utils.base.SharedPreferencesHelper;
 
 
 public class AvatarPaint {
     private final static String TAG = "AvatarPaint";
-    private final static String ANIM_SPEED = "anim_speed";
+    public final static String ANIM_SPEED = "anim_speed_key";
 
     private Queue<Pair<HashMap, Integer>> frameQueue = new ConcurrentLinkedQueue<>();
     private Queue<FrameData> frameDataQueue = new ConcurrentLinkedQueue<>();
 
     private Context mContext;
-    private final int mSpeed= 1000/30;
+    private int mSpeed;
     private int mMode;
     private boolean playing;
 
@@ -51,11 +53,11 @@ public class AvatarPaint {
     private Runnable mFrameCreatorThread;
     private SignPlayer mUnityPlayer;
 
-    public AvatarPaint(SignPlayer player, int mode){
+    public AvatarPaint(SignPlayer player, int mode) {
         this(player, mode, false);
     }
 
-    public AvatarPaint(SignPlayer player,int mode,  boolean startup) {
+    public AvatarPaint(SignPlayer player, int mode, boolean startup) {
         this.mContext = player.getContext();
         this.mUnityPlayer = player;
         this.mMode = mode;
@@ -65,16 +67,19 @@ public class AvatarPaint {
         init();
     }
 
-    public synchronized void addFrameDataList(List<FrameData> frameDataList){
-            this.frameDataQueue.addAll(frameDataList);
+    public synchronized void addFrameDataList(List<FrameData> frameDataList) {
+        if (mMode == GeneratorConstants.FLUSH_MODE) {
+            clearFrameData();
+        }
+        this.frameDataQueue.addAll(frameDataList);
     }
 
-    public synchronized void clearFrameData(){
+    public synchronized void clearFrameData() {
         this.frameDataQueue.clear();
         this.frameQueue.clear();
     }
 
-    private void init(){
+    private void init() {
 //        mAnimatorThread = new Runnable() {
 //            @Override
 //            public void run() {
@@ -102,7 +107,7 @@ public class AvatarPaint {
 //                mFrameCreator.postDelayed(this, 100);
 //            }
 //        };
-//        mSpeed = SharedPreferencesHelper.getObject(mContext, ANIM_SPEED);
+        mSpeed = (int)SharedPreferencesHelper.get(mContext, ANIM_SPEED, 30);
     }
 
 
@@ -118,7 +123,7 @@ public class AvatarPaint {
             String x = String.valueOf(endBone.worldRotate.x);
             String y = String.valueOf(endBone.worldRotate.y);
             String z = String.valueOf(endBone.worldRotate.z);
-            mUnityPlayer.sendMessage("kong","rotates",endBone.parentName+"+"+w+"+"+x+"+"+y+"+"+z);
+            mUnityPlayer.sendMessage("kong", "rotates", endBone.parentName + "+" + w + "+" + x + "+" + y + "+" + z);
 
             // draw bone
             endBone.setRotate(data.getDataByBoneName(startBone.name), startBone);
@@ -135,7 +140,7 @@ public class AvatarPaint {
                     drawFrame(frameDataQueue.poll());
                 }
             }
-        }, 1000,100);
+        }, 100, mSpeed);
 //        mAnimator.post(mAnimatorThread);
         setPlaying(true);
     }

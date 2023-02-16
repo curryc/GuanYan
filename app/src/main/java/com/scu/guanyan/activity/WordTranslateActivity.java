@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.huawei.hms.signpal.GeneratorConstants;
 import com.scu.guanyan.R;
 import com.scu.guanyan.base.BaseUnityActivity;
 import com.scu.guanyan.event.BaseEvent;
@@ -77,7 +78,7 @@ public class WordTranslateActivity extends BaseUnityActivity {
         super.initData();
         mBubbles = new ArrayList<>();
 
-        mTranslator = new SignTranslator(this, TAG);
+        mTranslator = new SignTranslator(this, TAG, (int)SharedPreferencesHelper.get(this, SignTranslator.FLASH_KEY, GeneratorConstants.FLUSH_MODE));
         mUnityPlayer = SignPlayer.with(this).setContainer(findViewById(R.id.sign));
         mPainter = new AvatarPaint(mUnityPlayer, mTranslator.getMode());
         mBubbles = SharedPreferencesHelper.getListString(this, BUBBLE_KEY);
@@ -149,11 +150,6 @@ public class WordTranslateActivity extends BaseUnityActivity {
             if (event instanceof SignEvent) {
                 toastShort("" + ((SignEvent) event).getFrames().size());
                 if (event.isOk()) {
-//                    Log.e(TAG, event.getMsg());
-                    // 模式不同， 可能会clear所有帧（flush模式）
-//                    if(mTranslator.getMode() == GeneratorConstants.FLUSH_MODE){
-//                        mPainter.clearFrameData();
-//                    }
                     mPainter.addFrameDataList(((SignEvent) event).getFrames());
                 } else {
                     Log.e(TAG, event.getMsg());

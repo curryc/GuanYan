@@ -8,6 +8,7 @@
     <string name="go_setting">Go Setting</string>
     <string name="tutorial">Tutorial</string>
     <string name="setting">Setting</string>
+    <string name="confirm">Confirm</string>
 
     <string name="about_app">About App</string>
     <string name="more_setting">More Settings</string>
@@ -33,4 +34,7 @@
 
     <string name="begin_audio">Begin</string>
     <string name="end_audio">End</string>
+
+    <string name="is_flash">Flash Anim?</string>
+    <string name="fps">Frame per Second</string>
 </resources>
