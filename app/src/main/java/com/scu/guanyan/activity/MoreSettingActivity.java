@@ -33,8 +33,7 @@ public class MoreSettingActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        mSettingList.setShowDividers(LinearLayout.SHOW_DIVIDER_BEGINNING);
-
+        mSettingList = findViewById(R.id.setting_list);
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

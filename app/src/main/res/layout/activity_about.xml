@@ -32,10 +32,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
-        android:layout_marginBottom="@dimen/button_size_big"
-        android:layout_marginLeft="@dimen/button_size_mid"
-        android:layout_marginRight="@dimen/button_size_mid"
-        android:layout_marginTop="@dimen/button_size_mid"
+        android:layout_marginBottom="75dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="70dp"
         app:cardCornerRadius="@dimen/button_size_mid">
         <RelativeLayout
             android:layout_width="wrap_content"
