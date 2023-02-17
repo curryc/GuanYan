@@ -5,6 +5,7 @@ import android.widget.LinearLayout;
 
 import com.scu.guanyan.R;
 import com.scu.guanyan.activity.AboutAppActivity;
+import com.scu.guanyan.activity.ContactUsActivity;
 import com.scu.guanyan.activity.FeedbackActivity;
 import com.scu.guanyan.activity.MoreSettingActivity;
 import com.scu.guanyan.base.BaseFragment;
@@ -35,8 +36,8 @@ public class SettingFragment extends BaseFragment {
 
     private void handleMenuList(){
         mMenuList.addView(new MenuListItem(getContext(), R.string.about_app,R.drawable.setting_about_app, AboutAppActivity.class));
-        mMenuList.addView(new MenuListItem(getContext(), R.string.more_setting,R.drawable.setting_share_app, MoreSettingActivity.class));
+        mMenuList.addView(new MenuListItem(getContext(), R.string.more_setting,R.drawable.share, MoreSettingActivity.class));
         mMenuList.addView(new MenuListItem(getContext(), R.string.feedback,R.drawable.setting_feedback, FeedbackActivity.class));
-        mMenuList.addView(new MenuListItem(getContext(), R.string.contact_us,R.drawable.setting_contact, AboutAppActivity.class));
+        mMenuList.addView(new MenuListItem(getContext(), R.string.contact_us,R.drawable.setting_contact, ContactUsActivity.class));
     }
 }

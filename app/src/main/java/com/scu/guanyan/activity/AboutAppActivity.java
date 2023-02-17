@@ -1,5 +1,7 @@
 package com.scu.guanyan.activity;
 
+import android.view.View;
+
 import com.scu.guanyan.R;
 import com.scu.guanyan.base.BaseActivity;
 
@@ -17,6 +19,11 @@ public class AboutAppActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 }

@@ -31,7 +31,6 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:layout_marginBottom="@dimen/button_size_big"
         android:layout_marginLeft="@dimen/button_size_mid"
         android:layout_marginRight="@dimen/button_size_mid"

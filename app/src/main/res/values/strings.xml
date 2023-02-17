@@ -31,6 +31,7 @@
     <string name="edit_advise">Please enter your advise</string>
     <string name="edit_name">What should we call you?</string>
     <string name="edit_phone">Provide your TEL so we can contact you</string>
+    <string name="introduce">a simple introduce to this app</string>
 
     <string name="begin_audio">Begin</string>
     <string name="end_audio">End</string>
