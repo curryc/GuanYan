@@ -75,7 +75,7 @@ public class FeedbackActivity extends BaseActivity {
         if(event.getFlag().equals(TAG)){
             if(event.isOk()){
                 // 成功提交反馈
-                toastShort("200");
+                toastShort("Done");
             }
         }
     }

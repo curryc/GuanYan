@@ -123,6 +123,10 @@ public class FloatWindowService extends Service {
         mPainter.destroy();
         windowManager.removeView(mDisplayView);
         windowManager = null;
+        mTranslator = null;
+        mUnityPlayer = null;
+        mPainter = null;
+        mAudioUtils = null;
         super.onDestroy();
     }
 
@@ -130,7 +134,7 @@ public class FloatWindowService extends Service {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         mDisplayView = layoutInflater.inflate(R.layout.float_sign, null);
         windowManager.addView(mDisplayView, layoutParams);
-        mUnityPlayer = new SignPlayer(getApplicationContext(), mDisplayView.findViewById(R.id.sign));
+        mUnityPlayer = SignPlayer.with(getApplicationContext(), mDisplayView.findViewById(R.id.sign));
         mAudio = mDisplayView.findViewById(R.id.audio);
         mPainter = new AvatarPaint(mUnityPlayer, mTranslator.getMode());
         mUnityPlayer.start();
@@ -141,17 +145,17 @@ public class FloatWindowService extends Service {
         mAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (!isRecord) {
-//                    isRecord = true;
-//                    mAudio.setImageResource(R.drawable.ic_pause);
-//                    mAudioUtils.start();
-//                    checkViewAfter();
-////                    toastShort("正在录音...");
-//                } else {
-//                    isRecord = false;
-//                    mAudio.setImageResource(R.drawable.ic_play);
-//                    mAudioUtils.end();
-//                }
+                if (!isRecord) {
+                    isRecord = true;
+                    mAudio.setImageResource(R.drawable.ic_pause);
+                    mAudioUtils.start();
+                    checkViewAfter();
+//                    toastShort("正在录音...");
+                } else {
+                    isRecord = false;
+                    mAudio.setImageResource(R.drawable.ic_play);
+                    mAudioUtils.end();
+                }
 
             }
         });
@@ -165,6 +169,7 @@ public class FloatWindowService extends Service {
             if (event instanceof AudioEvent) {
                 if (event.isOk() && !((AudioEvent) event).getData().equals("")) {
                     Log.i(TAG, ((AudioEvent) event).getData());
+                    mPainter.checkAndClear();
                     mTranslator.translate(((AudioEvent) event).getData());
                 }
             } else if (event instanceof SignEvent) {

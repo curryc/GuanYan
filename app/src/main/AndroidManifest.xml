@@ -28,22 +28,31 @@
 
         <activity
             android:name=".activity.WordTranslateActivity"
+            android:screenOrientation="portrait"
             android:exported="true"
             android:process=":word"/>
         <activity
             android:name=".activity.AudioTranslateActivity"
+            android:screenOrientation="portrait"
             android:exported="true"
             android:process=":audio" />
         <activity
             android:name=".activity.VideoPlayActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".activity.AboutAppActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".activity.MoreSettingActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity android:name=".activity.FeedbackActivity"
+            android:screenOrientation="portrait"
+            android:exported="true"/>
+        <activity android:name=".activity.ContactUsActivity"
+            android:screenOrientation="portrait"
             android:exported="true"/>
 
         <service

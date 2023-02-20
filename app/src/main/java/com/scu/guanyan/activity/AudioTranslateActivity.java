@@ -58,11 +58,16 @@ public class AudioTranslateActivity extends BaseUnityActivity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         EventBus.getDefault().unregister(this);
         mAudioUtils.destroy();
         mTranslator.destroy();
         mPainter.destroy();
+        mUnityPlayer.destroy();
+        mTranslator = null;
+        mUnityPlayer = null;
+        mAudioUtils = null;
+        mPainter = null;
+        super.onDestroy();
     }
 
     @Override
@@ -75,7 +80,7 @@ public class AudioTranslateActivity extends BaseUnityActivity {
         super.initData();
         mTranslator = new SignTranslator(this, TAG);
         mAudioUtils = new RealTimeWords(AudioTranslateActivity.this, TAG);
-        mUnityPlayer = SignPlayer.with(this).setContainer(findViewById(R.id.sign));
+        mUnityPlayer = SignPlayer.with(this, findViewById(R.id.sign));
         mPainter = new AvatarPaint(mUnityPlayer, mTranslator.getMode());
         isRecord = false;
     }
@@ -129,6 +134,7 @@ public class AudioTranslateActivity extends BaseUnityActivity {
                 Log.i(TAG, ((AudioEvent) event).getData());
                 mWords = ((AudioEvent) event).getData();
                 mHint.setText(mWords);
+                mPainter.checkAndClear();
                 mTranslator.translate(mWords);
             } else if (event instanceof SignEvent) {
                 // 模式不同， 可能会clear所有帧（flush模式）

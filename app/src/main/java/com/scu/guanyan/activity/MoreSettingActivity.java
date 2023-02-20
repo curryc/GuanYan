@@ -54,6 +54,7 @@ public class MoreSettingActivity extends BaseActivity {
             put("12 fps", 12);
             put("30 fps", 30);
             put("45 fps", 45);
+            put("60 fps", 60);
         }}));
     }
 }

@@ -65,6 +65,9 @@ public class WordTranslateActivity extends BaseUnityActivity {
         mTranslator.destroy();
         mPainter.destroy();
         mUnityPlayer.destroy();
+        mTranslator = null;
+        mUnityPlayer = null;
+        mPainter = null;
         super.onDestroy();
     }
 
@@ -78,8 +81,8 @@ public class WordTranslateActivity extends BaseUnityActivity {
         super.initData();
         mBubbles = new ArrayList<>();
 
-        mTranslator = new SignTranslator(this, TAG, (int)SharedPreferencesHelper.get(this, SignTranslator.FLASH_KEY, GeneratorConstants.FLUSH_MODE));
-        mUnityPlayer = SignPlayer.with(this).setContainer(findViewById(R.id.sign));
+        mTranslator = new SignTranslator(this, TAG, (int) SharedPreferencesHelper.get(this, SignTranslator.FLASH_KEY, GeneratorConstants.FLUSH_MODE));
+        mUnityPlayer = SignPlayer.with(this, findViewById(R.id.sign));
         mPainter = new AvatarPaint(mUnityPlayer, mTranslator.getMode());
         mBubbles = SharedPreferencesHelper.getListString(this, BUBBLE_KEY);
     }
@@ -148,7 +151,7 @@ public class WordTranslateActivity extends BaseUnityActivity {
     public void handleData(BaseEvent event) {
         if (event.getFlag().equals(TAG)) {
             if (event instanceof SignEvent) {
-                toastShort("" + ((SignEvent) event).getFrames().size());
+//                toastShort("" + ((SignEvent) event).getFrames().size());
                 if (event.isOk()) {
                     mPainter.addFrameDataList(((SignEvent) event).getFrames());
                 } else {
@@ -170,6 +173,8 @@ public class WordTranslateActivity extends BaseUnityActivity {
     }
 
     private void translate(String text) {
+        mPainter.checkAndClear();
+
         if (ActivityCompat.checkSelfPermission(WordTranslateActivity.this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
             mTranslator.translate(text);
         } else {

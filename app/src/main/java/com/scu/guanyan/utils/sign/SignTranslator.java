@@ -136,13 +136,13 @@ public class SignTranslator {
 
     public void translate(String text, int mode) {
         mMode = mode;
+
         mSignGenerator.text2SignMotion(text, mode);
         Avatar.getInstance().initBone();
     }
 
     public void translate(String text) {
-        mSignGenerator.text2SignMotion(text, mMode);
-        Avatar.getInstance().initBone();
+        translate(text, mMode);
     }
 
     public void destroy() {

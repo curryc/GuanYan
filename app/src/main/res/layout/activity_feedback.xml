@@ -31,7 +31,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/app_bar_height"
+            android:layout_height="@dimen/button_size_big"
             android:layout_marginBottom="@dimen/app_padding_mid"
             app:cardCornerRadius="@dimen/app_radius_sml">
 
@@ -61,7 +61,7 @@
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/app_bar_height"
+            android:layout_height="@dimen/button_size_big"
             android:layout_marginBottom="@dimen/app_padding_mid"
             app:cardCornerRadius="@dimen/app_radius_sml">
 
@@ -75,7 +75,7 @@
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/app_bar_height"
+            android:layout_height="@dimen/button_size_big"
             android:layout_marginBottom="@dimen/app_padding_mid"
             app:cardCornerRadius="@dimen/app_radius_sml">
 
@@ -90,6 +90,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/button_size_sml"
             android:text="@string/submit"
             android:id="@+id/submit"
             android:background="@drawable/round_rec"/>

@@ -23,7 +23,7 @@ public abstract class BaseUnityActivity extends BaseActivity{
     @Override
     protected final void initView() {
         ViewGroup l = findViewById(getUnityContainerId());
-        mUnityPlayer = new SignPlayer(this, l);
+        mUnityPlayer = SignPlayer.with(this, l);
         initOtherViews();
     }
 

@@ -1,7 +1,6 @@
 package com.scu.guanyan.utils.sign;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.view.KeyEvent;
 import android.view.View;
@@ -9,6 +8,9 @@ import android.view.ViewGroup;
 
 import com.scu.guanyan.base.BaseUnityPlayer;
 import com.unity3d.player.UnityPlayer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @program: Guanyan
@@ -22,17 +24,27 @@ public class SignPlayer {
     private BaseUnityPlayer mUnityPlayer;
     private ViewGroup mContainer;
 
-    private static SignPlayer sSignPlayer;
+    private static List<SignPlayer> sSignPlayers;
 
-    public static SignPlayer with(Context context){
-        if(sSignPlayer == null) {
-            sSignPlayer = new SignPlayer(context);
-            sSignPlayer.resume();
+    public static SignPlayer with(Context context, ViewGroup parent){
+        SignPlayer player;
+        if(sSignPlayers == null) {
+            sSignPlayers = new ArrayList<>();
+        }else{
+            for (SignPlayer p : sSignPlayers) {
+                if(p.getContainer().getId() == parent.getId()) return p;
+            }
         }
-        return sSignPlayer;
+        player = new SignPlayer(context, parent);
+        sSignPlayers.add(player);
+        return player;
     }
 
-    public SignPlayer(Context context, ViewGroup container) {
+    public ViewGroup getContainer(){
+        return mContainer;
+    }
+
+    private SignPlayer(Context context, ViewGroup container) {
         mContext = context;
         mContainer = container;
         mUnityPlayer = new BaseUnityPlayer(context);

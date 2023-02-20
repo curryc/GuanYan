@@ -41,7 +41,6 @@ public class AvatarPaint {
     private final static String TAG = "AvatarPaint";
     public final static String ANIM_SPEED = "anim_speed_key";
 
-    private Queue<Pair<HashMap, Integer>> frameQueue = new ConcurrentLinkedQueue<>();
     private Queue<FrameData> frameDataQueue = new ConcurrentLinkedQueue<>();
 
     private Context mContext;
@@ -68,15 +67,13 @@ public class AvatarPaint {
     }
 
     public synchronized void addFrameDataList(List<FrameData> frameDataList) {
-        if (mMode == GeneratorConstants.FLUSH_MODE) {
-            clearFrameData();
-        }
         this.frameDataQueue.addAll(frameDataList);
     }
 
-    public synchronized void clearFrameData() {
-        this.frameDataQueue.clear();
-        this.frameQueue.clear();
+    public synchronized void checkAndClear(){
+        if (mMode == GeneratorConstants.FLUSH_MODE) {
+            this.frameDataQueue.clear();
+        }
     }
 
     private void init() {
@@ -107,7 +104,7 @@ public class AvatarPaint {
 //                mFrameCreator.postDelayed(this, 100);
 //            }
 //        };
-        mSpeed = (int)SharedPreferencesHelper.get(mContext, ANIM_SPEED, 30);
+        mSpeed = 1000/(int)SharedPreferencesHelper.get(mContext, ANIM_SPEED, 30);
     }
 
 

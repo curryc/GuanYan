@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.scu.guanyan.R;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -88,7 +90,7 @@ public class DialogSelect extends Dialog {
             public void onClick(View v) {
                 if (yesOnclickListener != null) {
                     int id = mSelectGroup.getCheckedRadioButtonId();
-                    yesOnclickListener.onYesClick(((RadioButton)mSelectGroup.findViewById(id)).getText().toString());
+                    yesOnclickListener.onYesClick(((RadioButton) mSelectGroup.findViewById(id)).getText().toString());
                 }
             }
         });
@@ -125,8 +127,8 @@ public class DialogSelect extends Dialog {
         for (String item : mItems) {
             RadioButton button = new RadioButton(getContext());
             button.setText(item);
-            button.setId(i ++);
-            if(item.equals(mChecked)) button.setChecked(true);
+            button.setId(i++);
+            if (item.equals(mChecked)) button.setChecked(true);
             mSelectGroup.addView(button);
         }
     }
@@ -156,17 +158,19 @@ public class DialogSelect extends Dialog {
      * @param
      */
 
-    public void setItems(List<String> items, String checked){
+    public void setItems(List<String> items, String checked) {
         this.mItems = items;
-        this.mChecked =checked;
+        this.mChecked = checked;
+        Collections.sort(this.mItems);
     }
 
-    public void setItems(Iterator items, String checked){
+    public void setItems(Iterator items, String checked) {
         mChecked = checked;
-        while(items.hasNext()){
+        while (items.hasNext()) {
             String s = (String) items.next();
             mItems.add(s);
         }
+        Collections.sort(this.mItems);
     }
 
     /**
