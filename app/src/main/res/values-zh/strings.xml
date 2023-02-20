@@ -22,4 +22,20 @@
 
     <string name="begin_audio">开始</string>
     <string name="end_audio">结束</string>
+    <string name="cancel">退出</string>
+    <string name="go_setting">去设置</string>
+    <string name="confirm">确认</string>
+    <string name="view_on_github">在Github上浏览</string>
+    <string name="email">电子邮件</string>
+    <string name="floating_permission">在其他APP上显示</string>
+    <string name="description_floating_ask">由于我们需要在其他APP之上进行翻译，我们需要授予悬浮窗权限，单击“转到设置”以进行设置，单击“取消”以取消</string>
+    <string name="description_phone_state_ask">由于我们需要确保只在中国地区进行翻译，我们需要授予获取手机状态权限，单击“转到设置”以进行设置，单击“取消”以取消</string>
+    <string name="description_record_ask">由于我们需要录取音频以进行翻译，我们需要授予录音权限，单击“转到设置”以进行设置，单击“取消”以取消</string>
+    <string name="edit_quz">请描述您遇到的问题</string>
+    <string name="edit_advise">请输入您的建议</string>
+    <string name="edit_name">请输入您的昵称</string>
+    <string name="edit_phone">请输入您的电话以联系到您</string>
+    <string name="introduce">一个简单但是高效的手语翻译工具</string>
+    <string name="is_flash">Flash模式</string>
+    <string name="fps">动画帧率</string>
 </resources>
