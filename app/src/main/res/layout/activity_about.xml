@@ -19,6 +19,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="@dimen/button_size_mid"
         android:layout_height="@dimen/button_size_mid"
+        android:visibility="invisible"
         android:id="@+id/share"
         app:fabCustomSize="@dimen/button_size_mid"
         android:layout_gravity="top|right"

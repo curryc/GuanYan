@@ -6,18 +6,26 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
 import com.scu.guanyan.R;
 import com.scu.guanyan.activity.AudioTranslateActivity;
+import com.scu.guanyan.event.BaseEvent;
 import com.scu.guanyan.widget.DialogMessage;
 import com.scu.guanyan.base.BaseFragment;
 import com.scu.guanyan.base.ViewHolder;
 import com.scu.guanyan.service.FloatWindowService;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * @program: Guanyan
@@ -26,12 +34,25 @@ import com.scu.guanyan.service.FloatWindowService;
  * @description:
  **/
 public class HomeFragment extends BaseFragment {
+    public static final String TAG = "homeFragment";
     private Button mWordTrans, mAudioTrans, mFloatTrans;
     private int mFloatingFlag;// 0:未悬浮，1：悬浮手势， 2：悬浮文字
 
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_home;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 
     @Override
@@ -104,4 +125,14 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handleEvent(BaseEvent event){
+        Log.e(TAG, event.getFlag() + "helloworld");
+        if(event.getFlag().equals(TAG)){
+            this.mAudioTrans.setText(event.getMsg());
+            this.mFloatingFlag = 0;
+        }
+    }
 }

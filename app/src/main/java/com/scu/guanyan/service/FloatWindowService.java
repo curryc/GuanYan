@@ -17,11 +17,14 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
+import com.huawei.hms.signpal.GeneratorConstants;
 import com.scu.guanyan.R;
 import com.scu.guanyan.event.AudioEvent;
 import com.scu.guanyan.event.BaseEvent;
 import com.scu.guanyan.event.SignEvent;
+import com.scu.guanyan.ui.home.HomeFragment;
 import com.scu.guanyan.utils.audio.RealTimeWords;
+import com.scu.guanyan.utils.base.SharedPreferencesHelper;
 import com.scu.guanyan.utils.sign.AvatarPaint;
 import com.scu.guanyan.utils.sign.SignPlayer;
 import com.scu.guanyan.utils.sign.SignTranslator;
@@ -67,7 +70,7 @@ public class FloatWindowService extends Service {
         isStarted = true;
         isRecord = false;
         mAudioUtils = new RealTimeWords(this, TAG);
-        mTranslator = new SignTranslator(this, TAG);
+        mTranslator = new SignTranslator(this, TAG, (int) SharedPreferencesHelper.get(this, SignTranslator.FLASH_KEY, GeneratorConstants.FLUSH_MODE));
 
 
         mHandler = new Handler();
@@ -130,6 +133,8 @@ public class FloatWindowService extends Service {
         super.onDestroy();
     }
 
+
+
     private void showFloatingWindow() {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         mDisplayView = layoutInflater.inflate(R.layout.float_sign, null);
@@ -160,6 +165,14 @@ public class FloatWindowService extends Service {
             }
         });
 
+        mDisplayView.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventBus.getDefault().postSticky(new BaseEvent(HomeFragment.TAG, getString(R.string.float_trans), true));
+                FloatWindowService.this.stopSelf();
+            }
+        });
+
     }
 
 
@@ -174,12 +187,9 @@ public class FloatWindowService extends Service {
                 }
             } else if (event instanceof SignEvent) {
                 if (event.isOk() && ((SignEvent) event).getFrames().size() != 0) {
-                    // 模式不同， 可能会clear所有帧（flush模式）
-//                    if(mTranslator.getMode() == 1){
-//                        mPainter.clearFrameData();
-//                    }
                     mPainter.addFrameDataList(((SignEvent) event).getFrames());
-                    mPainter.startAndPlay();
+                    if (!mPainter.isPlaying())
+                        mPainter.startAndPlay();
                 }
             }
         }

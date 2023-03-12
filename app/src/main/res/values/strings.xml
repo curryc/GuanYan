@@ -23,7 +23,7 @@
     <string name="audio_trans">Audio Translate</string>
     <string name="word_trans">Word Translate</string>
     <string name="float_trans">Float Translate</string>
-    <string name="floating">Floating</string>
+    <string name="floating">Stop Floating</string>
 
     <string name="floating_permission">Draw Overlay Other APPs</string>
     <string name="description_floating_ask">As we need to translate above other scenes, we need floating above other apps permission, click Go Setting to setting and Cancel to cancel</string>

@@ -134,6 +134,7 @@ public class WordTranslateActivity extends BaseUnityActivity {
         TextView bubble = new Button(this);
         bubble.setText(text);
         bubble.setTextColor(Color.WHITE);
+        bubble.setPadding(20,0,20,0);
         bubble.setBackground(getDrawable(R.drawable.round_rec_variant));
         bubble.setLayoutParams(mBubbleParams);
         bubble.setOnClickListener(new View.OnClickListener() {

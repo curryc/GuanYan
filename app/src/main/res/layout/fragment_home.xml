@@ -21,7 +21,7 @@
         android:layout_height="0dp"
         android:layout_margin="@dimen/app_padding_mid"
         android:layout_weight="3"
-        android:background="@drawable/round_rec"
+        android:background="@drawable/round_rec_light_deep"
         android:textAppearance="@style/ButtonTextAppearance"
         android:text="@string/word_trans" />
 
@@ -37,7 +37,7 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/app_padding_mid"
             android:layout_weight="1"
-            android:background="@drawable/round_rec"
+            android:background="@drawable/round_rec_gradient_left_top"
             android:textAppearance="@style/ButtonTextAppearance"
             android:text="@string/audio_trans" />
 
@@ -47,7 +47,7 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/app_padding_mid"
             android:layout_weight="1"
-            android:background="@drawable/round_rec"
+            android:background="@drawable/round_rec_gradient_left_top"
             android:textAppearance="@style/ButtonTextAppearance"
             android:text="@string/float_trans" />
     </LinearLayout>

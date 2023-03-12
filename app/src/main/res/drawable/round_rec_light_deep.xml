@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="false">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <corners android:radius="20dp"></corners>
+            <solid android:color="#ECE7E2"></solid>
+        </shape>
+    </item>
+    <item android:drawable="@drawable/round_rec_deep" android:state_pressed="true"/>
+</selector>

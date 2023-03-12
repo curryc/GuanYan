@@ -18,7 +18,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginTop="@dimen/app_padding_sml"
-        android:background="@drawable/round_rec">
+        android:background="@drawable/round_rec_light">
         <EditText
             android:id="@+id/input"
             android:layout_width="match_parent"

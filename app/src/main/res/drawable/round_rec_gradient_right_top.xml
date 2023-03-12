@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="false">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <corners android:radius="10dp"></corners>
+            <solid android:color="#ECE7E2"></solid>
+            <gradient android:startColor="@color/white"
+                android:endColor="@color/app_color"
+                android:angle="45"
+                android:type="linear"/>
+        </shape>
+    </item>
+    <item android:drawable="@drawable/round_rec_light" android:state_pressed="true"/>
+</selector>
