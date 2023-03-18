@@ -115,7 +115,6 @@ public class OCRUtils {
         } else if (!predictor.isLoaded()) {
             return  false;
         } else {
-            tvStatus.setText("STATUS: run model ...... ");
             predictor.setInputImage(image);
             return  onRunModel();
         }
