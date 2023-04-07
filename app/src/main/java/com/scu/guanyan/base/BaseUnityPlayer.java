@@ -31,8 +31,9 @@ public class BaseUnityPlayer extends UnityPlayer {
         super(context);
     }
 
-    @Override
-    protected void kill() {
-        return;
-    }
+//    @Override
+//    protected void kill() {
+//
+//        return;
+//    }
 }

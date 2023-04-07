@@ -126,6 +126,7 @@ public class WordTranslateActivity extends BaseUnityActivity {
         }
     }
 
+    // TODO： 删除一个bubble
     private TextView generateBubble(String text) {
         if (mBubbleParams == null) {
             mBubbleParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER);

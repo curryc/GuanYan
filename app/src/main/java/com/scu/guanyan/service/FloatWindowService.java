@@ -263,4 +263,9 @@ public class FloatWindowService extends Service {
         super.onConfigurationChanged(newConfig);
         mUnityPlayer.configurationChanged(newConfig);
     }
+
+
+    // TODO： OCR 文字识别转为手语
+    // TODO： 录音的通道改变
+
 }
