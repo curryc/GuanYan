@@ -46,7 +46,7 @@ public class SignTranslator {
     private String mFlag;
     private int mMode;
 
-    private Handler mHandler;
+//    private Handler mHandler;
 
     public int getMode() {
         return mMode;
@@ -70,7 +70,7 @@ public class SignTranslator {
 
     public SignTranslator(Context context, Handler handler){
         this(context, "", GeneratorConstants.QUEUE_MODE);
-        mHandler = handler;
+//        mHandler = handler;
     }
 
     public SignTranslator(Context context, String flag) {
@@ -148,5 +148,8 @@ public class SignTranslator {
     public void destroy() {
         mSignGenerator.stop();
         mSignGenerator.shutdown();
+        mSignGenerator = null;
+        mSetting = null;
+        mContext = null;
     }
 }

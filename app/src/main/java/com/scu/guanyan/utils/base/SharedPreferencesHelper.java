@@ -111,6 +111,7 @@ public class SharedPreferencesHelper {
 
     /**
      * 放入一个Object对象列表
+     *
      * @param mContext
      * @param key
      * @param list
@@ -124,24 +125,31 @@ public class SharedPreferencesHelper {
         editor.apply();
     }
 
-    public static void addListStringItem(Context mContext, String key, String item){
+    public static void addListStringItem(Context mContext, String key, String item) {
         SharedPreferences.Editor editor = mContext.getSharedPreferences(FILE_NAME, MODE_PRIVATE).edit();
-        List items = getListString(mContext,key);
+        List items = getListString(mContext, key);
         int size;
-        if(item == null){
+        if (items == null) {
             size = 0;
             editor.putInt(key + "Nums", 1);
-        }
-        else {
+        } else {
             size = items.size();
             editor.putInt(key + "Nums", size + 1);
         }
-        editor.putString(key + "item_" + size , item);
+        editor.putString(key + "item_" + size, item);
+        editor.apply();
+    }
+
+    public static void delListStringItem(Context mContext, String key, String item) {
+        SharedPreferences.Editor editor = mContext.getSharedPreferences(FILE_NAME, MODE_PRIVATE).edit();
+        List items = getListString(mContext, key);
+        editor.putString(key + "item_" + items.indexOf(item), "");
         editor.apply();
     }
 
     /**
      * 获取一个Object对象列表
+     *
      * @param mContext
      * @param key
      * @return
@@ -152,7 +160,8 @@ public class SharedPreferencesHelper {
         List<String> list = new ArrayList<>();
         for (int i = 0; i < nums; i++) {
             String item = sharedPreferences.getString(key + "item_" + i, null);
-            list.add(item);
+            if (item != null && item.length() > 0)
+                list.add(item);
         }
         return list;
     }

@@ -32,9 +32,6 @@ public class Predictor {
     protected float postprocessTime = 0;
 
 
-    public Predictor() {
-    }
-
     public boolean init(Context appCtx, String modelPath, String labelPath, int useOpencl, int cpuThreadNum, String cpuPowerMode) {
         isLoaded = loadModel(appCtx, modelPath, useOpencl, cpuThreadNum, cpuPowerMode);
         if (!isLoaded) {

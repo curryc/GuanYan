@@ -4,6 +4,7 @@
     <string name="tip_double_click_exit">double click to leave</string>
     <string name="submit">Submit</string>
     <string name="save">Save</string>
+    <string name="edit">Edit</string>
     <string name="cancel">Cancel</string>
     <string name="go_setting">Go Setting</string>
     <string name="tutorial">Tutorial</string>
@@ -43,8 +44,6 @@
 
 
     <!-- ORC  -->
-
-    <string name="app_name" tools:ignore="DuplicateDefinition">PaddleOCR</string>
     <string name="CHOOSE_PRE_INSTALLED_MODEL_KEY" translatable="false">CHOOSE_PRE_INSTALLED_MODEL_KEY</string>
     <string name="ENABLE_CUSTOM_SETTINGS_KEY" translatable="false">ENABLE_CUSTOM_SETTINGS_KEY</string>
     <string name="MODEL_PATH_KEY" translatable="false">MODEL_PATH_KEY</string>

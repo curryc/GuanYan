@@ -1,12 +1,17 @@
 package com.scu.guanyan.service;
 
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
+import android.os.Message;
+import android.os.RemoteException;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,10 +20,12 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 
 import com.huawei.hms.signpal.GeneratorConstants;
+import com.scu.guanyan.IAidlServiceToMain;
 import com.scu.guanyan.R;
+import com.scu.guanyan.Receiver.MainProcessReceiver;
 import com.scu.guanyan.event.AudioEvent;
 import com.scu.guanyan.event.BaseEvent;
 import com.scu.guanyan.event.SignEvent;
@@ -41,7 +48,7 @@ import org.greenrobot.eventbus.ThreadMode;
  * 悬浮窗管理，悬浮翻译调用此服务
  **/
 public class FloatWindowService extends Service {
-    private final String TAG = "FloatWindowService";
+    public static final String TAG = "FloatWindowService";
     private WindowManager windowManager;
     private WindowManager.LayoutParams layoutParams;
     private SignTranslator mTranslator;
@@ -60,20 +67,43 @@ public class FloatWindowService extends Service {
     private SignPlayer mUnityPlayer;
     private ImageView mAudio;
 
+    private IBinder mBinder;
+
     private boolean isRecord = false;
     public boolean isStarted = false;
 
     @Override
     public void onCreate() {
-        EventBus.getDefault().register(this);
         super.onCreate();
+        EventBus.getDefault().register(this);
         isStarted = true;
         isRecord = false;
+        mBinder  = new SignBinder();
         mAudioUtils = new RealTimeWords(this, TAG);
         mTranslator = new SignTranslator(this, TAG, (int) SharedPreferencesHelper.get(this, SignTranslator.FLASH_KEY, GeneratorConstants.FLUSH_MODE));
 
 
-        mHandler = new Handler();
+        mHandler = new Handler(Looper.myLooper()){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                if(msg.what == -1){
+                    EventBus.getDefault().unregister(FloatWindowService.this);
+//        mUnityPlayer.destroy();
+                    mAudioUtils.destroy();
+                    mTranslator.destroy();
+                    mPainter.destroy();
+                    windowManager.removeView(mDisplayView);
+                    windowManager = null;
+                    mTranslator = null;
+                    mUnityPlayer = null;
+                    mPainter = null;
+                    mAudioUtils = null;
+                    System.gc();
+
+                    FloatWindowService.this.stopSelf();
+                }
+            }
+        };
 
         mViewChecker = new Runnable() {
             @Override
@@ -102,12 +132,9 @@ public class FloatWindowService extends Service {
         showFloatingWindow();
     }
 
-
-
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return mBinder;
     }
 
     @Override
@@ -119,20 +146,8 @@ public class FloatWindowService extends Service {
 
     @Override
     public void onDestroy() {
-        EventBus.getDefault().unregister(this);
-        mUnityPlayer.destroy();
-        mAudioUtils.destroy();
-        mTranslator.destroy();
-        mPainter.destroy();
-        windowManager.removeView(mDisplayView);
-        windowManager = null;
-        mTranslator = null;
-        mUnityPlayer = null;
-        mPainter = null;
-        mAudioUtils = null;
         super.onDestroy();
     }
-
 
 
     private void showFloatingWindow() {
@@ -155,7 +170,7 @@ public class FloatWindowService extends Service {
                     mAudio.setImageResource(R.drawable.ic_pause);
                     mAudioUtils.start();
                     checkViewAfter();
-//                    toastShort("正在录音...");
+
                 } else {
                     isRecord = false;
                     mAudio.setImageResource(R.drawable.ic_play);
@@ -168,8 +183,12 @@ public class FloatWindowService extends Service {
         mDisplayView.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EventBus.getDefault().postSticky(new BaseEvent(HomeFragment.TAG, getString(R.string.float_trans), true));
-                FloatWindowService.this.stopSelf();
+//                EventBus.getDefault().post(new FloatCloseEvent(HomeFragment.TAG, getString(R.string.float_trans), true));
+//                Log.i("hello","hello close float");
+                Intent intent = new Intent(FloatWindowService.this, MainProcessReceiver.class);
+                intent.setAction("service closed");
+                sendBroadcast(intent);
+                mHandler.sendEmptyMessage(-1);
             }
         });
 
@@ -262,6 +281,14 @@ public class FloatWindowService extends Service {
     {
         super.onConfigurationChanged(newConfig);
         mUnityPlayer.configurationChanged(newConfig);
+    }
+
+    public class SignBinder extends IAidlServiceToMain.Stub {
+
+        @Override
+        public void closeService() throws RemoteException {
+            mHandler.sendEmptyMessage(-1);
+        }
     }
 
 

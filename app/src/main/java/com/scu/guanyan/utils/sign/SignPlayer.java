@@ -2,6 +2,7 @@ package com.scu.guanyan.utils.sign;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,19 +25,19 @@ public class SignPlayer {
     private BaseUnityPlayer mUnityPlayer;
     private ViewGroup mContainer;
 
-    private static List<SignPlayer> sSignPlayers;
+//    private static SignPlayer sSignPlayers;
 
     public static SignPlayer with(Context context, ViewGroup parent){
         SignPlayer player;
-        if(sSignPlayers == null) {
-            sSignPlayers = new ArrayList<>();
-        }else{
-            for (SignPlayer p : sSignPlayers) {
-                if(p.getContainer().getId() == parent.getId()) return p;
-            }
-        }
+//        if(sSignPlayers == null) {
+//            sSignPlayers = new ArrayList<>();
+//        }else{
+//            for (SignPlayer p : sSignPlayers) {
+//                if(p.getContainer().getId() == parent.getId()) return p;
+//            }
+//        }
         player = new SignPlayer(context, parent);
-        sSignPlayers.add(player);
+//        sSignPlayers.add(player);
         return player;
     }
 
@@ -48,8 +49,7 @@ public class SignPlayer {
         mContext = context;
         mContainer = container;
         mUnityPlayer = new BaseUnityPlayer(context);
-        View mView = mUnityPlayer.getView();
-        container.addView(mView);
+        container.addView(mUnityPlayer.getView());
         mUnityPlayer.setFocusable(false);
     }
 
@@ -91,12 +91,21 @@ public class SignPlayer {
     public void start(){
         mUnityPlayer.start();
     }
+    public void stop(){
+        mUnityPlayer.stop();
+    }
     public void resume(){
         mUnityPlayer.resume();
+        mUnityPlayer.postInvalidate();
     }
+//    public void init(){
+//        mUnityPlayer.init(UnityPlayer.currentActivity);
+//    }
     public void destroy(){
+        Log.i("Guanyan", "signplayer  destroyed");
         mUnityPlayer.destroy();
     }
+    public void quit(){mUnityPlayer.quit();}
     public void lowMemory(){
         mUnityPlayer.lowMemory();
     }

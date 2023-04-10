@@ -146,6 +146,9 @@ public class AvatarPaint {
     public void destroy() {
         mFrameCreator.cancel();
         mFrameCreator = null;
+//        frameDataQueue.clear();
+        frameDataQueue = null;
+        mContext = null;
         setPlaying(false);
 //        mAnimator.removeCallbacks(mAnimatorThread);
     }

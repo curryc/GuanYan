@@ -58,17 +58,25 @@ public class AudioTranslateActivity extends BaseUnityActivity {
 
     @Override
     protected void onDestroy() {
-        EventBus.getDefault().unregister(this);
-        mAudioUtils.destroy();
-        mTranslator.destroy();
-        mPainter.destroy();
-        mUnityPlayer.destroy();
-        mTranslator = null;
-        mUnityPlayer = null;
-        mAudioUtils = null;
-        mPainter = null;
         super.onDestroy();
     }
+
+    @Override
+    protected void destroyAll() {
+        EventBus.getDefault().unregister(this);
+        mTranslator.destroy();
+        mPainter.destroy();
+        mPainter = null;
+        mTranslator = null;
+//        if(playing){
+//            mUnityPlayer.pause();
+//            mUnityPlayer.stop();
+//        }
+        mUnityPlayer.destroy();
+        mUnityPlayer = null;
+        System.gc();
+    }
+
 
     @Override
     protected int getLayoutId() {

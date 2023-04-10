@@ -40,12 +40,21 @@
             android:layout_marginBottom="4dp"
             android:background="@drawable/round_rec"
             android:textAppearance="@style/ButtonTextAppearance"
+            android:text="@string/edit"
+            android:id="@+id/edit"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/round_rec"
+            android:textAppearance="@style/ButtonTextAppearance"
             android:text="@string/save"
             android:id="@+id/save"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_marginBottom="4dp"
             android:background="@drawable/round_rec"
             android:textAppearance="@style/ButtonTextAppearance"
