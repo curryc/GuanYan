@@ -31,6 +31,7 @@ import com.scu.guanyan.service.FloatWindowService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * @program: Guanyan
@@ -95,8 +96,8 @@ public class HomeFragment extends BaseFragment {
                     }
 
                     if (canFloat) {
-//                        getActivity().startService(new Intent(getActivity(), FloatWindowService.class));
-                        getActivity().bindService(new Intent(getActivity(), FloatWindowService.class), new SignConnection(), Context.BIND_AUTO_CREATE);
+                        getActivity().startService(new Intent(getActivity(), FloatWindowService.class));
+                        getActivity().bindService(new Intent(getContext(), FloatWindowService.class), new SignConnection(), Context.BIND_AUTO_CREATE);
 
                         // 设置状态
                         mFloatingFlag = 1;
@@ -141,13 +142,13 @@ public class HomeFragment extends BaseFragment {
 
 
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void handleEvent(BaseEvent event){
-        Log.e(TAG, event.getMsg() + "floatcloseevent");
         if(event.getFlag().equals(TAG)){
-            Log.e(TAG, event.getMsg() + "floatcloseevent");
-            this.mAudioTrans.setText(getString(R.string.float_trans));
-            this.mFloatingFlag = 0;
+            if(event.getMsg().equals("float closed")) {
+                this.mFloatTrans.setText(getString(R.string.float_trans));
+                this.mFloatingFlag = 0;
+            }
         }
     }
 
@@ -158,6 +159,7 @@ public class HomeFragment extends BaseFragment {
         public void onServiceConnected(ComponentName name, IBinder service) {
             //获取中间人对象
             mProxy = IAidlServiceToMain.Stub.asInterface(service);
+            Log.i(TAG, mProxy.toString());
         }
 
         //失去连接

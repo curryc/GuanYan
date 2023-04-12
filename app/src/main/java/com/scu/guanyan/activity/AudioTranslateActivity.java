@@ -66,6 +66,7 @@ public class AudioTranslateActivity extends BaseUnityActivity {
         EventBus.getDefault().unregister(this);
         mTranslator.destroy();
         mPainter.destroy();
+        mAudioUtils.destroy();
         mPainter = null;
         mTranslator = null;
 //        if(playing){
@@ -74,6 +75,7 @@ public class AudioTranslateActivity extends BaseUnityActivity {
 //        }
         mUnityPlayer.destroy();
         mUnityPlayer = null;
+        mAudioUtils = null;
         System.gc();
     }
 

@@ -4,11 +4,15 @@
 
 package com.scu.guanyan.utils.audio;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.util.Log;
+
+import androidx.core.app.ActivityCompat;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -31,6 +35,7 @@ public class AudioRecordService {
     private byte[] buffer = null; // 录制的缓冲数组
 
     private int bufferSize;
+    private int mFrequence;
 
     private AtomicBoolean isRecording = new AtomicBoolean(false);
 
@@ -41,11 +46,21 @@ public class AudioRecordService {
      */
     @SuppressLint("MissingPermission")
     public AudioRecordService(int frequence) {
+        mFrequence = frequence;
         // 设置每次传入sdk服务的数组大小
         bufferSize = 3200;
         // 实例化AudioRecord
         audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC,
                 frequence, channelInConfig, audioEncoding, bufferSize);
+    }
+
+    @SuppressLint("MissingPermission")
+    public void setChannel(int channel) {
+        if (audioRecord.getAudioSource() != channel) {
+            releaseAudioRecord();
+            audioRecord = new AudioRecord(channel,
+                    mFrequence, channelInConfig, audioEncoding, bufferSize);
+        }
     }
 
     /**

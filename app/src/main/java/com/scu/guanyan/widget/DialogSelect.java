@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.scu.guanyan.R;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -165,6 +166,7 @@ public class DialogSelect extends Dialog {
     }
 
     public void setItems(Iterator items, String checked) {
+        mItems = new ArrayList<>();
         mChecked = checked;
         while (items.hasNext()) {
             String s = (String) items.next();

@@ -24,13 +24,22 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:sharedUserId="android.uid.system"
         android:supportsRtl="true"
         android:theme="@style/Theme.Guanyan"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".DragToBoxActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
         <receiver
             android:name=".Receiver.MainProcessReceiver"
-            android:exported="false"></receiver>
+            android:exported="false" />
 
         <activity
             android:name=".MainActivity"
@@ -44,8 +53,8 @@
         <activity
             android:name=".activity.WordTranslateActivity"
             android:exported="true"
-            android:process=":word"
             android:launchMode="singleTask"
+            android:process=":word"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.AudioTranslateActivity"
@@ -72,6 +81,9 @@
             android:name=".activity.ContactUsActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.DragToBoxActivity"
+            android:launchMode="singleInstance"
+            android:exported="true"/>
 
         <service
             android:name=".service.FloatWindowService"

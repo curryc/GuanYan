@@ -12,4 +12,7 @@ public class FloatClosingEvent extends BaseEvent {
     public FloatClosingEvent(String flag, boolean ok) {
         super(flag, "0", ok);
     }
+    public FloatClosingEvent(String flag,String msg, boolean ok) {
+        super(flag, msg, ok);
+    }
 }

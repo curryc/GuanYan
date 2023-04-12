@@ -1,22 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
     android:background="@color/transparent">
     <FrameLayout
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="match_parent"
-        android:id="@+id/sign"/>
-    <ImageView
-        android:layout_width="@dimen/button_size_sml"
-        android:layout_height="@dimen/button_size_sml"
-        android:id="@+id/audio"
-        android:src="@drawable/ic_play"
-        android:layout_gravity="center"/>
-    <ImageView
-        android:layout_width="@dimen/button_size_sml"
-        android:layout_height="@dimen/button_size_sml"
-        android:layout_gravity="right|top"
-        android:id="@+id/cancel"
-        android:src="@android:drawable/ic_menu_close_clear_cancel"/>
-</FrameLayout>
+        android:id="@+id/sign">
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="50dp"
+        android:id="@+id/right_menu"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="right|top"
+            android:id="@+id/cancel"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/control"
+            android:src="@android:drawable/ic_media_play"
+            android:layout_gravity="center"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/setting"
+            android:src="@android:drawable/ic_menu_manage"
+            android:layout_gravity="center"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/change"
+            android:src="@android:drawable/ic_menu_more"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+</LinearLayout>

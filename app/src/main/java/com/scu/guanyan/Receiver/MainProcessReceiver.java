@@ -20,7 +20,7 @@ public class MainProcessReceiver extends BroadcastReceiver {
         String action = intent.getAction();
         switch (action){
             case "service closed":
-                EventBus.getDefault().post(new FloatClosingEvent(HomeFragment.TAG, true));
+                EventBus.getDefault().post(new FloatClosingEvent(HomeFragment.TAG, "float closed",true));
                 break;
         }
     }

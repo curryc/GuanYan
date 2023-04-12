@@ -12,17 +12,6 @@ import com.unity3d.player.UnityPlayer;
  * @description:
  **/
 public class BaseUnityPlayer extends UnityPlayer {
-//    @Override
-//    public void destroy() {
-//        return;
-//    }
-
-
-    @Override
-    public void start() {
-        super.start();
-    }
-
     @Override
     protected boolean isFinishing() {
         return super.isFinishing();
@@ -42,8 +31,14 @@ public class BaseUnityPlayer extends UnityPlayer {
         super(context);
     }
 
+    @Override
+    protected void kill() {
+//        android.os.Process.killProcess(android.os.Process.myPid());
+        return;
+    }
+
 //    @Override
-//    protected void kill() {
+//    public void destroy() {
 //        return;
 //    }
 }

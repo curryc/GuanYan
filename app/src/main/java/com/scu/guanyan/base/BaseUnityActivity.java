@@ -67,11 +67,12 @@ public abstract class BaseUnityActivity extends BaseActivity {
     // Quit Unity
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (mUnityPlayer != null) {
-            mUnityPlayer.quit();
+            mUnityPlayer.destroy();
         }
         System.gc();
+        super.onDestroy();
+
     }
 
     @Override
@@ -104,6 +105,8 @@ public abstract class BaseUnityActivity extends BaseActivity {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
+                        // 想要流畅，直接上这个
+//                        android.os.Process.killProcess(android.os.Process.myPid());
                         if (!destroyFlag && System.currentTimeMillis() - resumeTime < 2000) {
                             destroyAll();
                             destroyFlag = true;

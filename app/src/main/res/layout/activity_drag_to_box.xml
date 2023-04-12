@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.scu.guanyan.widget.BoxDrawingView
+        android:id="@+id/box"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/translucent">
+    </com.scu.guanyan.widget.BoxDrawingView>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/app_padding_mid"
+        android:layout_marginTop="@dimen/app_padding_mid"
+        android:background="@drawable/round_rec"
+        android:text="@string/submit"
+        android:layout_gravity="top|right"
+        android:id="@+id/submit"/>
+    <ImageView
+        android:layout_width="@dimen/button_size_mid"
+        android:layout_height="@dimen/button_size_mid"
+        android:id="@+id/back"
+        app:fabCustomSize="@dimen/button_size_mid"
+        android:src="@android:drawable/ic_menu_delete"
+        android:layout_marginLeft="@dimen/app_padding_mid"
+        android:layout_marginTop="@dimen/app_padding_mid" />
+</FrameLayout>

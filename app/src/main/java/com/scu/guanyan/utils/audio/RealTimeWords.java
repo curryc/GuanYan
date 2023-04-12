@@ -4,10 +4,14 @@
 
 package com.scu.guanyan.utils.audio;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
 
 import com.huaweicloud.sdk.core.utils.JsonUtils;
 import com.scu.guanyan.event.AudioEvent;
@@ -63,6 +67,86 @@ public class RealTimeWords {
         }
         System.gc();
     }
+
+    /**
+     * 开始监听
+     */
+    public void start() {
+        realTimeResult = realTimeResult.delete(0, realTimeResult.length());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    rasrClient = new RasrClient(authInfo, rasrResponseListener, rasrConnProcessListener, new SisHttpConfig());
+                    rasrClient.rasrContinueStreamConnect();
+                    // 建立连接
+                    rasrClient.connect();
+                    rasrClient.sendStart(getStartRequest());
+                    audioRecordService.startSendRecordingData(rasrClient);
+                } catch (SisException e) {
+                    Log.e("error", e.getErrorCode() + e.getErrorMsg());
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * 识别结束
+     */
+    public void end() {
+        if (audioRecordService.getIsRecording().get()) {
+            audioRecordService.stopAudioRecord();
+            Toast.makeText(mContext, "识别结束...", Toast.LENGTH_SHORT).show();
+        }
+        try {
+            rasrClient.sendEnd();
+        } catch (SisException e) {
+            Log.e("error", e.getErrorCode() + e.getErrorMsg());
+        }
+        rasrClient.close();
+    }
+
+    /**
+     * 设置录音通道
+     */
+    public void setChannel(int channel) {
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            Log.e("Guanyan", "record permission denied");
+            return;
+        }
+        audioRecordService.setChannel(channel);
+    }
+    /**
+     * 初始化设置资源
+     */
+    private void initResources() {
+        authInfo = new AuthInfo(Config.AK, Config.SK, Config.REGION, Config.PROJECT_ID);
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            Log.e("Guanyan", "record permission denied");
+            return;
+        }
+        audioRecordService = new AudioRecordService(16000);
+        realTimeResult = new StringBuffer();
+    }
+
+
+    /**
+     * 开始请求
+     *
+     * @return 返回请求体内容
+     */
+    private RasrRequest getStartRequest() {
+        RasrRequest rasrRequest = new RasrRequest();
+        rasrRequest.setCommand("START");
+        RasrRequest.Config config = new RasrRequest.Config();
+        config.setAudioFormat("pcm16k16bit");
+        config.setProperty("chinese_16k_general");
+        config.setAddPunc("yes");
+        config.setInterimResults("yes");
+        rasrRequest.setConfig(config);
+        return rasrRequest;
+    }
+
 
     /**
      * 监听类
@@ -182,72 +266,9 @@ public class RealTimeWords {
 //                    Toast.makeText(mContext.getApplicationContext(), "实时语音识别连续模式，错误响应:" + JsonUtils.toJSON(response), Toast.LENGTH_SHORT).show();
 //                }
 //            });
-            EventBus.getDefault().post(new AudioEvent(flag, "error",false, "实时语音识别连续模式，错误响应:" + JsonUtils.toJSON(response)));
+            EventBus.getDefault().post(new AudioEvent(flag, "error", false, "实时语音识别连续模式，错误响应:" + JsonUtils.toJSON(response)));
             rasrClient.close();
         }
     };
 
-    /**
-     * 开始监听
-     */
-    public void start() {
-        realTimeResult = realTimeResult.delete(0, realTimeResult.length());
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    rasrClient = new RasrClient(authInfo, rasrResponseListener, rasrConnProcessListener, new SisHttpConfig());
-                    rasrClient.rasrContinueStreamConnect();
-                    // 建立连接
-                    rasrClient.connect();
-                    rasrClient.sendStart(getStartRequest());
-                    audioRecordService.startSendRecordingData(rasrClient);
-                } catch (SisException e) {
-                    Log.e("error", e.getErrorCode() + e.getErrorMsg());
-                }
-            }
-        }).start();
-    }
-
-    /**
-     * 识别结束
-     */
-    public void end() {
-        if (audioRecordService.getIsRecording().get()) {
-            audioRecordService.stopAudioRecord();
-            Toast.makeText(mContext, "识别结束...", Toast.LENGTH_SHORT).show();
-        }
-        try {
-            rasrClient.sendEnd();
-        } catch (SisException e) {
-            Log.e("error", e.getErrorCode() + e.getErrorMsg());
-        }
-        rasrClient.close();
-    }
-
-    /**
-     * 初始化设置资源
-     */
-    private void initResources() {
-        authInfo = new AuthInfo(Config.AK, Config.SK, Config.REGION, Config.PROJECT_ID);
-        audioRecordService = new AudioRecordService(16000);
-        realTimeResult = new StringBuffer();
-    }
-
-    /**
-     * 开始请求
-     *
-     * @return 返回请求体内容
-     */
-    private RasrRequest getStartRequest() {
-        RasrRequest rasrRequest = new RasrRequest();
-        rasrRequest.setCommand("START");
-        RasrRequest.Config config = new RasrRequest.Config();
-        config.setAudioFormat("pcm16k16bit");
-        config.setProperty("chinese_16k_general");
-        config.setAddPunc("yes");
-        config.setInterimResults("yes");
-        rasrRequest.setConfig(config);
-        return rasrRequest;
-    }
 }
