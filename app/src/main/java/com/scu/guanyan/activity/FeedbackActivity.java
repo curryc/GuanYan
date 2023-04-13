@@ -7,6 +7,7 @@ import android.widget.EditText;
 import com.scu.guanyan.R;
 import com.scu.guanyan.base.BaseActivity;
 import com.scu.guanyan.event.BaseEvent;
+import com.scu.guanyan.event.WebEvent;
 import com.scu.guanyan.utils.base.Web;
 
 import org.greenrobot.eventbus.EventBus;
@@ -73,7 +74,7 @@ public class FeedbackActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Callback(BaseEvent event){
         if(event.getFlag().equals(TAG)){
-            if(event.isOk()){
+            if(event instanceof WebEvent && event.isOk()){
                 // 成功提交反馈
                 toastShort("Done");
             }

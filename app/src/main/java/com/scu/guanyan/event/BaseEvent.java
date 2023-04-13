@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
  * @create: 2022/11/22 16:35
  * @description:基础事件
  **/
-public class BaseEvent {
+public abstract class BaseEvent {
     private String flag;
     private String msg;
     private boolean ok;

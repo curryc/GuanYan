@@ -1,6 +1,7 @@
 package com.scu.guanyan.utils.base;
 
 import com.scu.guanyan.event.BaseEvent;
+import com.scu.guanyan.event.WebEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
@@ -47,7 +48,7 @@ public class Web {
             public void onResponse(Call arg0, Response response) throws IOException {
                 try {
                     JSONObject ret = new JSONObject(response.body().string());
-                    BaseEvent event = new BaseEvent(flag, ret.getString("message"), ret.getInt("code") == 200);
+                    BaseEvent event = new WebEvent(flag,ret.toString(), ret.getString("message"), ret.getInt("code") == 200);
                     EventBus.getDefault().post(event);
                 } catch (JSONException e) {
                     e.printStackTrace();

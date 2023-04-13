@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission
         android:name="android.permission.CAPTURE_AUDIO_OUTPUT"
         tools:ignore="ProtectedPermissions" />
@@ -29,13 +30,6 @@
         android:theme="@style/Theme.Guanyan"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".DragToBoxActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
 
         <receiver
             android:name=".Receiver.MainProcessReceiver"
@@ -81,14 +75,24 @@
             android:name=".activity.ContactUsActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.DragToBoxActivity"
-            android:launchMode="singleInstance"
-            android:exported="true"/>
+        <activity
+            android:name=".activity.DragToBoxActivity"
+            android:exported="true"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".activity.ScreenCaptureIntentActivity"
+            android:process=":float"
+            android:exported="false">
+        </activity>
 
         <service
             android:name=".service.FloatWindowService"
             android:exported="true"
             android:process=":float" />
+        <service android:name=".service.ScreenCaptureService"
+            android:process=":float"
+            android:foregroundServiceType="mediaProjection"
+            android:exported="true"/>
     </application>
 
 </manifest>

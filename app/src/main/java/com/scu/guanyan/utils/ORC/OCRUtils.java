@@ -109,14 +109,18 @@ public class OCRUtils {
      * @param: 传入Bitmap
      * @return:
      */
-    public boolean setImgAndRunModel(Bitmap image) {
+    public String setImgAndRunModel(Bitmap image) {
         if (image == null) {
-           return  false;
+           return  null;
         } else if (!predictor.isLoaded()) {
-            return  false;
+            return  null;
         } else {
             predictor.setInputImage(image);
-            return  onRunModel();
+            if(onRunModel()){
+                return getModelRunResult();
+            }else{
+                return null;
+            }
         }
     }
 }
