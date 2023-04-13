@@ -6,9 +6,14 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.PixelFormat;
+import android.media.Image;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -42,10 +47,12 @@ public class ScreenCaptureService extends Service {
     private ScreenCapture mCapture;
     private OCRUtils mOcr;
 
+    ImageView imageView;
+    boolean flag = true;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-
         return null;
     }
 
@@ -90,6 +97,7 @@ public class ScreenCaptureService extends Service {
             public void onScreenCaptureSuccess(Bitmap bitmap) {
                 System.out.println(mPos[0]);
                 Bitmap res = Bitmap.createBitmap(bitmap, mPos[0],mPos[1],mPos[2],mPos[3]);
+                showBitmap(res);
                 String s = mOcr.setImgAndRunModel(res);
                 Log.i(TAG, s == null ? "null" : s);
                 EventBus.getDefault().post(new ScreenCaptureResultEvent(FloatWindowService.TAG, s,"screen capture" ,true));
@@ -101,6 +109,34 @@ public class ScreenCaptureService extends Service {
             }
         });
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    /**
+     * 调试使用
+     * @param bitmap
+     */
+    private void showBitmap(Bitmap bitmap){
+        if(flag) {
+            flag = false;
+            WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                params.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+            } else {
+                params.type = WindowManager.LayoutParams.TYPE_PHONE;
+            }
+            params.format = PixelFormat.RGBA_8888;
+            params.gravity = Gravity.RIGHT | Gravity.TOP;
+            params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+            params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+            params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+            WindowManager windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+            imageView = new ImageView(this);
+            imageView.setImageBitmap(bitmap);
+            windowManager.addView(imageView, params);
+        }else{
+            imageView.setImageBitmap(bitmap);
+        }
     }
 
     @Override
