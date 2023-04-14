@@ -7,9 +7,12 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
+import android.graphics.Rect;
 import android.media.Image;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.WindowManager;
@@ -87,15 +90,14 @@ public class ScreenCaptureService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         float[] data = (float[])intent.getExtras().get(FloatWindowService.BOX_TAG);
         mPos = new int[4];
-        mPos[0] = (int)data[0];
-        mPos[1] = (int)data[1];
-        mPos[2] = (int)(data[2] - data[0]);
-        mPos[3] = (int)(data[3] = data[1]);
-        Log.i(TAG, "bind");
+        mPos[0] = (int)Math.min(data[0], data[2]);
+        mPos[1] = (int)Math.min(data[1], data[3]) + getStatusBarHeight();
+        mPos[2] = (int)Math.abs(data[2] - data[0]);
+        mPos[3] = (int)Math.abs(data[3] - data[1]);
+        Log.i(TAG, "image pos :" + Arrays.toString(mPos));
         mCapture.setCaptureListener(new ScreenCapture.OnCaptureListener() {
             @Override
             public void onScreenCaptureSuccess(Bitmap bitmap) {
-                System.out.println(mPos[0]);
                 Bitmap res = Bitmap.createBitmap(bitmap, mPos[0],mPos[1],mPos[2],mPos[3]);
                 showBitmap(res);
                 String s = mOcr.setImgAndRunModel(res);
@@ -108,7 +110,18 @@ public class ScreenCaptureService extends Service {
                 Toast.makeText(getApplicationContext(), "获取屏幕信息失败", Toast.LENGTH_SHORT).show();
             }
         });
+
+
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 
     /**
@@ -116,27 +129,37 @@ public class ScreenCaptureService extends Service {
      * @param bitmap
      */
     private void showBitmap(Bitmap bitmap){
-        if(flag) {
-            flag = false;
-            WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                params.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
-            } else {
-                params.type = WindowManager.LayoutParams.TYPE_PHONE;
-            }
-            params.format = PixelFormat.RGBA_8888;
-            params.gravity = Gravity.RIGHT | Gravity.TOP;
-            params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-            params.width = WindowManager.LayoutParams.WRAP_CONTENT;
-            params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        Handler handler = new Handler(Looper.getMainLooper());
 
-            WindowManager windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-            imageView = new ImageView(this);
-            imageView.setImageBitmap(bitmap);
-            windowManager.addView(imageView, params);
-        }else{
-            imageView.setImageBitmap(bitmap);
-        }
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+
+                if(flag) {
+                    flag = false;
+                    WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        params.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+                    } else {
+                        params.type = WindowManager.LayoutParams.TYPE_PHONE;
+                    }
+                    params.format = PixelFormat.RGBA_8888;
+                    params.gravity = Gravity.RIGHT | Gravity.TOP;
+                    params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+                    params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+                    params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+                    WindowManager windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+                    imageView = new ImageView(getApplicationContext());
+
+                    windowManager.addView(imageView, params);
+
+                    imageView.setImageBitmap(bitmap);
+                }else{
+                    imageView.setImageBitmap(bitmap);
+                }
+            }
+        });
     }
 
     @Override

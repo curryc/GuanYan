@@ -14,6 +14,7 @@ import android.media.MediaCodecInfo;
 import android.media.MediaFormat;
 import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
+import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Surface;
@@ -92,7 +93,7 @@ public class ScreenCapture {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         mWindowManager.getDefaultDisplay().getMetrics(displayMetrics);
         mScreenDensity = displayMetrics.densityDpi;
-        mImageReader = ImageReader.newInstance(mWindowWidth, mWindowHeight, 0x1, 2);
+        mImageReader = ImageReader.newInstance(mWindowWidth, mWindowHeight, 0x1, 2); // 为了格式相同，此错误可以忽略
 
         mMediaProjectionManager = (MediaProjectionManager) mContext.
                 getSystemService(Context.MEDIA_PROJECTION_SERVICE);
@@ -174,7 +175,6 @@ public class ScreenCapture {
     @Subscribe(threadMode = ThreadMode.POSTING)
     public void handleEvent(BaseEvent event){
         if(event.getFlag().equals(TAG)){
-            System.out.println("hello world");
             if(event instanceof ScreenCaptureIntentEvent){
                 setUpMediaProjection(((ScreenCaptureIntentEvent) event).getResultCode(), ((ScreenCaptureIntentEvent) event).getData());
                 setUpVirtualDisplay();
