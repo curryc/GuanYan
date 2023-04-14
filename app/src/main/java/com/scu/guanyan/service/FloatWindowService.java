@@ -3,9 +3,7 @@ package com.scu.guanyan.service;
 import android.app.Service;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
-import android.graphics.PointF;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -29,11 +27,10 @@ import com.scu.guanyan.Receiver.MainProcessReceiver;
 import com.scu.guanyan.event.AudioEvent;
 import com.scu.guanyan.event.BaseEvent;
 import com.scu.guanyan.event.BoxSelectEvent;
+import com.scu.guanyan.event.ScreenCaptureResultEvent;
 import com.scu.guanyan.event.SignEvent;
-import com.scu.guanyan.utils.ORC.OCRUtils;
 import com.scu.guanyan.utils.audio.RealTimeWords;
 import com.scu.guanyan.utils.base.SharedPreferencesHelper;
-import com.scu.guanyan.utils.screen.ScreenCapture;
 import com.scu.guanyan.utils.sign.AvatarPaint;
 import com.scu.guanyan.utils.sign.SignPlayer;
 import com.scu.guanyan.utils.sign.SignTranslator;
@@ -62,7 +59,7 @@ public class FloatWindowService extends Service {
     }
 
     private final int INITIAL_WIDTH = 500;
-    private final int INITIAL_HEIGHT = 700;
+    private final int INITIAL_HEIGHT = 600;
     private final int INITIAL_X = 0;
     private final int INITIAL_Y = 900;
     private final int VIEW_CHECK_TIME_MILLIS = 2000;
@@ -256,6 +253,7 @@ public class FloatWindowService extends Service {
                     if (status == STATUS.RECORD_STOP) {
                         status = STATUS.SETTING;
                         mAudioUtils.destroy();
+                        ((ImageView)view).setImageResource(android.R.drawable.presence_video_online);
                         status = STATUS.CUT_STOP;
                     } else {
                         Toast.makeText(getApplicationContext(), "请先暂停录音", Toast.LENGTH_SHORT).show();
@@ -264,6 +262,7 @@ public class FloatWindowService extends Service {
                     if (status == STATUS.CUT_STOP) {
                         status = STATUS.SETTING;
                         mAudioUtils.destroy();
+                        ((ImageView)view).setImageResource(android.R.drawable.presence_audio_online);
                         status = STATUS.RECORD_STOP;
                     } else {
                         Toast.makeText(getApplicationContext(), "请先暂停录屏", Toast.LENGTH_SHORT).show();
@@ -279,7 +278,7 @@ public class FloatWindowService extends Service {
     }
 
     private View generateFullScreenView() {
-        View mView = LayoutInflater.from(this).inflate(R.layout.activity_drag_to_box, null);
+        View mView = LayoutInflater.from(this).inflate(R.layout.float_drag_to_box, null);
 
         mView.findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -335,6 +334,12 @@ public class FloatWindowService extends Service {
             } else if (event instanceof BoxSelectEvent) {
                 if (event.isOk()) {
                     this.mBox = ((BoxSelectEvent) event).getBox();
+                }
+            } else if(event instanceof ScreenCaptureResultEvent){
+                if(event.isOk()){
+                    Log.i(TAG, ((ScreenCaptureResultEvent)event).getData());
+                    mPainter.checkAndClear();
+                    mTranslator.translate(((ScreenCaptureResultEvent) event).getData());
                 }
             }
         }
@@ -393,7 +398,6 @@ public class FloatWindowService extends Service {
             return true;
         }
     }
-
 
     // Low Memory Unity
     @Override
@@ -458,9 +462,4 @@ public class FloatWindowService extends Service {
 
         android.os.Process.killProcess(android.os.Process.myPid());
     }
-
-
-    // TODO： OCR 文字识别转为手语
-    // TODO： 录音的通道改变
-
 }

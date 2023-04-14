@@ -5,13 +5,14 @@
     android:orientation="horizontal"
     android:background="@color/transparent">
     <FrameLayout
-        android:layout_width="200dp"
+        android:layout_width="160dp"
         android:layout_height="match_parent"
         android:id="@+id/sign">
     </FrameLayout>
     <LinearLayout
-        android:layout_width="50dp"
+        android:layout_width="35dp"
         android:id="@+id/right_menu"
+        android:background="@color/app_color"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
@@ -34,14 +35,14 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:id="@+id/setting"
-            android:src="@android:drawable/ic_menu_manage"
+            android:src="@android:drawable/ic_menu_crop"
             android:layout_gravity="center"/>
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:id="@+id/change"
-            android:src="@android:drawable/ic_menu_more"
+            android:src="@android:drawable/presence_audio_online"
             android:layout_gravity="center"/>
     </LinearLayout>
 </LinearLayout>

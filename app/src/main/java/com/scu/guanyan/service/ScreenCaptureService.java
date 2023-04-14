@@ -99,7 +99,7 @@ public class ScreenCaptureService extends Service {
             @Override
             public void onScreenCaptureSuccess(Bitmap bitmap) {
                 Bitmap res = Bitmap.createBitmap(bitmap, mPos[0],mPos[1],mPos[2],mPos[3]);
-                showBitmap(res);
+//                showBitmap(res);
                 String s = mOcr.setImgAndRunModel(res);
                 Log.i(TAG, s == null ? "null" : s);
                 EventBus.getDefault().post(new ScreenCaptureResultEvent(FloatWindowService.TAG, s,"screen capture" ,true));

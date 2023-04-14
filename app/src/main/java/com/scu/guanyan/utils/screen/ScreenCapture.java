@@ -39,12 +39,6 @@ import java.util.TimerTask;
  * @create: 2023/4/12 23:56
  * @description:
  **/
-
-/**
- * Created by panj on 2017/5/22.
- * Modify by jambestwick on 2021/10/05 fix record when close bug
- */
-
 public class ScreenCapture {
     public static final String TAG = ScreenCapture.class.getName();
     private final Context mContext;
@@ -56,7 +50,6 @@ public class ScreenCapture {
     private VirtualDisplay mVirtualDisplay;
     private WindowManager mWindowManager;
     private ImageReader mImageReader;
-    private Surface mSurface;
     private MediaCodec mMediaCodec;
 
     private MediaProjectionManager mMediaProjectionManager;
@@ -223,7 +216,6 @@ public class ScreenCapture {
             e.printStackTrace();
         }
         mMediaCodec.configure(mediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
-        mSurface = mMediaCodec.createInputSurface();
         mMediaCodec.start();
     }
 

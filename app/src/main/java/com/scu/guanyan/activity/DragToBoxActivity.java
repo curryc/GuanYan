@@ -1,12 +1,6 @@
 package com.scu.guanyan.activity;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.scu.guanyan.R;
 import com.scu.guanyan.base.BaseActivity;
@@ -21,7 +15,7 @@ public class DragToBoxActivity extends BaseActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_drag_to_box;
+        return R.layout.float_drag_to_box;
     }
 
     @Override

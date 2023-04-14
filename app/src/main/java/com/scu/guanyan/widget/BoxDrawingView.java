@@ -33,7 +33,7 @@ public class BoxDrawingView extends View {
         super(context, attrs);
 
         mBoxPaint = new Paint();
-        mBoxPaint.setColor(Color.RED);
+        mBoxPaint.setColor(0x11000000);
 
         mCurrentBox = new Box(new PointF(0,0));
         mCurrentBox.setCurrent(new PointF(0,0));

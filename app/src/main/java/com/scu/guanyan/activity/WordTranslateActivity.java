@@ -1,12 +1,8 @@
 package com.scu.guanyan.activity;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -15,7 +11,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,7 +36,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
 
 public class WordTranslateActivity extends BaseUnityActivity {
     private static String TAG = "TranslateActivity";
@@ -147,18 +141,12 @@ public class WordTranslateActivity extends BaseUnityActivity {
             @Override
             public void onClick(View view) {
                 if(!editMode) {
-//                    for (RoundDotButton bubble : mBubbles) {
-//                        bubble.showDot();.
-//                    }
                     for (int i = 0; i < mCommonWords.getChildCount(); i++) {
-                        mCommonWords.getChildAt(i).setBackground(getDrawable(R.drawable.round_rec_deep));
+                        mCommonWords.getChildAt(i).setBackground(getDrawable(R.drawable.round_rec_red));
                     }
                     mEdit.setText("点击气泡以删除");
                     editMode = true;
                 }else{
-//                    for (RoundDotButton bubble : mBubbles) {
-//                        bubble.hideDot();
-//                    }
                     for (int i = 0; i < mCommonWords.getChildCount(); i++) {
                         mCommonWords.getChildAt(i).setBackground(getDrawable(R.drawable.round_rec_variant));
                     }
@@ -172,7 +160,6 @@ public class WordTranslateActivity extends BaseUnityActivity {
         }
     }
 
-    // TODO： 删除一个bubble
     private RoundDotButton generateBubble(String text) {
         if (mBubbleParams == null) {
             mBubbleParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
@@ -226,7 +213,6 @@ public class WordTranslateActivity extends BaseUnityActivity {
             }
         }
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
