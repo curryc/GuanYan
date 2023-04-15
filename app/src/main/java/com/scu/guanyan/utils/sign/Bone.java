@@ -29,7 +29,7 @@ public class Bone {
     public String parentName;
     public int color;
     public float len;
-    private Vector3 initialPosition;
+    private Vector3 initialPosition = new Vector3(0,len,0);
 
     public Bone(float x,float y,float z) {
         worldPosition = new Vector3(x,y,z);
@@ -41,6 +41,9 @@ public class Bone {
         if (parent == null){
             localPosition = new Vector3(0,0,0);
             len = worldPosition.length();
+
+
+
             worldRotate = new Quaternion(1,0,0,0);
             localRotate = new Quaternion(1,0,0,0);
         }

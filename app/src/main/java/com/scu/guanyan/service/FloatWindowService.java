@@ -216,7 +216,7 @@ public class FloatWindowService extends Service {
         mSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (status == STATUS.RECORD || status == STATUS.RECORD_STOP) {
+//                if (status == STATUS.RECORD || status == STATUS.RECORD_STOP) {
 //                    if (status == STATUS.RECORD_STOP) {
 //                        status = STATUS.SETTING;
 //                        if (!mAudioChannel) {
@@ -232,14 +232,16 @@ public class FloatWindowService extends Service {
 //                    } else {
 //                        Toast.makeText(getApplicationContext(), "请先暂停录音", Toast.LENGTH_SHORT).show();
 //                    }
-                } else if (status == STATUS.CUT || status == STATUS.CUT_STOP) {
-                    if (status == STATUS.CUT_STOP) {
+//                } else
+                if (status == STATUS.CUT || status == STATUS.CUT_STOP) {
+                    if (status == STATUS.CUT_STOP || status == STATUS.RECORD_STOP) {
                         status = STATUS.SETTING;
                         windowManager.addView(generateFullScreenView(), getFullScreenLayoutParams());
                         status = STATUS.CUT_STOP;
                     } else {
-                        Toast.makeText(getApplicationContext(), "请先暂停录屏", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "请先暂停翻译", Toast.LENGTH_SHORT).show();
                     }
+
                 } else if (status == STATUS.SETTING) {
 
                 }
@@ -253,7 +255,7 @@ public class FloatWindowService extends Service {
                     if (status == STATUS.RECORD_STOP) {
                         status = STATUS.SETTING;
                         mAudioUtils.destroy();
-                        ((ImageView)view).setImageResource(android.R.drawable.presence_video_online);
+                        ((ImageView) view).setImageResource(android.R.drawable.presence_video_online);
                         status = STATUS.CUT_STOP;
                     } else {
                         Toast.makeText(getApplicationContext(), "请先暂停录音", Toast.LENGTH_SHORT).show();
@@ -262,7 +264,7 @@ public class FloatWindowService extends Service {
                     if (status == STATUS.CUT_STOP) {
                         status = STATUS.SETTING;
                         mAudioUtils.destroy();
-                        ((ImageView)view).setImageResource(android.R.drawable.presence_audio_online);
+                        ((ImageView) view).setImageResource(android.R.drawable.presence_audio_online);
                         status = STATUS.RECORD_STOP;
                     } else {
                         Toast.makeText(getApplicationContext(), "请先暂停录屏", Toast.LENGTH_SHORT).show();
@@ -335,8 +337,8 @@ public class FloatWindowService extends Service {
                 if (event.isOk()) {
                     this.mBox = ((BoxSelectEvent) event).getBox();
                 }
-            } else if(event instanceof ScreenCaptureResultEvent){
-                if(event.isOk()){
+            } else if (event instanceof ScreenCaptureResultEvent) {
+                if (event.isOk()) {
                     Log.i(TAG, ((ScreenCaptureResultEvent)event).getData());
                     mPainter.checkAndClear();
                     mTranslator.translate(((ScreenCaptureResultEvent) event).getData());
