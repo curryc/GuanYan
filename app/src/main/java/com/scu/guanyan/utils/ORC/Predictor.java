@@ -139,6 +139,7 @@ public class Predictor {
         // Run inference
         Date start = new Date();
         ArrayList<OcrResultModel> results = paddlePredictor.runImage(inputImage, detLongSize, run_det, run_cls, run_rec);
+        rawResultArray = (ArrayList<OcrResultModel>) results.clone();
         Date end = new Date();
         inferenceTime = (end.getTime() - start.getTime()) / (float) inferIterNum;
 
@@ -213,6 +214,10 @@ public class Predictor {
         }
         return results;
     }
+    protected ArrayList<OcrResultModel> rawResultArray;
+    public ArrayList<OcrResultModel> outputRawResult() {
+        return rawResultArray;
+    }
 
     private void drawResults(ArrayList<OcrResultModel> results) {
         StringBuffer outputResultSb = new StringBuffer("");
@@ -233,6 +238,7 @@ public class Predictor {
                 sb.append(" Cls: ").append(result.getClsLabel());
                 sb.append(",").append(result.getClsConfidence());
             }
+
             Log.i(TAG, sb.toString()); // show LOG in Logcat panel
             outputResultSb.append(i + 1).append(": ").append(sb.toString()).append("\n");
         }

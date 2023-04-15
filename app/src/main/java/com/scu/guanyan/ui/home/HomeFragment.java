@@ -24,6 +24,7 @@ import com.scu.guanyan.IAidlServiceToMain;
 import com.scu.guanyan.R;
 import com.scu.guanyan.activity.AudioTranslateActivity;
 import com.scu.guanyan.event.BaseEvent;
+import com.scu.guanyan.testActivity;
 import com.scu.guanyan.widget.DialogMessage;
 import com.scu.guanyan.base.BaseFragment;
 import com.scu.guanyan.base.ViewHolder;
@@ -64,6 +65,14 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView(ViewHolder viewHolder, View root) {
+        Button button=viewHolder.getViewById(R.id.button2);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), testActivity.class);
+                startActivity(intent);
+            }
+            });
         mWordTrans = viewHolder.getViewById(R.id.translate);
         mAudioTrans = viewHolder.getViewById(R.id.audio_trans);
         mFloatTrans = viewHolder.getViewById(R.id.floating_window);
