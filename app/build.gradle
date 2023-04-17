@@ -22,11 +22,7 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "arm64-v8a"
         }
-        python {
-            pip {
-                install "jieba"
-            }
-        }
+
         externalNativeBuild {
             cmake {
                 cppFlags "-std=c++11 -frtti -fexceptions -Wno-format"
@@ -88,6 +84,10 @@ dependencies {
 
     //unity
     implementation files('libs/guanyan-debug.aar')
+
+    //Jieba分词
+    implementation 'com.huaban:jieba-analysis:1.0.2'
+
 }
 
 
