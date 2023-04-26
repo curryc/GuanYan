@@ -64,6 +64,7 @@ public class WordTranslateActivity extends BaseUnityActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        SharedPreferencesHelper.putListString(this, BUBBLE_KEY, mBubbles);
     }
 
 
@@ -131,7 +132,7 @@ public class WordTranslateActivity extends BaseUnityActivity {
                         toastShort("Already In");
                     } else {
                         mCommonWords.addView(generateBubble(str));
-                        SharedPreferencesHelper.addListStringItem(WordTranslateActivity.this, BUBBLE_KEY, str);
+                        mBubbles.add(str);
                     }
                 }
             }
@@ -180,7 +181,6 @@ public class WordTranslateActivity extends BaseUnityActivity {
                     mBubbles.remove(index);
                     mCommonWords.removeViewAt(index);
                     mCommonWords.invalidate();
-                    SharedPreferencesHelper.delListStringItem(WordTranslateActivity.this, BUBBLE_KEY, ((TextView)view).getText().toString());
                 }
             }
         }, null);

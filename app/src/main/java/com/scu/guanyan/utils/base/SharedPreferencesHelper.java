@@ -9,7 +9,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.ImageView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -118,34 +122,40 @@ public class SharedPreferencesHelper {
      */
     public static void putListString(Context mContext, String key, List<String> list) {
         SharedPreferences.Editor editor = mContext.getSharedPreferences(FILE_NAME, MODE_PRIVATE).edit();
-        editor.putInt(key + "Nums", list.size());
-        for (int i = 0; i < list.size(); i++) {
-            editor.putString(key + "item_" + i, list.get(i));
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("size", list.size());
+            for (int i = 0; i < list.size(); i++) {
+                jsonObject.put(String.valueOf(i), list.get(i));
+            }
+            editor.putString(key, jsonObject.toString());
+            editor.apply();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        editor.apply();
     }
 
-    public static void addListStringItem(Context mContext, String key, String item) {
-        SharedPreferences.Editor editor = mContext.getSharedPreferences(FILE_NAME, MODE_PRIVATE).edit();
-        List items = getListString(mContext, key);
-        int size;
-        if (items == null) {
-            size = 0;
-            editor.putInt(key + "Nums", 1);
-        } else {
-            size = items.size();
-            editor.putInt(key + "Nums", size + 1);
-        }
-        editor.putString(key + "item_" + size, item);
-        editor.apply();
-    }
-
-    public static void delListStringItem(Context mContext, String key, String item) {
-        SharedPreferences.Editor editor = mContext.getSharedPreferences(FILE_NAME, MODE_PRIVATE).edit();
-        List items = getListString(mContext, key);
-        editor.putString(key + "item_" + items.indexOf(item), "");
-        editor.apply();
-    }
+//    public static void addListStringItem(Context mContext, String key, String item) {
+//        SharedPreferences.Editor editor = mContext.getSharedPreferences(FILE_NAME, MODE_PRIVATE).edit();
+//        List items = getListString(mContext, key);
+//        int size;
+//        if (items == null) {
+//            size = 0;
+//            editor.putInt(key + "Nums", 1);
+//        } else {
+//            size = items.size();
+//            editor.putInt(key + "Nums", size + 1);
+//        }
+//        editor.putString(key + "item_" + size, item);
+//        editor.apply();
+//    }
+//
+//    public static void delListStringItem(Context mContext, String key, String item) {
+//        SharedPreferences.Editor editor = mContext.getSharedPreferences(FILE_NAME, MODE_PRIVATE).edit();
+//        List items = getListString(mContext, key);
+//        editor.putString(key + "item_" + items.indexOf(item), "");
+//        editor.apply();
+//    }
 
     /**
      * 获取一个Object对象列表
@@ -156,12 +166,14 @@ public class SharedPreferencesHelper {
      */
     public static List<String> getListString(Context mContext, String key) {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(FILE_NAME, MODE_PRIVATE);
-        int nums = sharedPreferences.getInt(key + "Nums", 0);
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < nums; i++) {
-            String item = sharedPreferences.getString(key + "item_" + i, null);
-            if (item != null && item.length() > 0)
-                list.add(item);
+        List<String> list = new ArrayList();
+        try {
+            JSONObject jsonObject = new JSONObject(sharedPreferences.getString(key, " "));
+            for (int i = 0; i < jsonObject.getInt("size"); i++) {
+                list.add(jsonObject.getString(String.valueOf(i)));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         return list;
     }
