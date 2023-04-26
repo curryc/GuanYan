@@ -79,19 +79,20 @@
             android:exported="true"
             android:launchMode="singleInstance" />
         <activity
-            android:name=".activity.ScreenCaptureIntentActivity"
-            android:process=":float"
-            android:exported="false">
+                android:name=".activity.ScreenCaptureIntentActivity"
+                android:exported="false"
+                android:process=":float">
         </activity>
 
         <service
-            android:name=".service.FloatWindowService"
-            android:exported="true"
-            android:process=":float" />
-        <service android:name=".service.ScreenCaptureService"
-            android:process=":float"
-            android:foregroundServiceType="mediaProjection"
-            android:exported="true"/>
+                android:name=".service.FloatWindowService"
+                android:exported="true"
+                android:process=":float"/>
+        <service
+                android:name=".service.ScreenCaptureService"
+                android:exported="true"
+                android:foregroundServiceType="mediaProjection"
+                android:process=":float"/>
     </application>
 
 </manifest>

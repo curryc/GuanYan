@@ -5,22 +5,62 @@ import android.app.Activity;
 import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
 
+import com.huaban.analysis.jieba.JiebaSegmenter;
+import com.huaban.analysis.jieba.SegToken;
+import com.huaban.analysis.jieba.WordDictionary;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+
 /**
  * @author: 浦博威
  * @create: 2022-06-30 23:17
  * @description: python解释器，构造函数传入activity
  **/
 public class WordUtil {
+    JiebaSegmenter segmenter = new JiebaSegmenter();
+   public WordUtil(){
 
-   public WordUtil(Activity activity){
-       if (! Python.isStarted()) {
-           Python.start(new AndroidPlatform(activity));
+   }
+
+   public List<String> cut(String seq){
+       List<SegToken> segTokenList = segmenter.process(seq, JiebaSegmenter.SegMode.SEARCH);
+       List<String> strings=new ArrayList<>();
+       for(SegToken segToken: segTokenList){
+           strings.add(segToken.word);
        }
+       return  strings;
    }
 
-   public String cut(String seq){
-       Python py = Python.getInstance();
-       return py.getModule("lcut").callAttr("lcutseq",seq).toString();
+   public List<String> cutSpecial(String str){
+       List<String> list=cut(str);
+       List<String> result= new ArrayList<>();
+       String regex = "[\" ()]";
+       Pattern pattern = Pattern.compile(regex);
+       boolean add=false;
+       String tem="";
+       for(String s:list){
+           if(str.matches(regex)||strMatch(s)){
+               add=!add;
+               if(!add)
+                   result.add(tem);
+               result.add(s);
+               continue;
+           }
+           if(add){
+               tem=tem+s;
+           }
+           else {
+               result.add(s);
+               tem="";
+           }
+
+       }
+       return  result;
    }
+    public  boolean strMatch(String str) {
+        return str.equals("”") || str.equals("“") || str.equals("（") || str.equals("）");
+    }
 }
 

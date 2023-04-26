@@ -64,6 +64,14 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView(ViewHolder viewHolder, View root) {
+        Button button=viewHolder.getViewById(R.id.button2);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), testActivity.class);
+                startActivity(intent);
+            }
+            });
         mWordTrans = viewHolder.getViewById(R.id.translate);
         mAudioTrans = viewHolder.getViewById(R.id.audio_trans);
         mFloatTrans = viewHolder.getViewById(R.id.floating_window);

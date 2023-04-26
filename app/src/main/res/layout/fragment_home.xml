@@ -67,6 +67,10 @@
         android:visibility="invisible"
         android:src="@drawable/horizontal_line" />
 
+    <Button
+            android:text="test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/button2"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

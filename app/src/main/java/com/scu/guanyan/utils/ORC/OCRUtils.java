@@ -8,6 +8,9 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import com.scu.guanyan.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Description:  OCR的工具类，建议另起线程，传入context
  * @author: Pu Bowei
@@ -30,6 +33,7 @@ public class OCRUtils {
     public OCRUtils(Context context) {
         this.context=context;
         initSettings();
+        onLoadModel();
     }
 
     public void initSettings(){
@@ -89,7 +93,7 @@ public class OCRUtils {
      * @return:
      */
     public boolean onRunModel() {
-        return predictor.isLoaded() && predictor.runModel(1, 1, 0);
+        return predictor.isLoaded() && predictor.runModel(1, 0, 1);
     }
     /**
      * Description: 获取模型的当前输出
@@ -122,6 +126,21 @@ public class OCRUtils {
                 return null;
             }
         }
+    }
+
+    /**
+     * Description: 获取字符串
+     * @author: Pu Bowei
+     * @date: 2023/4/15 16:51
+     * @param:
+     * @return:
+     */
+    public List<String> getRawResult(){
+        List<String> str=new ArrayList<>();
+        for( OcrResultModel ocrResultModel:predictor.outputRawResult()){
+            str.add(ocrResultModel.getLabel());
+        }
+        return  str;
     }
 }
 
