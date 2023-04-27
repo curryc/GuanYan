@@ -56,7 +56,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:visibility="invisible"
         android:gravity="center|left"
         android:text="@string/common_words"
         android:textSize="15sp" />
@@ -64,12 +63,20 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="5dp"
-        android:visibility="invisible"
         android:src="@drawable/horizontal_line" />
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:visibility="invisible"
         android:layout_marginTop="@dimen/app_padding_mid"
-        android:layout_weight="12" />
+        android:layout_weight="12">
+        <Button
+            android:id="@+id/segment_trans"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/app_padding_mid"
+            android:layout_weight="1"
+            android:background="@drawable/round_rec_gradient_left_top"
+            android:textAppearance="@style/ButtonTextAppearance"
+            android:text="@string/float_trans" />
+    </LinearLayout>
 </LinearLayout>

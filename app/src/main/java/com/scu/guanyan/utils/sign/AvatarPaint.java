@@ -49,7 +49,7 @@ public class AvatarPaint {
     private boolean playing;
 
     private Timer mFrameCreator;
-    private Runnable mFrameCreatorThread;
+    private TimerTask mFrameCreatorThread;
     private SignPlayer mUnityPlayer;
 
     public AvatarPaint(SignPlayer player, int mode) {
@@ -61,6 +61,15 @@ public class AvatarPaint {
         this.mUnityPlayer = player;
         this.mMode = mode;
         this.mFrameCreator = new Timer();
+        this.mFrameCreatorThread = new TimerTask() {
+            @Override
+            public void run() {
+                if (!frameDataQueue.isEmpty()) {
+                    Log.i(TAG, "timer" + new Date().getTime());
+                    drawFrame(frameDataQueue.poll());
+                }
+            }
+        };
         this.playing = startup;
         if (startup) startAndPlay();
         init();
@@ -70,41 +79,14 @@ public class AvatarPaint {
         this.frameDataQueue.addAll(frameDataList);
     }
 
-    public synchronized void checkAndClear(){
+    public synchronized void checkAndClear() {
         if (mMode == GeneratorConstants.FLUSH_MODE) {
             this.frameDataQueue.clear();
         }
     }
 
     private void init() {
-//        mAnimatorThread = new Runnable() {
-//            @Override
-//            public void run() {
-//                if (!frameQueue.isEmpty()) {
-//                    Pair<HashMap, Integer> frameDataPair = frameQueue.poll();
-//                    for (String name : Avatar.boneNames){
-//                        Bone endBone = (Bone) frameDataPair.first.get(name);
-//                        String w = String.valueOf(endBone.worldRotate.w);
-//                        String x = String.valueOf(endBone.worldRotate.x);
-//                        String y = String.valueOf(endBone.worldRotate.y);
-//                        String z = String.valueOf(endBone.worldRotate.z);
-//                        mUnityPlayer.sendMessage("kong","rotates",endBone.parentName+"+"+w+"+"+x+"+"+y+"+"+z);
-//                    }
-//
-//                }
-//                mAnimator.post(this);
-//            }
-//        };
-//        mFrameCreatorThread = new Runnable() {
-//            @Override
-//            public void run() {
-//                if (!frameDataQueue.isEmpty()) {
-//                    drawFrame(frameDataQueue.poll());
-//                }
-//                mFrameCreator.postDelayed(this, 100);
-//            }
-//        };
-        mSpeed = 1000/(int)SharedPreferencesHelper.get(mContext, ANIM_SPEED, 30);
+        mSpeed = 1000 / (int) SharedPreferencesHelper.get(mContext, ANIM_SPEED, 30);
     }
 
 
@@ -129,15 +111,7 @@ public class AvatarPaint {
     }
 
     public void startAndPlay() {
-        mFrameCreator.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (!frameDataQueue.isEmpty()) {
-                    Log.e(TAG, "timer" + new Date().getTime());
-                    drawFrame(frameDataQueue.poll());
-                }
-            }
-        }, 100, mSpeed);
+        mFrameCreator.schedule(mFrameCreatorThread, 100, mSpeed);
 //        mAnimator.post(mAnimatorThread);
         setPlaying(true);
     }

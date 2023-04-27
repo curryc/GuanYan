@@ -37,28 +37,10 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_margin="4dp"
-            android:background="@drawable/round_rec"
-            android:textAppearance="@style/ButtonTextAppearance"
-            android:text="@string/edit"
-            android:id="@+id/edit"/>
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_margin="4dp"
-            android:background="@drawable/round_rec"
-            android:textAppearance="@style/ButtonTextAppearance"
-            android:text="@string/save"
-            android:id="@+id/save"/>
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
             android:layout_weight="2"
             android:layout_margin="4dp"
             android:background="@drawable/round_rec"
-            android:textAppearance="@style/ButtonTextAppearance"
+            android:textAppearance="@style/NormalTextAppearance"
             android:text="@string/submit"
             android:id="@+id/submit"/>
     </LinearLayout>
@@ -68,7 +50,7 @@
         <com.scu.guanyan.widget.FlowLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/common_words"/>
+            android:id="@+id/segment_words"/>
     </ScrollView>
 
 </LinearLayout>

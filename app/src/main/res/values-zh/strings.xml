@@ -7,6 +7,7 @@
     <string name="edit">编辑</string>
     <string name="tutorial">教程</string>
     <string name="setting">设置</string>
+    <string name="segment">分词</string>
 
     <string name="about_app">关于软件</string>
     <string name="more_setting">更多设置</string>
@@ -19,6 +20,7 @@
     <string name="audio_trans">实时翻译</string>
     <string name="word_trans">文字翻译</string>
     <string name="float_trans">悬浮翻译</string>
+    <string name="segment_trans">分词翻译</string>
     <string name="floating">关闭悬浮</string>
 
     <string name="begin_audio">开始</string>

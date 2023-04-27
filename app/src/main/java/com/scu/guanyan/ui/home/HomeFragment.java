@@ -23,6 +23,7 @@ import androidx.core.app.ActivityCompat;
 import com.scu.guanyan.IAidlServiceToMain;
 import com.scu.guanyan.R;
 import com.scu.guanyan.activity.AudioTranslateActivity;
+import com.scu.guanyan.activity.SegmentTranslateActivity;
 import com.scu.guanyan.event.BaseEvent;
 import com.scu.guanyan.widget.DialogMessage;
 import com.scu.guanyan.base.BaseFragment;
@@ -41,7 +42,7 @@ import org.greenrobot.eventbus.ThreadMode;
  **/
 public class HomeFragment extends BaseFragment {
     public static final String TAG = "homeFragment";
-    private Button mWordTrans, mAudioTrans, mFloatTrans;
+    private Button mWordTrans, mAudioTrans, mFloatTrans, mSegmentTrans;
     private int mFloatingFlag;// 0:未悬浮，1：悬浮手势， 2：悬浮文字
     private IAidlServiceToMain  mProxy;
 
@@ -64,17 +65,11 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView(ViewHolder viewHolder, View root) {
-        Button button=viewHolder.getViewById(R.id.button2);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), testActivity.class);
-                startActivity(intent);
-            }
-            });
         mWordTrans = viewHolder.getViewById(R.id.translate);
         mAudioTrans = viewHolder.getViewById(R.id.audio_trans);
         mFloatTrans = viewHolder.getViewById(R.id.floating_window);
+        mSegmentTrans = viewHolder.getViewById(R.id.segment_trans);
+
         mWordTrans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,6 +139,14 @@ public class HomeFragment extends BaseFragment {
                         e.printStackTrace();
                     }
                 }
+            }
+        });
+
+        mSegmentTrans.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SegmentTranslateActivity.class);
+                startActivity(intent);
             }
         });
     }

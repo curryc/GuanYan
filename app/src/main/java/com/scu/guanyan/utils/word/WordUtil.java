@@ -13,9 +13,13 @@ import java.util.regex.Pattern;
  * @description:
  **/
 public class WordUtil {
-    private static JiebaSegmenter mSegment = new JiebaSegmenter();
+    private JiebaSegmenter mSegment;
 
-    private static List<String> cut(String seq) {
+    public WordUtil(){
+        mSegment = new JiebaSegmenter();
+    }
+
+    private List<String> cut(String seq) {
         List<SegToken> segTokenList = mSegment.process(seq, JiebaSegmenter.SegMode.SEARCH);
         List<String> strings = new ArrayList<>();
         for (SegToken segToken : segTokenList) {
@@ -24,7 +28,7 @@ public class WordUtil {
         return strings;
     }
 
-    public static List<String> cutSpecial(String str) {
+    public List<String> cutSpecial(String str) {
         List<String> list = cut(str);
         List<String> result = new ArrayList<>();
         String regex = "[\" ()]";
@@ -50,7 +54,7 @@ public class WordUtil {
         return result;
     }
 
-    private static boolean strMatch(String str) {
+    private boolean strMatch(String str) {
         return str.equals("”") || str.equals("“") || str.equals("（") || str.equals("）");
     }
 }

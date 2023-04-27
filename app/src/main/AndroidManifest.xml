@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission
         android:name="android.permission.CAPTURE_AUDIO_OUTPUT"
         tools:ignore="ProtectedPermissions" />
@@ -79,20 +79,24 @@
             android:exported="true"
             android:launchMode="singleInstance" />
         <activity
-                android:name=".activity.ScreenCaptureIntentActivity"
-                android:exported="false"
-                android:process=":float">
+            android:name=".activity.ScreenCaptureIntentActivity"
+            android:exported="false"
+            android:process=":float"></activity>
+        <activity
+            android:name=".activity.SegmentTranslateActivity"
+            android:process=":segment"
+            android:exported="false">
         </activity>
 
         <service
-                android:name=".service.FloatWindowService"
-                android:exported="true"
-                android:process=":float"/>
+            android:name=".service.FloatWindowService"
+            android:exported="true"
+            android:process=":float" />
         <service
-                android:name=".service.ScreenCaptureService"
-                android:exported="true"
-                android:foregroundServiceType="mediaProjection"
-                android:process=":float"/>
+            android:name=".service.ScreenCaptureService"
+            android:exported="true"
+            android:foregroundServiceType="mediaProjection"
+            android:process=":float" />
     </application>
 
 </manifest>
