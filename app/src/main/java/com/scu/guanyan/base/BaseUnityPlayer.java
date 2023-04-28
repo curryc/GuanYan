@@ -33,7 +33,7 @@ public class BaseUnityPlayer extends UnityPlayer {
 
     @Override
     protected void kill() {
-//        android.os.Process.killProcess(android.os.Process.myPid());
+        android.os.Process.killProcess(android.os.Process.myPid());
         return;
     }
 

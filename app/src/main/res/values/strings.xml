@@ -26,6 +26,8 @@
     <string name="word_trans">Word Translate</string>
     <string name="float_trans">Float Translate</string>
     <string name="segment_trans">Segment Translate</string>
+    <string name="classical_trans">Classical words Translate</string>
+    <string name="sign_to_word_trans">Segment Translate</string>
     <string name="floating">Stop Floating</string>
 
     <string name="floating_permission">Draw Overlay Other APPs</string>

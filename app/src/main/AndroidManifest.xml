@@ -81,10 +81,18 @@
         <activity
             android:name=".activity.ScreenCaptureIntentActivity"
             android:exported="false"
-            android:process=":float"></activity>
+            android:process=":float" />
         <activity
             android:name=".activity.SegmentTranslateActivity"
-            android:process=":segment"
+            android:exported="false"
+            android:process=":segment" />
+        <activity
+            android:name=".activity.SignToWordsActivity"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".activity.ClassicalTranslateActivity"
+            android:process=":classical"
             android:exported="false">
         </activity>
 

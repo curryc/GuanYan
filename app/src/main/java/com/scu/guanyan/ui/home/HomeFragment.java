@@ -23,7 +23,9 @@ import androidx.core.app.ActivityCompat;
 import com.scu.guanyan.IAidlServiceToMain;
 import com.scu.guanyan.R;
 import com.scu.guanyan.activity.AudioTranslateActivity;
+import com.scu.guanyan.activity.ClassicalTranslateActivity;
 import com.scu.guanyan.activity.SegmentTranslateActivity;
+import com.scu.guanyan.activity.SignToWordsActivity;
 import com.scu.guanyan.event.BaseEvent;
 import com.scu.guanyan.widget.DialogMessage;
 import com.scu.guanyan.base.BaseFragment;
@@ -146,6 +148,22 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), SegmentTranslateActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        viewHolder.getViewById(R.id.classical_trans).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ClassicalTranslateActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        viewHolder.getViewById(R.id.sign_to_words_trans).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SignToWordsActivity.class);
                 startActivity(intent);
             }
         });

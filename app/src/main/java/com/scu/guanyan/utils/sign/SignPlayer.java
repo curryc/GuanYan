@@ -25,6 +25,7 @@ public class SignPlayer {
     private BaseUnityPlayer mUnityPlayer;
     private ViewGroup mContainer;
 
+
 //    private static SignPlayer sSignPlayers;
 
     public static SignPlayer with(Context context, ViewGroup parent){

@@ -57,8 +57,9 @@ public class FrameData {
 
     public void setMotionData(Map<String, float[]> motionData) {
         for (String k : motionData.keySet()) {
-
             this.motionData.put(k, new Quaternion(motionData.get(k)[0],
+
+
                     -motionData.get(k)[1],  // X-Axis Flip
                     motionData.get(k)[2],
                     motionData.get(k)[3]).normalize());

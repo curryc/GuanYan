@@ -27,6 +27,7 @@ android {
             cmake {
                 cppFlags "-std=c++11 -frtti -fexceptions -Wno-format"
                 arguments '-DANDROID_PLATFORM=android-23', '-DANDROID_STL=c++_shared' ,"-DANDROID_ARM_NEON=TRUE"
+
             }
         }
     }
