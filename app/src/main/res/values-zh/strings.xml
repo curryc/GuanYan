@@ -43,4 +43,15 @@
     <string name="introduce">一个简单但是高效的手语翻译工具</string>
     <string name="is_flash">Flash模式</string>
     <string name="fps">动画帧率</string>
+
+    <!-- NCNN -->
+    <string-array name="size_array">
+        <item>轻量</item>
+        <item>完整</item>
+        <item>重量</item>
+    </string-array>
+    <string-array name="cpugpu_array">
+        <item>CPU</item>
+        <item>GPU</item>
+    </string-array>
 </resources>

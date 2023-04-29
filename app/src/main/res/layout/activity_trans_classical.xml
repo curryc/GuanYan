@@ -46,12 +46,12 @@
     </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
-        android:visibility="invisible"
         android:layout_height="@dimen/text_area_height_big">
-        <com.scu.guanyan.widget.FlowLayout
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/common_words"/>
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:id="@+id/words"/>
     </ScrollView>
 
 </LinearLayout>

@@ -1,5 +1,7 @@
 package com.scu.guanyan.utils.base;
 
+import android.util.Log;
+
 import com.scu.guanyan.event.BaseEvent;
 import com.scu.guanyan.event.WebEvent;
 
@@ -8,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -24,12 +27,13 @@ import okhttp3.Response;
  * @description:
  **/
 public class Web {
-    private static final String POST_FEEDBACK = "http://1.117.68.73:8080";
+    private static final String POST_FEEDBACK = "http://1.117.68.73:8080/api/advice/creat";
     private static final String POST_CLASSICAL = "http://43.156.5.87:8888/api/gpt/";
+    private static final String POST_PREDICT = "http://1.117.68.73:8989/predict";
+
+    private static OkHttpClient sOkHttpClient = new OkHttpClient();
 
     public static void postFeedback(String flag, String quz, String advise, String name, String tel) throws JSONException {
-        OkHttpClient okHttpClient = new OkHttpClient();
-
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("name", name);
         jsonObject.put("connection", tel);
@@ -38,18 +42,18 @@ public class Web {
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
 
         Request request = new Request.Builder()
-                .url(POST_FEEDBACK + "/api/advice/creat")
+                .url(POST_FEEDBACK)
                 .addHeader("key", "value")
                 .post(requestBody)
                 .build();
 
-        okHttpClient.newCall(request).enqueue(new Callback() {
+        sOkHttpClient.newCall(request).enqueue(new Callback() {
 
             @Override
             public void onResponse(Call arg0, Response response) throws IOException {
                 try {
                     JSONObject ret = new JSONObject(response.body().string());
-                    BaseEvent event = new WebEvent(flag,ret.toString(), ret.getString("message"), ret.getInt("code") == 200);
+                    BaseEvent event = new WebEvent(flag, ret.toString(), ret.getString("message"), ret.getInt("code") == 200);
                     EventBus.getDefault().post(event);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -63,21 +67,21 @@ public class Web {
     }
 
     public static void postClassicalWords(String tag, String text) throws JSONException {
-        OkHttpClient okHttpClient = new OkHttpClient();
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), "");
 
         Request request = new Request.Builder()
                 .url(POST_CLASSICAL + text)
                 .addHeader("key", "value")
-                .post(null)
+                .post(requestBody)
                 .build();
 
-        okHttpClient.newCall(request).enqueue(new Callback() {
+        sOkHttpClient.newCall(request).enqueue(new Callback() {
 
             @Override
             public void onResponse(Call arg0, Response response) throws IOException {
                 try {
                     JSONObject ret = new JSONObject(response.body().string());
-                    BaseEvent event = new WebEvent(tag,ret.toString(), ret.getString("result"), ret.getInt("code") == 200);
+                    BaseEvent event = new WebEvent(tag, ret.toString(), ret.getString("result"), ret.getInt("code") == 200);
                     EventBus.getDefault().post(event);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -89,4 +93,37 @@ public class Web {
             }
         });
     }
+
+
+    public static void postPredictSign(String tag, float[][] points) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("data", Arrays.deepoString(points));
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
+
+        Request request = new Request.Builder()
+                .url(POST_PREDICT)
+                .addHeader("key", "value")
+                .post(requestBody)
+                .build();
+
+        sOkHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call arg0, Response response) throws IOException {
+                try {
+                    Log.i("'hello", response.body().string());
+                    JSONObject ret = new JSONObject(response.body().string());
+                    BaseEvent event = new WebEvent(tag, ret.toString(), ret.getString("predict"), ret.getInt("code") == 200);
+                    EventBus.getDefault().post(event);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call arg0, IOException arg1) {
+            }
+        });
+    }
+
 }

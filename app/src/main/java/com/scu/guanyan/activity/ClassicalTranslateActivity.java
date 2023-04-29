@@ -37,6 +37,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,7 @@ public class ClassicalTranslateActivity extends BaseUnityActivity {
     private int READ_PHONE_STATE_CODE = 0x001;
 
     private EditText mEditText;
+    private TextView mTextView;
     private Button mSubmit;
     private String mFirstWord;
 
@@ -99,6 +101,7 @@ public class ClassicalTranslateActivity extends BaseUnityActivity {
     protected void initOtherViews() {
         mEditText = findViewById(R.id.input);
         mSubmit = findViewById(R.id.submit);
+        mTextView = findViewById(R.id.words);
 
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,13 +120,13 @@ public class ClassicalTranslateActivity extends BaseUnityActivity {
     public void handleData(BaseEvent event) {
         if (event.getFlag().equals(TAG)) {
             if (event instanceof SignEvent) {
-//                toastShort("" + ((SignEvent) event).getFrames().size());
                 if (event.isOk()) {
                     mPainter.addFrameDataList(((SignEvent) event).getFrames());
                 } else {
                     Log.e(TAG, event.getMsg());
                 }
             }else if(event instanceof WebEvent){
+                mTextView.setText(((WebEvent) event).getMsg());
                 translate(((WebEvent) event).getMsg());
                 if (!mPainter.isPlaying()) {
                     mPainter.startAndPlay();
