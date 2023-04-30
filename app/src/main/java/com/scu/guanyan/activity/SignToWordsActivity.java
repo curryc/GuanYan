@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.scu.guanyan.R;
 import com.scu.guanyan.base.BaseActivity;
@@ -41,6 +42,7 @@ public class SignToWordsActivity extends BaseActivity {
     private int current_cpugpu = 0;
 
     private SurfaceView cameraView;
+    private TextView mResultText;
     private String mResultString;
 
     private float[][] mFrames = new float[50][34];
@@ -66,8 +68,8 @@ public class SignToWordsActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        mResultText = findViewById(R.id.result_text);
 
         cameraView = (SurfaceView) findViewById(R.id.cameraview);
         cameraView.getHolder().setFormat(PixelFormat.RGBA_8888);
@@ -132,7 +134,8 @@ public class SignToWordsActivity extends BaseActivity {
     public void handleData(BaseEvent event){
         if(event.getFlag().equals(TAG)){
             if(event instanceof WebEvent){
-                mResultString = ((WebEvent) event).getData();
+                mResultString = ((WebEvent) event).getMsg();
+                mResultText.setText(mResultString);
             }
         }
     }

@@ -5,12 +5,14 @@ import android.util.Log;
 import com.scu.guanyan.event.BaseEvent;
 import com.scu.guanyan.event.WebEvent;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -97,7 +99,8 @@ public class Web {
 
     public static void postPredictSign(String tag, float[][] points) throws JSONException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("data", Arrays.deepoString(points));
+
+        jsonObject.put("data", Arrays.deepToString(points));
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
 
@@ -111,9 +114,12 @@ public class Web {
             @Override
             public void onResponse(Call arg0, Response response) throws IOException {
                 try {
-                    Log.i("'hello", response.body().string());
-                    JSONObject ret = new JSONObject(response.body().string());
-                    BaseEvent event = new WebEvent(tag, ret.toString(), ret.getString("predict"), ret.getInt("code") == 200);
+                    String s = response.body().string();// response.body()不能使用两次？cbw
+                    Log.i("hello", s);
+                    String decodedJson = StringEscapeUtils.unescapeJava(s);
+                    Log.i("hello", decodedJson);
+                    JSONObject ret = new JSONObject(decodedJson);
+                    BaseEvent event = new WebEvent(tag, ret.toString(), ret.getString("prediction"), true);
                     EventBus.getDefault().post(event);
                 } catch (JSONException e) {
                     e.printStackTrace();
