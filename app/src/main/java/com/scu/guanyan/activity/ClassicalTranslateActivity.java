@@ -1,7 +1,6 @@
 package com.scu.guanyan.activity;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,17 +28,11 @@ import com.scu.guanyan.utils.base.Web;
 import com.scu.guanyan.utils.sign.AvatarPaint;
 import com.scu.guanyan.utils.sign.SignPlayer;
 import com.scu.guanyan.utils.sign.SignTranslator;
-import com.scu.guanyan.widget.FlowLayout;
-import com.scu.guanyan.widget.RoundDotButton;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ClassicalTranslateActivity extends BaseUnityActivity {
     private static String TAG = "classicalTranslateActivity";
@@ -107,6 +99,7 @@ public class ClassicalTranslateActivity extends BaseUnityActivity {
             @Override
             public void onClick(View view) {
                 try {
+                    mUnityPlayer.loading();
                     Web.postClassicalWords(TAG, mEditText.getText().toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -121,6 +114,7 @@ public class ClassicalTranslateActivity extends BaseUnityActivity {
         if (event.getFlag().equals(TAG)) {
             if (event instanceof SignEvent) {
                 if (event.isOk()) {
+                    mUnityPlayer.prepare();
                     mPainter.addFrameDataList(((SignEvent) event).getFrames());
                 } else {
                     Log.e(TAG, event.getMsg());

@@ -3,15 +3,17 @@ package com.scu.guanyan.utils.sign;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.scu.guanyan.R;
 import com.scu.guanyan.base.BaseUnityPlayer;
 import com.unity3d.player.UnityPlayer;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @program: Guanyan
@@ -25,20 +27,11 @@ public class SignPlayer {
     private BaseUnityPlayer mUnityPlayer;
     private ViewGroup mContainer;
 
-
-//    private static SignPlayer sSignPlayers;
+    private ImageView mLoading;
 
     public static SignPlayer with(Context context, ViewGroup parent){
         SignPlayer player;
-//        if(sSignPlayers == null) {
-//            sSignPlayers = new ArrayList<>();
-//        }else{
-//            for (SignPlayer p : sSignPlayers) {
-//                if(p.getContainer().getId() == parent.getId()) return p;
-//            }
-//        }
         player = new SignPlayer(context, parent);
-//        sSignPlayers.add(player);
         return player;
     }
 
@@ -52,6 +45,19 @@ public class SignPlayer {
         mUnityPlayer = new BaseUnityPlayer(context);
         container.addView(mUnityPlayer.getView());
         mUnityPlayer.setFocusable(false);
+        mLoading = new ImageView(context);
+        Glide.with(context).load(R.drawable.origin_loading).into(mLoading);
+        mLoading.setVisibility(View.INVISIBLE);
+        ViewGroup.LayoutParams params = new FrameLayout.LayoutParams(120, 120, Gravity.TOP|Gravity.LEFT);
+        container.addView(mLoading, params);
+    }
+
+    public void loading(){
+        mLoading.setVisibility(View.VISIBLE);
+    }
+
+    public void prepare(){
+        mLoading.setVisibility(View.INVISIBLE);
     }
 
     public SignPlayer(Context context){
