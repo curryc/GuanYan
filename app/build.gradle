@@ -59,6 +59,11 @@ android {
             debuggable true
         }
     }
+    configurations {
+        all { // wtf：Duplicate class okio.AsyncTimeout found in modules
+            exclude group: "com.squareup.okio", module: "okio"
+        }
+    }
     externalNativeBuild {
         cmake {
             path "src/main/ocr/CMakeLists.txt"
@@ -85,7 +90,7 @@ dependencies {
     implementation 'com.huawei.hms:signpal-signpalgeneration-sdk:1.5.0.300'
 
     //unity
-    implementation files('libs/guanyan-debug.aar')
+    implementation project(':unity')
 
     //Jieba分词
     implementation 'com.huaban:jieba-analysis:1.0.2'

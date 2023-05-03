@@ -15,4 +15,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Guanyan"
-include ':app', 'unityLibrary'
+include ':app'
+include ':unity'
