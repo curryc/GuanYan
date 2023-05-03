@@ -1,0 +1,131 @@
+-- Merging decision tree log ---
+manifest
+ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:2:1-32:12
+INJECTED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:2:1-32:12
+INJECTED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:2:1-32:12
+	package
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:2:70-95
+		INJECTED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml
+		INJECTED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml
+	xmlns:tools
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:2:96-142
+	xmlns:android
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:2:11-69
+	android:installLocation
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:2:143-183
+supports-screens
+ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:3:3-163
+	android:largeScreens
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:3:78-105
+	android:smallScreens
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:3:21-48
+	android:normalScreens
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:3:49-77
+	android:xlargeScreens
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:3:106-134
+	android:anyDensity
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:3:135-160
+application
+ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:4:3-25:17
+	android:label
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:7:7-39
+	android:icon
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:6:7-38
+	android:theme
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:5:7-48
+activity#com.scu.guanyan.UnityPlayerActivity
+ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:8:5-17:16
+	android:screenOrientation
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:9:9-47
+	android:label
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:8:15-47
+	android:launchMode
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:10:9-40
+	android:hardwareAccelerated
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:12:9-44
+	android:configChanges
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:11:9-190
+	android:name
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:13:9-59
+meta-data#unityplayer.UnityActivity
+ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:15:7-82
+	android:value
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:15:59-79
+	android:name
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:15:18-58
+meta-data#android.notch_support
+ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:16:7-78
+	android:value
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:16:55-75
+	android:name
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:16:18-54
+meta-data#unity.build-id
+ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:18:5-101
+	android:value
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:18:46-98
+	android:name
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:18:16-45
+meta-data#unity.splash-mode
+ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:19:5-69
+	android:value
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:19:49-66
+	android:name
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:19:16-48
+meta-data#unity.splash-enable
+ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:20:5-74
+	android:value
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:20:51-71
+	android:name
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:20:16-50
+meta-data#notch.config
+ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:21:5-81
+	android:value
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:21:44-78
+	android:name
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:21:16-43
+uses-feature#0x00020000
+ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:26:3-52
+	android:glEsVersion
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:26:17-49
+uses-feature#android.hardware.vulkan
+ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:27:3-83
+	android:required
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:27:56-80
+	android:name
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:27:17-55
+uses-permission#android.permission.INTERNET
+ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:28:3-65
+	android:name
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:28:20-62
+uses-feature#android.hardware.touchscreen
+ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:29:3-88
+	android:required
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:29:61-85
+	android:name
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:29:17-60
+uses-feature#android.hardware.touchscreen.multitouch
+ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:30:3-99
+	android:required
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:30:72-96
+	android:name
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:30:17-71
+uses-feature#android.hardware.touchscreen.multitouch.distinct
+ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:31:3-108
+	android:required
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:31:81-105
+	android:name
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:31:17-80
+uses-sdk
+INJECTED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml
+INJECTED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml
+INJECTED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml
+INJECTED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml
+		INJECTED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml
+		ADDED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml
+		INJECTED from E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml

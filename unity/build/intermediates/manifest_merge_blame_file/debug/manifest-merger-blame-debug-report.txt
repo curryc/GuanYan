@@ -1,0 +1,121 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    xmlns:tools="http://schemas.android.com/tools"
+4    package="com.scu.guanyan"
+5    android:installLocation="preferExternal" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+8-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="32" />
+9-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml
+10
+11    <supports-screens
+11-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:3:3-163
+12        android:anyDensity="true"
+12-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:3:135-160
+13        android:largeScreens="true"
+13-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:3:78-105
+14        android:normalScreens="true"
+14-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:3:49-77
+15        android:smallScreens="true"
+15-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:3:21-48
+16        android:xlargeScreens="true" />
+16-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:3:106-134
+17
+18    <uses-feature android:glEsVersion="0x00020000" />
+18-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:26:3-52
+18-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:26:17-49
+19    <uses-feature
+19-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:27:3-83
+20        android:name="android.hardware.vulkan"
+20-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:27:17-55
+21        android:required="false" />
+21-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:27:56-80
+22
+23    <uses-permission android:name="android.permission.INTERNET" />
+23-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:28:3-65
+23-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:28:20-62
+24
+25    <uses-feature
+25-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:29:3-88
+26        android:name="android.hardware.touchscreen"
+26-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:29:17-60
+27        android:required="false" />
+27-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:29:61-85
+28    <uses-feature
+28-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:30:3-99
+29        android:name="android.hardware.touchscreen.multitouch"
+29-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:30:17-71
+30        android:required="false" />
+30-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:30:72-96
+31    <uses-feature
+31-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:31:3-108
+32        android:name="android.hardware.touchscreen.multitouch.distinct"
+32-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:31:17-80
+33        android:required="false" />
+33-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:31:81-105
+34
+35    <application
+35-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:4:3-25:17
+36        android:icon="@mipmap/app_icon"
+36-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:6:7-38
+37        android:label="@string/app_name"
+37-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:7:7-39
+38        android:theme="@style/UnityThemeSelector" >
+38-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:5:7-48
+39        <activity
+39-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:8:5-17:16
+40            android:name="com.scu.guanyan.UnityPlayerActivity"
+40-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:13:9-59
+41            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale|layoutDirection|density"
+41-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:11:9-190
+42            android:hardwareAccelerated="false"
+42-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:12:9-44
+43            android:label="@string/app_name"
+43-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:8:15-47
+44            android:launchMode="singleTask"
+44-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:10:9-40
+45            android:screenOrientation="fullSensor" >
+45-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:9:9-47
+46            <meta-data
+46-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:15:7-82
+47                android:name="unityplayer.UnityActivity"
+47-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:15:18-58
+48                android:value="true" />
+48-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:15:59-79
+49            <meta-data
+49-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:16:7-78
+50                android:name="android.notch_support"
+50-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:16:18-54
+51                android:value="true" />
+51-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:16:55-75
+52        </activity>
+53
+54        <meta-data
+54-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:18:5-101
+55            android:name="unity.build-id"
+55-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:18:16-45
+56            android:value="4cc9bd8d-9ead-4d12-a963-52c70c0006ae" />
+56-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:18:46-98
+57        <meta-data
+57-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:19:5-69
+58            android:name="unity.splash-mode"
+58-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:19:16-48
+59            android:value="0" />
+59-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:19:49-66
+60        <meta-data
+60-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:20:5-74
+61            android:name="unity.splash-enable"
+61-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:20:16-50
+62            android:value="True" />
+62-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:20:51-71
+63        <meta-data
+63-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:21:5-81
+64            android:name="notch.config"
+64-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:21:16-43
+65            android:value="portrait|landscape" />
+65-->E:\Program\Android\Projects\GuanYan\unity\src\main\AndroidManifest.xml:21:44-78
+66    </application>
+67
+68</manifest>
