@@ -78,7 +78,7 @@ public class FloatWindowService extends Service {
     private boolean mAudioChannel; // true内部，false外部
     private IBinder mBinder;
     private BoxDrawingView.Box mBox;
-    private String mResult;
+    private String mResult = "";
 
     private Intent mScreenCaptureServiceIntent;
 
