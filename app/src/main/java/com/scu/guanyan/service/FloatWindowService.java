@@ -1,7 +1,9 @@
 package com.scu.guanyan.service;
 
+import android.Manifest;
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Build;
@@ -20,9 +22,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+
 import com.huawei.hms.signpal.GeneratorConstants;
 import com.scu.guanyan.IAidlServiceToMain;
 import com.scu.guanyan.R;
+import com.scu.guanyan.activity.AudioTranslateActivity;
 import com.scu.guanyan.receiver.MainProcessReceiver;
 import com.scu.guanyan.event.AudioEvent;
 import com.scu.guanyan.event.BaseEvent;
@@ -30,6 +35,7 @@ import com.scu.guanyan.event.BoxSelectEvent;
 import com.scu.guanyan.event.ScreenCaptureResultEvent;
 import com.scu.guanyan.event.SignEvent;
 import com.scu.guanyan.utils.audio.RealTimeWords;
+import com.scu.guanyan.utils.base.PermissionUtils;
 import com.scu.guanyan.utils.base.SharedPreferencesHelper;
 import com.scu.guanyan.utils.sign.AvatarPaint;
 import com.scu.guanyan.utils.sign.SignPlayer;
@@ -75,7 +81,6 @@ public class FloatWindowService extends Service {
     private SignPlayer mUnityPlayer;
     private ImageView mControl, mSetting;
     private LinearLayout mRight;
-    private boolean mAudioChannel; // true内部，false外部
     private IBinder mBinder;
     private BoxDrawingView.Box mBox;
     private String mResult = "";
@@ -105,7 +110,6 @@ public class FloatWindowService extends Service {
         status = STATUS.RECORD_STOP;
         mBinder = new SignBinder();
         mAudioUtils = new RealTimeWords(this, TAG);
-        mAudioChannel = false;
         mTranslator = new SignTranslator(this, TAG, (int) SharedPreferencesHelper.get(this, SignTranslator.FLASH_KEY, GeneratorConstants.FLUSH_MODE));
 
         mHandler = new Handler(Looper.myLooper());
@@ -340,7 +344,7 @@ public class FloatWindowService extends Service {
                 }
             } else if (event instanceof ScreenCaptureResultEvent) {
                 if (event.isOk() && !mResult.equals(((ScreenCaptureResultEvent) event).getData())) {
-                    Log.i(TAG, ((ScreenCaptureResultEvent)event).getData());
+                    Log.i(TAG, ((ScreenCaptureResultEvent) event).getData());
                     mPainter.checkAndClear();
                     mResult = ((ScreenCaptureResultEvent) event).getData();
                     mTranslator.translate(mResult);

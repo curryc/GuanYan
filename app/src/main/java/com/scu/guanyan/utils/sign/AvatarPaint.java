@@ -17,14 +17,8 @@
 package com.scu.guanyan.utils.sign;
 
 import android.content.Context;
-import android.graphics.*;
-import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
-import android.util.Pair;
 
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Queue;
 import java.util.Timer;
@@ -65,7 +59,6 @@ public class AvatarPaint {
             @Override
             public void run() {
                 if (!frameDataQueue.isEmpty()) {
-                    Log.i(TAG, "timer" + new Date().getTime());
                     drawFrame(frameDataQueue.poll());
                 }
             }

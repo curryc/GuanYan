@@ -76,13 +76,7 @@ target_link_libraries(
         ${log-lib}
 )
 
-add_custom_command(
-        TARGET Native
-        POST_BUILD
-        COMMAND
-        ${CMAKE_COMMAND} -E copy
-        ${PaddleLite_DIR}/cxx/libs/${ANDROID_ABI}/libc++_shared.so
-        ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libc++_shared.so)
+
 
 add_custom_command(
         TARGET Native

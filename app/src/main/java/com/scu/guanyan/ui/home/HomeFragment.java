@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
@@ -27,6 +28,7 @@ import com.scu.guanyan.activity.ClassicalTranslateActivity;
 import com.scu.guanyan.activity.SegmentTranslateActivity;
 import com.scu.guanyan.activity.SignToWordsActivity;
 import com.scu.guanyan.event.BaseEvent;
+import com.scu.guanyan.utils.base.PermissionUtils;
 import com.scu.guanyan.widget.DialogMessage;
 import com.scu.guanyan.base.BaseFragment;
 import com.scu.guanyan.base.ViewHolder;
@@ -44,6 +46,8 @@ import org.greenrobot.eventbus.ThreadMode;
  **/
 public class HomeFragment extends BaseFragment {
     public static final String TAG = "homeFragment";
+    private static final int REQUEST_CODE = 0x2;
+
     private Button mWordTrans, mAudioTrans, mFloatTrans, mSegmentTrans;
     private int mFloatingFlag;// 0:未悬浮，1：悬浮手势， 2：悬浮文字
     private IAidlServiceToMain  mProxy;
@@ -101,12 +105,20 @@ public class HomeFragment extends BaseFragment {
                     }
 
                     if (canFloat) {
-                        getActivity().startService(new Intent(getActivity(), FloatWindowService.class));
-                        getActivity().bindService(new Intent(getContext(), FloatWindowService.class), new SignConnection(), Context.BIND_AUTO_CREATE);
 
-                        // 设置状态
-                        mFloatingFlag = 1;
-                        mFloatTrans.setText(getResources().getText(R.string.floating));
+
+                        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED &&
+                                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
+                        ) {
+                            getActivity().startService(new Intent(getActivity(), FloatWindowService.class));
+                            getActivity().bindService(new Intent(getContext(), FloatWindowService.class), new SignConnection(), Context.BIND_AUTO_CREATE);
+
+                            // 设置状态
+                            mFloatingFlag = 1;
+                            mFloatTrans.setText(getResources().getText(R.string.floating));
+                        }else{
+                            PermissionUtils.checkPermissionFirst(getActivity(), REQUEST_CODE, new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.RECORD_AUDIO});
+                        }
                     } else {
                         DialogMessage dialog = new DialogMessage(getContext());
                         dialog.setTitle(getString(R.string.floating_permission));
