@@ -46,7 +46,7 @@ public abstract class BaseUnityActivity extends BaseActivity {
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             if (msg.what == -1 && !destroyFlag) {
-                destroyAll();
+//                destroyAll();
                 destroyFlag = true;
                 BaseUnityActivity.this.finish();
 
@@ -65,15 +65,15 @@ public abstract class BaseUnityActivity extends BaseActivity {
 
 
     // Quit Unity
-    @Override
-    protected void onDestroy() {
-        if (mUnityPlayer != null) {
-            mUnityPlayer.destroy();
-        }
-        System.gc();
-        super.onDestroy();
-
-    }
+//    @Override
+//    protected void onDestroy() {
+//        if (mUnityPlayer != null) {
+//            mUnityPlayer.destroy();
+//        }
+//        System.gc();
+//        super.onDestroy();
+//
+//    }
 
     @Override
     protected void onStop() {
@@ -93,9 +93,6 @@ public abstract class BaseUnityActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         resumeTime = System.currentTimeMillis();
-        if (mUnityPlayer == null) {
-            mUnityPlayer = new SignPlayer(this);
-        }
         mUnityPlayer.resume();
 
         addOnTurnBackListener(new TurnBackListener() {

@@ -7,8 +7,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
-import android.graphics.Rect;
-import android.media.Image;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
@@ -23,11 +21,9 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.scu.guanyan.R;
-import com.scu.guanyan.event.BaseEvent;
 import com.scu.guanyan.event.ScreenCaptureResultEvent;
 import com.scu.guanyan.utils.ORC.OCRUtils;
 import com.scu.guanyan.utils.screen.ScreenCapture;
-import com.scu.guanyan.widget.BoxDrawingView;
 
 import org.greenrobot.eventbus.EventBus;
 

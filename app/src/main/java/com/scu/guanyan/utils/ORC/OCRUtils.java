@@ -3,9 +3,8 @@ package com.scu.guanyan.utils.ORC;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.preference.PreferenceManager;
-import android.view.View;
+
 import com.scu.guanyan.R;
 
 import java.util.ArrayList;

@@ -23,7 +23,7 @@ import android.widget.Toast;
 import com.huawei.hms.signpal.GeneratorConstants;
 import com.scu.guanyan.IAidlServiceToMain;
 import com.scu.guanyan.R;
-import com.scu.guanyan.Receiver.MainProcessReceiver;
+import com.scu.guanyan.receiver.MainProcessReceiver;
 import com.scu.guanyan.event.AudioEvent;
 import com.scu.guanyan.event.BaseEvent;
 import com.scu.guanyan.event.BoxSelectEvent;
@@ -78,6 +78,7 @@ public class FloatWindowService extends Service {
     private boolean mAudioChannel; // true内部，false外部
     private IBinder mBinder;
     private BoxDrawingView.Box mBox;
+    private String mResult;
 
     private Intent mScreenCaptureServiceIntent;
 
@@ -338,10 +339,11 @@ public class FloatWindowService extends Service {
                     this.mBox = ((BoxSelectEvent) event).getBox();
                 }
             } else if (event instanceof ScreenCaptureResultEvent) {
-                if (event.isOk()) {
+                if (event.isOk() && !mResult.equals(((ScreenCaptureResultEvent) event).getData())) {
                     Log.i(TAG, ((ScreenCaptureResultEvent)event).getData());
                     mPainter.checkAndClear();
-                    mTranslator.translate(((ScreenCaptureResultEvent) event).getData());
+                    mResult = ((ScreenCaptureResultEvent) event).getData();
+                    mTranslator.translate(mResult);
                 }
             }
         }

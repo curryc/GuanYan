@@ -28,11 +28,35 @@ public class SignPlayer {
     private ViewGroup mContainer;
 
     private ImageView mLoading;
+    private static SignPlayer sSignPlayer;
 
     public static SignPlayer with(Context context, ViewGroup parent){
-        SignPlayer player;
-        player = new SignPlayer(context, parent);
-        return player;
+        if(sSignPlayer == null){
+            sSignPlayer = new SignPlayer(context, parent);
+        }else{
+            sSignPlayer.setContainer(parent);
+        }
+        return sSignPlayer;
+    }
+
+    public SignPlayer setContainer(ViewGroup container){
+        if(container.equals(mContainer)){
+            return this;
+        }
+        View mView = mUnityPlayer.getView();
+//        mContainer.removeView(mView);
+        ((ViewGroup)mView.getParent()).removeView(mView);
+        mContainer = container;
+        mContext = container.getContext();
+        container.addView(mView);
+        mUnityPlayer.requestFocus();
+
+        mLoading = new ImageView(container.getContext());
+        Glide.with(container.getContext()).load(R.drawable.origin_loading).into(mLoading);
+        mLoading.setVisibility(View.INVISIBLE);
+        ViewGroup.LayoutParams params = new FrameLayout.LayoutParams(120, 120, Gravity.TOP|Gravity.LEFT);
+        container.addView(mLoading, params);
+        return this;
     }
 
     public ViewGroup getContainer(){
@@ -60,18 +84,11 @@ public class SignPlayer {
         mLoading.setVisibility(View.INVISIBLE);
     }
 
-    public SignPlayer(Context context){
+    private SignPlayer(Context context){
         mContext = context;
         mUnityPlayer = new BaseUnityPlayer(mContext);
     }
 
-    public SignPlayer setContainer(ViewGroup container){
-        mContainer = container;
-        View mView = mUnityPlayer.getView();
-        container.addView(mView);
-        mUnityPlayer.requestFocus();
-        return this;
-    }
 
     /**
      * 向模型发送消息
@@ -105,9 +122,6 @@ public class SignPlayer {
         mUnityPlayer.resume();
         mUnityPlayer.postInvalidate();
     }
-//    public void init(){
-//        mUnityPlayer.init(UnityPlayer.currentActivity);
-//    }
     public void destroy(){
         Log.i("Guanyan", "signplayer  destroyed");
         mUnityPlayer.destroy();
