@@ -24,7 +24,7 @@
         android:layout_height="@dimen/button_size_mid"
         android:id="@+id/back"
         app:fabCustomSize="@dimen/button_size_mid"
-        android:src="@android:drawable/ic_menu_delete"
+        android:src="@drawable/smaller"
         android:layout_marginLeft="@dimen/app_padding_mid"
         android:layout_marginTop="@dimen/app_padding_mid" />
 </FrameLayout>
