@@ -21,13 +21,16 @@ import com.scu.guanyan.event.BaseEvent;
 import com.scu.guanyan.event.WebEvent;
 import com.scu.guanyan.utils.base.Web;
 import com.scu.guanyan.utils.ncnn.BlazePoseNcnn;
+import com.scu.guanyan.widget.PressedTimerButton;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class SignToWordsActivity extends BaseActivity {
     private static String TAG = "SignToWordsActivity";
@@ -45,9 +48,13 @@ public class SignToWordsActivity extends BaseActivity {
     private TextView mResultText;
     private String mResultString;
 
-    private float[][] mFrames = new float[50][34];
+    //    private float[][] mFrames = new float[50][34];
+//private int mFrameIndex = 0;
     private long mSendTime;
-    private int mFrameIndex = 0;
+    private List<float[]> mFrames = new ArrayList<>();
+
+    private boolean mRecording = false;
+    private PressedTimerButton mTimerButton;
 
     @Override
     protected int getLayoutId() {
@@ -113,6 +120,20 @@ public class SignToWordsActivity extends BaseActivity {
             }
         });
 
+        mTimerButton = findViewById(R.id.timer_button);
+        mTimerButton.setTimeInterval(10 * 1000);
+
+        findViewById(R.id.submit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    Web.postPredictSign(TAG, mFrames.toArray(new float[mFrames.size()][]));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         spinnerCPUGPU = (Spinner) findViewById(R.id.spinnerCPUGPU);
         spinnerCPUGPU.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -131,9 +152,9 @@ public class SignToWordsActivity extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void handleData(BaseEvent event){
-        if(event.getFlag().equals(TAG)){
-            if(event instanceof WebEvent){
+    public void handleData(BaseEvent event) {
+        if (event.getFlag().equals(TAG)) {
+            if (event instanceof WebEvent) {
                 mResultString = ((WebEvent) event).getMsg();
                 mResultText.setText(mResultString);
             }
@@ -161,22 +182,29 @@ public class SignToWordsActivity extends BaseActivity {
             @Override
             public void onKeptsReceived(float[][][] points) {
                 long time = System.currentTimeMillis();
-                if (points != null && points.length > 0 && points[0].length>23 && points[0][0].length>1 && time - mSendTime > 100) {
+                if (mRecording && points != null && points.length > 0 && points[0].length > 23 && points[0][0].length > 1 && time - mSendTime > 100) {
                     mSendTime = time;
-                    mFrames[mFrameIndex] = generate(points[0]);
-                    mFrameIndex++;
-                    if(mFrameIndex == 50){
-                        try {
-                            Web.postPredictSign(TAG,mFrames);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }finally {
-                            mFrameIndex = 0;
-                        }
-                    }
+                    mFrames.add(generate(points[0]));
+//                    mFrameIndex++;
+//                    if(mFrameIndex == 50){
+//                        try {
+//                            Web.postPredictSign(TAG,mFrames);
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }finally {
+//                            mFrameIndex = 0;
+//                        }
+//                    }
                 }
             }
         });
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        blazeposencnn.closeCamera();
     }
 
     private void printArray(float[][] points) {
@@ -239,9 +267,4 @@ public class SignToWordsActivity extends BaseActivity {
         return target;
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        blazeposencnn.closeCamera();
-    }
 }

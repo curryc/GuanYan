@@ -12,7 +12,7 @@
         <SurfaceView
             android:id="@+id/cameraview"
             android:layout_width="match_parent"
-            android:layout_weight="3"
+            android:layout_weight="5"
             android:layout_height="0dp" />
         <TextView
             android:layout_width="match_parent"
@@ -21,6 +21,37 @@
             android:textSize="20sp"
             android:layout_height="0dp"
             android:id="@+id/result_text"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/buttonSwitchCamera"
+                android:padding="3dp"
+                android:layout_centerVertical="true"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/switch_camera"/>
+
+            <com.scu.guanyan.widget.PressedTimerButton
+                android:id="@+id/timer_button"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@id/buttonSwitchCamera" />
+            <ImageView
+                android:id="@+id/submit"
+                android:padding="3dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/timer_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/right"/>
+
+        </RelativeLayout>
     </LinearLayout>
 
 
@@ -45,16 +76,5 @@
             android:entries="@array/cpugpu_array" />
 
     </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="@dimen/button_size_mid"
-        android:layout_height="@dimen/button_size_mid"
-        android:id="@+id/buttonSwitchCamera"
-        app:fabCustomSize="@dimen/button_size_mid"
-        android:layout_gravity="right|bottom"
-        android:layout_marginRight="@dimen/app_padding_mid"
-        android:layout_marginBottom="@dimen/app_padding_mid"
-        android:src="@android:drawable/ic_popup_sync"
-        android:backgroundTint="@color/app_color" />
 
 </FrameLayout>
