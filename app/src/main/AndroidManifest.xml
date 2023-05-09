@@ -24,6 +24,7 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         tools:replace="android:icon, android:theme"
+        android:screenOrientation="portrait"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -38,10 +39,10 @@
 
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
-
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
@@ -79,22 +80,27 @@
         <activity
             android:name=".activity.DragToBoxActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:launchMode="singleInstance" />
         <activity
             android:name=".activity.ScreenCaptureIntentActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:process=":float" />
         <activity
             android:name=".activity.SegmentTranslateActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:process=":segment" />
         <activity
             android:name=".activity.SignToWordsActivity"
+            android:screenOrientation="portrait"
             android:exported="false">
         </activity>
         <activity
             android:name=".activity.ClassicalTranslateActivity"
             android:process=":classical"
+            android:screenOrientation="portrait"
             android:exported="false">
         </activity>
 
