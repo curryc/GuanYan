@@ -1,0 +1,8 @@
+com.scu.guanyan.test.unity-androidTest-0 E:\Program\Android\Projects\GuanYan\unity\build\generated\res\resValues\androidTest\debug
+com.scu.guanyan.test.unity-androidTest-1 E:\Program\Android\Projects\GuanYan\unity\build\generated\res\rs\androidTest\debug
+com.scu.guanyan.test.unity-mergeDebugAndroidTestResources-2 E:\Program\Android\Projects\GuanYan\unity\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+com.scu.guanyan.test.unity-mergeDebugAndroidTestResources-3 E:\Program\Android\Projects\GuanYan\unity\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+com.scu.guanyan.test.unity-merged_res-4 E:\Program\Android\Projects\GuanYan\unity\build\intermediates\merged_res\debugAndroidTest
+com.scu.guanyan.test.unity-packaged_res-5 E:\Program\Android\Projects\GuanYan\unity\build\intermediates\packaged_res\debug
+com.scu.guanyan.test.unity-androidTest-6 E:\Program\Android\Projects\GuanYan\unity\src\androidTest\res
+com.scu.guanyan.test.unity-androidTestDebug-7 E:\Program\Android\Projects\GuanYan\unity\src\androidTestDebug\res

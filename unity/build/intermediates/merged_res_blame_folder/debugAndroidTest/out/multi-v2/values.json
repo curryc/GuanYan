@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.scu.guanyan.test.unity-mergeDebugAndroidTestResources-2:/values/values.xml",
+            "map": [
+                {
+                    "source": "E:\\Program\\Android\\Projects\\GuanYan\\unity\\build\\intermediates\\packaged_res\\debug\\values\\values.xml",
+                    "from": {
+                        "startLines": "2,3,5,8",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,100,200,338",
+                        "endLines": "2,4,7,11",
+                        "endColumns": "44,8,8,8",
+                        "endOffsets": "95,195,333,560"
+                    }
+                }
+            ]
+        }
+    ]
+}
