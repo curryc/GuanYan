@@ -29,7 +29,7 @@ public class Bone {
     public String parentName;
     public int color;
     public float len;
-    private Vector3 initialPosition = new Vector3(0,len,0);
+    private Vector3 initialPosition;
 
     public Bone(float x,float y,float z) {
         worldPosition = new Vector3(x,y,z);
@@ -41,9 +41,6 @@ public class Bone {
         if (parent == null){
             localPosition = new Vector3(0,0,0);
             len = worldPosition.length();
-
-
-
             worldRotate = new Quaternion(1,0,0,0);
             localRotate = new Quaternion(1,0,0,0);
         }
@@ -56,6 +53,8 @@ public class Bone {
     }
 
     public void setRotate(Quaternion localRotate, Bone parent) {
+        if(initialPosition==null)
+            initialPosition = new Vector3(0,len,0); // The initial position of the object when the rotation angle is 0.
         if (parent==null) {
             this.localRotate = localRotate;
             this.worldRotate = localRotate;

@@ -100,8 +100,8 @@ public class WordTranslateActivity extends BaseUnityActivity {
 //            mUnityPlayer.pause();
 //            mUnityPlayer.stop();
 //        }
-        mUnityPlayer.destroy();
-        mUnityPlayer = null;
+//        mUnityPlayer.destroy();
+//        mUnityPlayer = null;
         System.gc();
     }
 

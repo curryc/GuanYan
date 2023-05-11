@@ -121,7 +121,7 @@ public class SignToWordsActivity extends BaseActivity {
         });
 
         mTimerButton = findViewById(R.id.timer_button);
-        mTimerButton.setTimeInterval(10 * 1000);
+        mTimerButton.setTimeInterval(10 * 10000);
 
         findViewById(R.id.submit).setOnClickListener(new View.OnClickListener() {
             @Override

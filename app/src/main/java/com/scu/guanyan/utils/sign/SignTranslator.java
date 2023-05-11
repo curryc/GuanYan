@@ -37,7 +37,7 @@ public class SignTranslator {
     private String apiKEY = "DAEDAKyby4AgjiQeVTi5JI4MP/pU9g7YZeCRaD3qXyLI1ckglxYM0Wavtg3RZ0fbKUpsLYoPVXJk4V6rDzfiD4xZ78loPchRlWXfWQ==";
     private String TAG = "signTranslate";
 
-    public static final String FLASH_KEY =  "flash_or_not";
+    public static final String FLASH_KEY = "flash_or_not";
 
     private long mStartTime, mCostTime;
     private SignGenerator mSignGenerator;
@@ -68,7 +68,7 @@ public class SignTranslator {
         mSignGenerator.setCallback(callback);
     }
 
-    public SignTranslator(Context context, Handler handler){
+    public SignTranslator(Context context, Handler handler) {
         this(context, "", GeneratorConstants.QUEUE_MODE);
 //        mHandler = handler;
     }
@@ -106,6 +106,7 @@ public class SignTranslator {
                 frameData.setFrameIdx(i);
                 frameDataList.add(frameData);
             }
+            Log.i(TAG, "frame size:" + frameDataList.size());
             EventBus.getDefault().post(new SignEvent(mFlag, "available", true, frameDataList));
 //            Message msg = new Message();
 //            msg.obj = new SignEvent(mFlag, "available", true, frameDataList);

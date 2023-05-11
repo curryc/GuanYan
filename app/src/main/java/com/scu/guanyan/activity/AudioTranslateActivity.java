@@ -15,7 +15,6 @@ import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.scu.guanyan.R;
-import com.scu.guanyan.base.BaseActivity;
 import com.scu.guanyan.base.BaseUnityActivity;
 import com.scu.guanyan.event.AudioEvent;
 import com.scu.guanyan.event.BaseEvent;

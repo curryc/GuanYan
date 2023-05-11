@@ -17,12 +17,12 @@
 package com.scu.guanyan.utils.sign;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.text.TextUtils;
 
 import java.util.List;
 import java.util.Queue;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import static com.scu.guanyan.utils.sign.Avatar.boneMap;
@@ -35,15 +35,17 @@ public class AvatarPaint {
     private final static String TAG = "AvatarPaint";
     public final static String ANIM_SPEED = "anim_speed_key";
 
-    private Queue<FrameData> frameDataQueue = new ConcurrentLinkedQueue<>();
+    private Queue<FrameData> mFrameDataQueue = new ConcurrentLinkedQueue<>();
+    private Queue<Integer> mFrameDrawQueue = new ConcurrentLinkedQueue<>();
 
     private Context mContext;
     private int mSpeed;
     private int mMode;
     private boolean playing;
 
-    private Timer mFrameCreator;
-    private TimerTask mFrameCreatorThread;
+    private Handler mFrameCreator,mFrameDrawer;
+    private HandlerThread mFrameCreatorThread;
+    private Runnable mFrameCreatorTask,mFrameDrawerTask;
     private SignPlayer mUnityPlayer;
 
     public AvatarPaint(SignPlayer player, int mode) {
@@ -54,36 +56,68 @@ public class AvatarPaint {
         this.mContext = player.getContext();
         this.mUnityPlayer = player;
         this.mMode = mode;
-        this.mFrameCreator = new Timer();
-        this.mFrameCreatorThread = new TimerTask() {
-            @Override
-            public void run() {
-                if (!frameDataQueue.isEmpty()) {
-                    drawFrame(frameDataQueue.poll());
-                }
-            }
-        };
+        this.mFrameCreatorThread = new HandlerThread("frame creator");
+        mFrameCreatorThread.start();
+        this.mFrameCreator = new Handler(mFrameCreatorThread.getLooper());
+        this.mFrameDrawer = new Handler(mFrameCreatorThread.getLooper());
         this.playing = startup;
         if (startup) startAndPlay();
         init();
     }
 
     public synchronized void addFrameDataList(List<FrameData> frameDataList) {
-        this.frameDataQueue.addAll(frameDataList);
+        this.mFrameDataQueue.addAll(frameDataList);
     }
 
-    public synchronized void checkAndClear() {
+    public synchronized void checkAndClear(){
         if (mMode == GeneratorConstants.FLUSH_MODE) {
-            this.frameDataQueue.clear();
+            this.mFrameDataQueue.clear();
         }
     }
 
     private void init() {
-        mSpeed = 1000 / (int) SharedPreferencesHelper.get(mContext, ANIM_SPEED, 30);
+        mSpeed = 1000/(int)SharedPreferencesHelper.get(mContext, ANIM_SPEED, 30);
+        mFrameCreatorTask = new Runnable() {
+            @Override
+            public void run() {
+                if (!mFrameDataQueue.isEmpty()) {
+                    createFrame(mFrameDataQueue.poll());
+                }
+                mFrameCreator.postDelayed(this,mSpeed);
+            }
+        };
+        mFrameDrawerTask = new Runnable() {
+            @Override
+            public void run() {
+                if(!mFrameDrawQueue.isEmpty()){
+                    drawFrame(mFrameDrawQueue.poll());
+                }
+                mFrameDrawer.post(this);
+            }
+        };
+    }
+
+    private  synchronized void drawFrame(int faceType){
+        for (String name : Avatar.boneNames){
+            Bone endBone = boneMap.get(name);
+            String w = String.valueOf(endBone.worldRotate.w);
+            String x = String.valueOf(endBone.worldRotate.x);
+            String y = String.valueOf(endBone.worldRotate.y);
+            String z = String.valueOf(endBone.worldRotate.z);
+
+            if(!(endBone.worldRotate.w == 1.0f &&
+                    endBone.worldRotate.x == 0.0f&&
+                    endBone.worldRotate.y == 0.0f &&
+                    endBone.worldRotate.z == 0.0f)) {
+
+                mUnityPlayer.sendMessage("kong", "rotates", endBone.parentName + "+" + w + "+" + x + "+" + y + "+" + z);
+            }
+            //Log.v(TAG,endBone.parentName+"+"+endBone.name+"+"+w+"+"+x+"+"+y+"+"+z);
+        }
     }
 
 
-    public synchronized void drawFrame(FrameData data) {
+    private synchronized void createFrame(FrameData data) {
         for (String name : Avatar.boneNames) {
             Bone endBone = boneMap.get(name);
             if (TextUtils.isEmpty(endBone.parentName)) {
@@ -91,33 +125,28 @@ public class AvatarPaint {
             }
             Bone startBone = boneMap.get(endBone.parentName);
 
-            String w = String.valueOf(endBone.worldRotate.w);
-            String x = String.valueOf(endBone.worldRotate.x);
-            String y = String.valueOf(endBone.worldRotate.y);
-            String z = String.valueOf(endBone.worldRotate.z);
-            mUnityPlayer.sendMessage("kong", "rotates", endBone.parentName + "+" + w + "+" + x + "+" + y + "+" + z);
-
             // draw bone
             endBone.setRotate(data.getDataByBoneName(startBone.name), startBone);
             boneMap.put(name, endBone); // update endBone pose
         }
+        mFrameDrawQueue.offer(data.getFaceType());
     }
 
     public void startAndPlay() {
-        mFrameCreator.schedule(mFrameCreatorThread, 100, mSpeed);
-//        mAnimator.post(mAnimatorThread);
-        setPlaying(true);
+        if(!playing) {
+            mFrameCreator.post(mFrameCreatorTask);
+            mFrameDrawer.post(mFrameDrawerTask);
+            setPlaying(true);
+        }
     }
 
 
     public void destroy() {
-        mFrameCreator.cancel();
+        mFrameCreator.removeCallbacks(mFrameCreatorTask);
+        mFrameDrawer.removeCallbacks(mFrameDrawerTask);
         mFrameCreator = null;
-//        frameDataQueue.clear();
-        frameDataQueue = null;
-        mContext = null;
+        mFrameDrawer = null;
         setPlaying(false);
-//        mAnimator.removeCallbacks(mAnimatorThread);
     }
 
     public boolean isPlaying() {

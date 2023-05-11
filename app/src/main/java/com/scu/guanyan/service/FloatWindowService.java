@@ -1,9 +1,7 @@
 package com.scu.guanyan.service;
 
-import android.Manifest;
 import android.app.Service;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Build;
@@ -22,12 +20,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import androidx.core.app.ActivityCompat;
-
 import com.huawei.hms.signpal.GeneratorConstants;
 import com.scu.guanyan.IAidlServiceToMain;
 import com.scu.guanyan.R;
-import com.scu.guanyan.activity.AudioTranslateActivity;
 import com.scu.guanyan.receiver.MainProcessReceiver;
 import com.scu.guanyan.event.AudioEvent;
 import com.scu.guanyan.event.BaseEvent;
@@ -35,7 +30,6 @@ import com.scu.guanyan.event.BoxSelectEvent;
 import com.scu.guanyan.event.ScreenCaptureResultEvent;
 import com.scu.guanyan.event.SignEvent;
 import com.scu.guanyan.utils.audio.RealTimeWords;
-import com.scu.guanyan.utils.base.PermissionUtils;
 import com.scu.guanyan.utils.base.SharedPreferencesHelper;
 import com.scu.guanyan.utils.sign.AvatarPaint;
 import com.scu.guanyan.utils.sign.SignPlayer;
