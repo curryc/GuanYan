@@ -73,8 +73,8 @@ public class AudioTranslateActivity extends BaseUnityActivity {
 //            mUnityPlayer.pause();
 //            mUnityPlayer.stop();
 //        }
-//        mUnityPlayer.destroy();
-//        mUnityPlayer = null;
+        mUnityPlayer.destroy();
+        mUnityPlayer = null;
         ((ViewGroup)findViewById(getUnityContainerId())).removeView(mUnityPlayer.getView());
         mAudioUtils = null;
         System.gc();

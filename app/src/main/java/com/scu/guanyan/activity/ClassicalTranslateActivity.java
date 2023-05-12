@@ -85,8 +85,8 @@ public class ClassicalTranslateActivity extends BaseUnityActivity {
 //            mUnityPlayer.pause();
 //            mUnityPlayer.stop();
 //        }
-//        mUnityPlayer.destroy();
-//        mUnityPlayer = null;
+        mUnityPlayer.destroy();
+        mUnityPlayer = null;
         ((ViewGroup)findViewById(getUnityContainerId())).removeView(mUnityPlayer.getView());
         System.gc();
     }

@@ -79,7 +79,7 @@ public class WordTranslateActivity extends BaseUnityActivity {
         mBubbles = new ArrayList<>();
 
         mTranslator = new SignTranslator(this, TAG, (int) SharedPreferencesHelper.get(this, SignTranslator.FLASH_KEY, GeneratorConstants.FLUSH_MODE));
-//        mUnityPlayer = SignPlayer.with(this, findViewById(R.id.sign));
+        mUnityPlayer = SignPlayer.with(this, findViewById(R.id.sign));
         mPainter = new AvatarPaint(mUnityPlayer, mTranslator.getMode());
         mBubbles = SharedPreferencesHelper.getListString(this, BUBBLE_KEY);
     }
@@ -100,8 +100,8 @@ public class WordTranslateActivity extends BaseUnityActivity {
 //            mUnityPlayer.pause();
 //            mUnityPlayer.stop();
 //        }
-//        mUnityPlayer.destroy();
-//        mUnityPlayer = null;
+        mUnityPlayer.destroy();
+        mUnityPlayer = null;
 //        ((ViewGroup)findViewById(getUnityContainerId())).removeView(mUnityPlayer.getView());
         System.gc();
     }

@@ -59,8 +59,8 @@ public abstract class BaseUnityActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
 //        mContainer.removeView(mUnityPlayer.getView());
-        destroyAll();
-        System.gc();
+//        destroyAll();
+//        System.gc();
         super.onDestroy();
 
     }
@@ -79,33 +79,35 @@ public abstract class BaseUnityActivity extends BaseActivity {
         resumeTime = System.currentTimeMillis();
         mUnityPlayer.resume();
 
-//        addOnTurnBackListener(new TurnBackListener() {
-//            @Override
-//            public boolean onTurnBack() {
-////                mHandler.sendEmptyMessage(-1);
-//                mHandler.post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        // 想要流畅，直接上这个
-////                        android.os.Process.killProcess(android.os.Process.myPid());
+        addOnTurnBackListener(new TurnBackListener() {
+            @Override
+            public boolean onTurnBack() {
+//                mHandler.sendEmptyMessage(-1);
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        // 想要流畅，直接上这个
+                        android.os.Process.killProcess(android.os.Process.myPid());
 //                        if (!destroyFlag && System.currentTimeMillis() - resumeTime < 2000) {
 //                            destroyAll();
 //                            destroyFlag = true;
 //                            BaseUnityActivity.this.finish();
 //                        } else {
+//                            destroyAll();
+//                            destroyFlag = true;
 //                            finish();
 //                        }
-//                    }
-//                });
-//                return true;
-//            }
-//        });
+                    }
+                });
+                return true;
+            }
+        });
     }
 
     @Override
     protected void initData() {
         mContainer = findViewById(getUnityContainerId());
-        if (mUnityPlayer == null) mUnityPlayer = SignPlayer.with(this, mContainer);
+//        if (mUnityPlayer == null) mUnityPlayer = SignPlayer.with(this, mContainer);
         super.initData();
     }
 

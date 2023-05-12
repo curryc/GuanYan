@@ -11,6 +11,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.bumptech.glide.Glide;
 import com.scu.guanyan.R;
 import com.scu.guanyan.base.BaseUnityPlayer;
@@ -39,21 +41,19 @@ public class SignPlayer {
 
     private List<Integer> mContainerIds;
 
-    public static SignPlayer with(Context context, ViewGroup parent) {
-        Log.i("sign player", parent.getId() + "/"+String.valueOf(sSignPlayer==null));
-        if (sSignPlayer == null) {
-            Log.i("sign player", "created");
-            sSignPlayer = new SignPlayer(context, parent);
-        } else {
-            sSignPlayer.setContainer(parent);
-        }
-        return (SignPlayer) sSignPlayer;
+    public static SignPlayer with(Context context, @NonNull ViewGroup parent) {
+//        Log.i("sign player", parent.getId() + "/"+String.valueOf(sSignPlayer==null));
+//        if (sSignPlayer == null) {
+//            Log.i("sign player", "created");
+//            sSignPlayer = new SignPlayer(context, parent);
+//        } else {
+//            sSignPlayer.setContainer(parent);
+//        }
+        return new SignPlayer(context, parent);
     }
 
-    public SignPlayer setContainer(ViewGroup container) {
-        mUnityPlayer.init(mUnityPlayer.getSettings().getInt("gles_mode", 1), false);
+    public SignPlayer setContainer(@NonNull ViewGroup container) {
         View mView = mUnityPlayer.getView();
-        mUnityPlayer.resume();
         mContainerIds.add(container.getId());
 //        mContainer.removeView(mView);
         if (mView.getParent() != null) {
@@ -77,20 +77,9 @@ public class SignPlayer {
     }
 
     private SignPlayer(Context context, ViewGroup container) {
-        mContext = context;
-        mContainer = container;
-        mContainerIds = new ArrayList<>();
-        mContainerIds.add(mContainer.getId());
         mUnityPlayer = new BaseUnityPlayer(context);
-        container.addView(mUnityPlayer.getView());
-
-
-        mUnityPlayer.setFocusable(false);
-        mLoading = new ImageView(context);
-        Glide.with(context).load(R.drawable.origin_loading).into(mLoading);
-        mLoading.setVisibility(View.INVISIBLE);
-        ViewGroup.LayoutParams params = new FrameLayout.LayoutParams(120, 120, Gravity.TOP | Gravity.LEFT);
-        container.addView(mLoading, params);
+        mContainerIds = new ArrayList<>();
+        setContainer(container);
     }
 
     public void loading() {
@@ -146,7 +135,7 @@ public class SignPlayer {
     }
 
     public void destroy() {
-        Log.i("Guanyan", "signplayer  destroyed");
+        Log.i("Guanyan", "sign player  destroyed");
         mUnityPlayer.destroy();
     }
 

@@ -43,9 +43,9 @@ public class AvatarPaint {
     private int mMode;
     private boolean playing;
 
-    private Handler mFrameCreator,mFrameDrawer;
+    private Handler mFrameCreator, mFrameDrawer;
     private HandlerThread mFrameCreatorThread;
-    private Runnable mFrameCreatorTask,mFrameDrawerTask;
+    private Runnable mFrameCreatorTask, mFrameDrawerTask;
     private SignPlayer mUnityPlayer;
 
     public AvatarPaint(SignPlayer player, int mode) {
@@ -69,44 +69,46 @@ public class AvatarPaint {
         this.mFrameDataQueue.addAll(frameDataList);
     }
 
-    public synchronized void checkAndClear(){
+    public synchronized void checkAndClear() {
         if (mMode == GeneratorConstants.FLUSH_MODE) {
             this.mFrameDataQueue.clear();
         }
     }
 
     private void init() {
-        mSpeed = 1000/(int)SharedPreferencesHelper.get(mContext, ANIM_SPEED, 30);
+        mSpeed = 1000 / (int) SharedPreferencesHelper.get(mContext, ANIM_SPEED, 30);
         mFrameCreatorTask = new Runnable() {
             @Override
             public void run() {
                 if (!mFrameDataQueue.isEmpty()) {
                     createFrame(mFrameDataQueue.poll());
                 }
-                mFrameCreator.postDelayed(this,mSpeed);
+                if (mFrameCreator != null)
+                    mFrameCreator.postDelayed(this, mSpeed);
             }
         };
         mFrameDrawerTask = new Runnable() {
             @Override
             public void run() {
-                if(!mFrameDrawQueue.isEmpty()){
+                if (!mFrameDrawQueue.isEmpty()) {
                     drawFrame(mFrameDrawQueue.poll());
                 }
-                mFrameDrawer.post(this);
+                if (mFrameDrawer != null)
+                    mFrameDrawer.post(this);
             }
         };
     }
 
-    private  synchronized void drawFrame(int faceType){
-        for (String name : Avatar.boneNames){
+    private synchronized void drawFrame(int faceType) {
+        for (String name : Avatar.boneNames) {
             Bone endBone = boneMap.get(name);
             String w = String.valueOf(endBone.worldRotate.w);
             String x = String.valueOf(endBone.worldRotate.x);
             String y = String.valueOf(endBone.worldRotate.y);
             String z = String.valueOf(endBone.worldRotate.z);
 
-            if(!(endBone.worldRotate.w == 1.0f &&
-                    endBone.worldRotate.x == 0.0f&&
+            if (!(endBone.worldRotate.w == 1.0f &&
+                    endBone.worldRotate.x == 0.0f &&
                     endBone.worldRotate.y == 0.0f &&
                     endBone.worldRotate.z == 0.0f)) {
 
@@ -133,7 +135,7 @@ public class AvatarPaint {
     }
 
     public void startAndPlay() {
-        if(!playing) {
+        if (!playing) {
             mFrameCreator.post(mFrameCreatorTask);
             mFrameDrawer.post(mFrameDrawerTask);
             setPlaying(true);
