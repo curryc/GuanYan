@@ -24,6 +24,7 @@
     <string name="classical_trans">文言文翻译</string>
     <string name="sign_to_word_trans">手语识别</string>
     <string name="floating">关闭悬浮</string>
+    <string name="play_video">视频播放</string>
 
     <string name="begin_audio">开始</string>
     <string name="end_audio">结束</string>

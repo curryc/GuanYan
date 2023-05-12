@@ -16,7 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.scu.guanyan.R;
-import com.scu.guanyan.base.BaseActivity;
+import com.scu.guanyan.base.BaseBackActivity;
 import com.scu.guanyan.event.BaseEvent;
 import com.scu.guanyan.event.WebEvent;
 import com.scu.guanyan.utils.base.Web;
@@ -29,10 +29,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class SignToWordsActivity extends BaseActivity {
+public class SignToWordsActivity extends BaseBackActivity {
     private static String TAG = "SignToWordsActivity";
     private int CAMERA_STATE_CODE = 0x02;
 
@@ -55,6 +54,11 @@ public class SignToWordsActivity extends BaseActivity {
 
     private boolean mRecording = false;
     private PressedTimerButton mTimerButton;
+
+    @Override
+    public String getWindowTitle() {
+        return getString(R.string.sign_to_word_trans);
+    }
 
     @Override
     protected int getLayoutId() {

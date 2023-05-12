@@ -2,15 +2,15 @@ package com.scu.guanyan.base;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.WindowInsetsController;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -41,6 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         initData();
         initView();
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

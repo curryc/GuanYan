@@ -8,6 +8,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="@dimen/button_size_mid"
         android:layout_height="@dimen/button_size_mid"
+        android:visibility="gone"
         android:id="@+id/back"
         app:fabCustomSize="@dimen/button_size_mid"
         android:layout_marginLeft="@dimen/app_padding_mid"
@@ -25,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/app_bar_height"
             android:layout_marginBottom="@dimen/app_padding_mid"
+            android:visibility="gone"
             android:gravity="center"
             android:text="@string/contact_us"
             android:textAppearance="@style/TitleTextAppearance" />

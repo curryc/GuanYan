@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -84,8 +85,9 @@ public class ClassicalTranslateActivity extends BaseUnityActivity {
 //            mUnityPlayer.pause();
 //            mUnityPlayer.stop();
 //        }
-        mUnityPlayer.destroy();
-        mUnityPlayer = null;
+//        mUnityPlayer.destroy();
+//        mUnityPlayer = null;
+        ((ViewGroup)findViewById(getUnityContainerId())).removeView(mUnityPlayer.getView());
         System.gc();
     }
 

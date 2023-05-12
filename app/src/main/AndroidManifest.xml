@@ -29,7 +29,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Guanyan"
+        android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
@@ -49,32 +49,55 @@
         <activity
             android:name=".activity.WordTranslateActivity"
             android:exported="true"
-            android:launchMode="singleTask"
             android:process=":word"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+        </activity>
         <activity
             android:name=".activity.AudioTranslateActivity"
             android:exported="true"
             android:process=":audio"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.SegmentTranslateActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:process=":segment" >
+        </activity>
+        <activity
+            android:name=".activity.SignToWordsActivity"
+            android:screenOrientation="portrait"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".activity.ClassicalTranslateActivity"
+            android:process=":classical"
+            android:screenOrientation="portrait"
+            android:exported="false">
+        </activity>
         <activity
             android:name=".activity.VideoPlayActivity"
+            android:theme="@style/BackAppTheme"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.AboutAppActivity"
+            android:theme="@style/BackAppTheme"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MoreSettingActivity"
+            android:theme="@style/BackAppTheme"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.FeedbackActivity"
+            android:theme="@style/BackAppTheme"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ContactUsActivity"
+            android:theme="@style/BackAppTheme"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
@@ -87,22 +110,6 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:process=":float" />
-        <activity
-            android:name=".activity.SegmentTranslateActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            android:process=":segment" />
-        <activity
-            android:name=".activity.SignToWordsActivity"
-            android:screenOrientation="portrait"
-            android:exported="false">
-        </activity>
-        <activity
-            android:name=".activity.ClassicalTranslateActivity"
-            android:process=":classical"
-            android:screenOrientation="portrait"
-            android:exported="false">
-        </activity>
 
         <service
             android:name=".service.FloatWindowService"

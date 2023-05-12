@@ -5,7 +5,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.scu.guanyan.R;
-import com.scu.guanyan.base.BaseActivity;
+import com.scu.guanyan.base.BaseBackActivity;
 import com.scu.guanyan.event.BaseEvent;
 import com.scu.guanyan.event.WebEvent;
 import com.scu.guanyan.utils.base.Web;
@@ -21,11 +21,16 @@ import org.json.JSONException;
  * @create: 2022/12/31 16:42
  * @description: 输入遇到的问题和解决建议
  **/
-public class FeedbackActivity extends BaseActivity {
+public class FeedbackActivity extends BaseBackActivity {
     private final String TAG = "feedbackActivity";
 
     private EditText mQuestion, mAdvise,mName, mTel;
     private Button mSubmit;
+
+    @Override
+    public String getWindowTitle() {
+        return getString(R.string.feedback);
+    }
 
     @Override
     protected int getLayoutId() {

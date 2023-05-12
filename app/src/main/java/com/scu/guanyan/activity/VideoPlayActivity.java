@@ -3,25 +3,15 @@ package com.scu.guanyan.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.provider.MediaStore;
-import android.view.Gravity;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
-import android.widget.VideoView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager2.widget.ViewPager2;
-
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 import com.scu.guanyan.R;
-import com.scu.guanyan.base.BaseActivity;
+import com.scu.guanyan.base.BaseBackActivity;
 import com.scu.guanyan.base.FragmentAdapter;
 import com.scu.guanyan.bean.TeachVideo;
 import com.scu.guanyan.ui.setting.SettingFragment;
@@ -35,7 +25,7 @@ import java.util.List;
  * @create: 2022/12/13 15:59
  * @description:
  **/
-public class VideoPlayActivity extends BaseActivity {
+public class VideoPlayActivity extends BaseBackActivity {
     public static String VIDEO_DATA = "video_data";
     //    private ViewPager2 mViewPager;
 //    private TabLayout mTab;
@@ -55,6 +45,11 @@ public class VideoPlayActivity extends BaseActivity {
 //        bundle.putSerializable(VIDEO_DATA, video);
 //        intent.putExtras(bundle);
         return intent;
+    }
+
+    @Override
+    public String getWindowTitle() {
+        return getString(R.string.play_video);
     }
 
     @Override

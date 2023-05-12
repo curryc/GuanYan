@@ -86,7 +86,7 @@ public class SegmentTranslateActivity extends BaseUnityActivity {
         mSegments = new ArrayList<>();
 
         mTranslator = new SignTranslator(SegmentTranslateActivity.this, TAG, (int) SharedPreferencesHelper.get(SegmentTranslateActivity.this, SignTranslator.FLASH_KEY, GeneratorConstants.FLUSH_MODE));
-        mUnityPlayer = SignPlayer.with(SegmentTranslateActivity.this, findViewById(R.id.sign));
+//        mUnityPlayer = SignPlayer.with(SegmentTranslateActivity.this, findViewById(R.id.sign));
         mPainter = new AvatarPaint(mUnityPlayer, mTranslator.getMode());
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
@@ -108,8 +108,9 @@ public class SegmentTranslateActivity extends BaseUnityActivity {
 //            mUnityPlayer.pause();
 //            mUnityPlayer.stop();
 //        }
-        mUnityPlayer.destroy();
-        mUnityPlayer = null;
+//        mUnityPlayer.destroy();
+//        mUnityPlayer = null;
+//        ((ViewGroup)findViewById(getUnityContainerId())).removeView(mUnityPlayer.getView());
         System.gc();
     }
 

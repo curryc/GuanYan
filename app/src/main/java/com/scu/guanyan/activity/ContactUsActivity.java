@@ -5,7 +5,7 @@ import android.net.Uri;
 import android.view.View;
 
 import com.scu.guanyan.R;
-import com.scu.guanyan.base.BaseActivity;
+import com.scu.guanyan.base.BaseBackActivity;
 
 /**
  * @program: Guanyan
@@ -13,7 +13,12 @@ import com.scu.guanyan.base.BaseActivity;
  * @create: 2023/2/17 11:51
  * @description:
  **/
-public class ContactUsActivity extends BaseActivity {
+public class ContactUsActivity extends BaseBackActivity {
+    @Override
+    public String getWindowTitle() {
+        return getString(R.string.contact_us);
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_contact;

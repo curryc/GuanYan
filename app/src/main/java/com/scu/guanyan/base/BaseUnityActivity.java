@@ -1,26 +1,16 @@
 package com.scu.guanyan.base;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 
 import com.scu.guanyan.utils.sign.SignPlayer;
-import com.unity3d.player.UnityPlayer;
-import com.unity3d.player.UnityPlayerActivity;
-
-import java.time.LocalDateTime;
-import java.util.concurrent.Executors;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.LogRecord;
 
 /**
  * @program: Guanyan
@@ -30,6 +20,7 @@ import java.util.logging.LogRecord;
  **/
 public abstract class BaseUnityActivity extends BaseActivity {
     protected SignPlayer mUnityPlayer;
+    private ViewGroup mContainer;
 
     protected boolean playing = false;
 
@@ -65,20 +56,13 @@ public abstract class BaseUnityActivity extends BaseActivity {
 
 
     // Quit Unity
-//    @Override
-//    protected void onDestroy() {
-//        if (mUnityPlayer != null) {
-//            mUnityPlayer.destroy();
-//        }
-//        System.gc();
-//        super.onDestroy();
-//
-//    }
-
     @Override
-    protected void onStop() {
-        super.onStop();
-        if (mUnityPlayer != null) mUnityPlayer.stop();
+    protected void onDestroy() {
+//        mContainer.removeView(mUnityPlayer.getView());
+        destroyAll();
+        System.gc();
+        super.onDestroy();
+
     }
 
     // Pause Unity
@@ -95,34 +79,38 @@ public abstract class BaseUnityActivity extends BaseActivity {
         resumeTime = System.currentTimeMillis();
         mUnityPlayer.resume();
 
-        addOnTurnBackListener(new TurnBackListener() {
-            @Override
-            public boolean onTurnBack() {
-//                mHandler.sendEmptyMessage(-1);
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        // 想要流畅，直接上这个
-//                        android.os.Process.killProcess(android.os.Process.myPid());
-                        if (!destroyFlag && System.currentTimeMillis() - resumeTime < 2000) {
-                            destroyAll();
-                            destroyFlag = true;
-                            BaseUnityActivity.this.finish();
-                        } else {
-                            finish();
-                        }
-                    }
-                });
-                return true;
-            }
-        });
+//        addOnTurnBackListener(new TurnBackListener() {
+//            @Override
+//            public boolean onTurnBack() {
+////                mHandler.sendEmptyMessage(-1);
+//                mHandler.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        // 想要流畅，直接上这个
+////                        android.os.Process.killProcess(android.os.Process.myPid());
+//                        if (!destroyFlag && System.currentTimeMillis() - resumeTime < 2000) {
+//                            destroyAll();
+//                            destroyFlag = true;
+//                            BaseUnityActivity.this.finish();
+//                        } else {
+//                            finish();
+//                        }
+//                    }
+//                });
+//                return true;
+//            }
+//        });
     }
 
+    @Override
+    protected void initData() {
+        mContainer = findViewById(getUnityContainerId());
+        if (mUnityPlayer == null) mUnityPlayer = SignPlayer.with(this, mContainer);
+        super.initData();
+    }
 
     @Override
     protected final void initView() {
-        ViewGroup l = findViewById(getUnityContainerId());
-        if (mUnityPlayer == null) mUnityPlayer = SignPlayer.with(this, l);
         initOtherViews();
     }
 

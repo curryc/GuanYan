@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.scu.guanyan.base.BaseActivity;
+import com.scu.guanyan.base.BaseBackActivity;
 import com.scu.guanyan.base.FragmentAdapter;
 import com.scu.guanyan.ui.NavFragment;
 import com.scu.guanyan.ui.home.HomeFragment;
@@ -27,6 +28,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
 
     @Override
     protected void initView() {

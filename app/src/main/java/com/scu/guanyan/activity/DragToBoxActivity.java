@@ -3,15 +3,20 @@ package com.scu.guanyan.activity;
 import android.view.View;
 
 import com.scu.guanyan.R;
-import com.scu.guanyan.base.BaseActivity;
+import com.scu.guanyan.base.BaseBackActivity;
 import com.scu.guanyan.event.BoxSelectEvent;
 import com.scu.guanyan.service.FloatWindowService;
 import com.scu.guanyan.widget.BoxDrawingView;
 
 import org.greenrobot.eventbus.EventBus;
 
-public class DragToBoxActivity extends BaseActivity {
+public class DragToBoxActivity extends BaseBackActivity {
     private BoxDrawingView mBox;
+
+    @Override
+    public String getWindowTitle() {
+        return "drag and draw";
+    }
 
     @Override
     protected int getLayoutId() {

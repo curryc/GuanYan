@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.scu.guanyan.R;
-import com.scu.guanyan.base.BaseActivity;
+import com.scu.guanyan.base.BaseBackActivity;
 import com.scu.guanyan.utils.sign.AvatarPaint;
 import com.scu.guanyan.utils.sign.SignTranslator;
 import com.scu.guanyan.widget.SettingEntry;
@@ -18,7 +18,7 @@ import java.util.HashMap;
  * @create: 2022/12/13 21:31
  * @description:
  **/
-public class MoreSettingActivity extends BaseActivity {
+public class MoreSettingActivity extends BaseBackActivity {
     private LinearLayout mSettingList;
 
     @Override
@@ -32,14 +32,13 @@ public class MoreSettingActivity extends BaseActivity {
     }
 
     @Override
+    public String getWindowTitle() {
+        return getString(R.string.more_setting);
+    }
+
+    @Override
     protected void initView() {
         mSettingList = findViewById(R.id.setting_list);
-        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
 
         addItems();
     }

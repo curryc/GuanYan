@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.scu.guanyan.R;
 import com.scu.guanyan.base.BaseActivity;
+import com.scu.guanyan.base.BaseBackActivity;
 
 /**
  * @program: Guanyan
@@ -12,6 +13,7 @@ import com.scu.guanyan.base.BaseActivity;
  * @description:关于软件
  **/
 public class AboutAppActivity extends BaseActivity {
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_about;

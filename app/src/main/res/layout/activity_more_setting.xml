@@ -5,42 +5,16 @@
     android:layout_height="match_parent"
     android:padding="@dimen/app_padding_sml">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/back"
-        android:layout_width="@dimen/button_size_mid"
-        android:layout_height="@dimen/button_size_mid"
-        android:layout_marginLeft="@dimen/app_padding_mid"
-        android:layout_marginTop="@dimen/app_padding_mid"
-        android:backgroundTint="@color/white"
-        android:src="@drawable/smaller"
-        app:backgroundTint="@color/white"
-        app:fabCustomSize="@dimen/button_size_mid" />
-
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/title"
+        android:layout_alignParentBottom="true">
 
-        <TextView
-            android:id="@+id/title"
+        <LinearLayout
+            android:id="@+id/setting_list"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/app_bar_height"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="@dimen/app_padding_mid"
-            android:gravity="center"
-            android:text="@string/more_setting"
-            android:textAppearance="@style/TitleTextAppearance" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/title"
-            android:layout_alignParentBottom="true">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/setting_list"
-                android:orientation="vertical">
-            </LinearLayout>
-        </ScrollView>
-    </RelativeLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical"></LinearLayout>
+    </ScrollView>
 </FrameLayout>
