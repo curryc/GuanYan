@@ -11,6 +11,7 @@
     <string name="setting">Setting</string>
     <string name="confirm">Confirm</string>
     <string name="segment">Segment</string>
+    <string name="trans_all">Translate all</string>
 
     <string name="about_app">About App</string>
     <string name="more_setting">More Settings</string>
@@ -30,6 +31,9 @@
     <string name="classical_trans">Classical words Translate</string>
     <string name="sign_to_word_trans">SignToWord Translate</string>
     <string name="floating">Stop Floating</string>
+
+
+    <string name="too_short_video">Video Too Short</string>
 
     <string name="floating_permission">Draw Overlay Other APPs</string>
     <string name="description_floating_ask">As we need to translate above other scenes, we need floating above other

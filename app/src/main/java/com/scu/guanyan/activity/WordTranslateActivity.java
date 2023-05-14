@@ -67,7 +67,6 @@ public class WordTranslateActivity extends BaseUnityActivity {
         SharedPreferencesHelper.putListString(this, BUBBLE_KEY, mBubbles);
     }
 
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_trans_word;
@@ -134,6 +133,7 @@ public class WordTranslateActivity extends BaseUnityActivity {
                     } else {
                         mCommonWords.addView(generateBubble(str));
                         mBubbles.add(str);
+                        SharedPreferencesHelper.putListString(WordTranslateActivity.this, BUBBLE_KEY, mBubbles);
                     }
                 }
             }
@@ -182,6 +182,7 @@ public class WordTranslateActivity extends BaseUnityActivity {
                     mBubbles.remove(index);
                     mCommonWords.removeViewAt(index);
                     mCommonWords.invalidate();
+                    SharedPreferencesHelper.putListString(WordTranslateActivity.this, BUBBLE_KEY, mBubbles);
                 }
             }
         }, null);

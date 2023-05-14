@@ -46,7 +46,7 @@ public class SegmentTranslateActivity extends BaseUnityActivity {
     private int READ_PHONE_STATE_CODE = 0x001;
 
     private EditText mEditText;
-    private Button mSubmit;
+    private Button mSubmit, mSubmitAll;
     private FlowLayout mSegmentWords;
     private ViewGroup.MarginLayoutParams mBubbleParams;
     private String mFirstWord;
@@ -118,6 +118,7 @@ public class SegmentTranslateActivity extends BaseUnityActivity {
     protected void initOtherViews() {
         mEditText = findViewById(R.id.input);
         mSubmit = findViewById(R.id.submit);
+        mSubmitAll = findViewById(R.id.trans_all);
         mSegmentWords = findViewById(R.id.segment_words);
 
         mSubmit.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +126,18 @@ public class SegmentTranslateActivity extends BaseUnityActivity {
             public void onClick(View view) {
                 String s = mEditText.getText().toString();
                 cutWords(s);
+                translate(s);
+                if (!mPainter.isPlaying()) {
+                    mPainter.startAndPlay();
+                    playing = true;
+                }
+            }
+        });
+
+        mSubmitAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String s = mEditText.getText().toString();
                 translate(s);
                 if (!mPainter.isPlaying()) {
                     mPainter.startAndPlay();
@@ -150,7 +163,19 @@ public class SegmentTranslateActivity extends BaseUnityActivity {
         }
         mSegmentThread.post(new Runnable() {
             @Override
-            public void run() {
+            public void run(){
+                if(mWordUtil == null){
+                    while(true){
+                        if(mWordUtil!=null){
+                            break;
+                        }
+                        try {
+                            Thread.sleep(100);
+                        }catch (Exception e){
+
+                        }
+                    }
+                }
                 mSegments = mWordUtil.cutSpecial(s);
                 mSegmentThread.sendEmptyMessage(1);
             }

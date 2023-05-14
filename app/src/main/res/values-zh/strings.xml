@@ -8,6 +8,7 @@
     <string name="tutorial">教程</string>
     <string name="setting">设置</string>
     <string name="segment">分词</string>
+    <string name="trans_all">整句翻译</string>
 
     <string name="about_app">关于软件</string>
     <string name="more_setting">更多设置</string>
@@ -25,6 +26,8 @@
     <string name="sign_to_word_trans">手语识别</string>
     <string name="floating">关闭悬浮</string>
     <string name="play_video">视频播放</string>
+
+    <string name="too_short_video">捕捉动画过短</string>
 
     <string name="begin_audio">开始</string>
     <string name="end_audio">结束</string>

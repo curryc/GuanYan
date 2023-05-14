@@ -161,8 +161,7 @@ public class AudioTranslateActivity extends BaseUnityActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&
-                    grantResults[1] == PackageManager.PERMISSION_GRANTED
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED
             ) {
                 isRecord = true;
                 mAudio.setImageResource(R.drawable.ic_pause);

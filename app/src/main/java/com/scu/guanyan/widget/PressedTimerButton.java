@@ -25,11 +25,13 @@ public class PressedTimerButton extends View implements View.OnTouchListener {
     private float mSize;
     private int mWidth, mHeight;
     private long mTime, mTick, mStart;
-    private float mAngle = 0f;
+    private float mAngle = 0f, mPriorAngle = 0f;
     private Paint mCenterPaint, mOuterPaint, mHighlightPaint;
     private Handler mTimer;
     private Runnable mTimerUpdater;
     private HandlerThread mThreadForTimer;
+
+    private OnPressedCallback mOnPressedCallback;
 
     ValueAnimator mCenterFracAnimator;
     private float mCenterFrac = 0.8f;
@@ -43,31 +45,31 @@ public class PressedTimerButton extends View implements View.OnTouchListener {
         super(context, attrs);
         this.mTime = 10000;
         this.mTick = this.mStart = 0;
-        init();
+        initData();
     }
 
     public PressedTimerButton(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.mTime = 10000;
         this.mTick = this.mStart = 0;
-        init();
+        initData();
     }
 
     public PressedTimerButton(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         this.mTime = 10000;
         this.mTick = this.mStart = 0;
-        init();
+        initData();
     }
 
     public PressedTimerButton(Context context, long time, int size) {
         super(context);
         this.mTime = time;
         this.mTick = this.mStart = 0;
-        init();
+        initData();
     }
 
-    private void init() {
+    private void initData() {
         this.setOnTouchListener(this);
         mThreadForTimer = new HandlerThread("timer");
         mThreadForTimer.start();
@@ -75,10 +77,14 @@ public class PressedTimerButton extends View implements View.OnTouchListener {
         this.mTimerUpdater = new Runnable() {
             @Override
             public void run() {
-                mTick = System.currentTimeMillis();
-                mAngle += (((float) (mTick - mStart)) / mTime) * 360f;
+                if (mAngle < 360) {
+                    mTick = System.currentTimeMillis();
+                    mAngle = mPriorAngle + (((float) (mTick - mStart)) / mTime) * 360f;
+                    mTimer.postDelayed(this, 70);
+                }else{
+                    mCenterPaint.setColor(Color.RED);
+                }
                 invalidate();
-                mTimer.postDelayed(this, 70);
             }
         };
 
@@ -92,20 +98,30 @@ public class PressedTimerButton extends View implements View.OnTouchListener {
 
         mHighlightPaint = new Paint();
         mHighlightPaint.setStyle(Paint.Style.FILL);
-        mHighlightPaint.setColor(Color.RED);
+        mHighlightPaint.setColor(0xffded7cd);
 
         mAnimatorUpdateListener = new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 mCenterFrac = (float) valueAnimator.getAnimatedValue();
                 invalidate();
-                Log.i("world", mCenterFrac + "");
             }
         };
     }
 
+    public void init() {
+        this.mTick = this.mStart = 0;
+        this.mAngle = mPriorAngle = 0;
+        mCenterPaint.setColor(Color.WHITE);
+        invalidate();
+    }
+
     public void setTimeInterval(long timeInterval) {
         this.mTime = timeInterval;
+    }
+
+    public void setOnPressedCallback(OnPressedCallback onPressedCallback){
+        mOnPressedCallback = onPressedCallback;
     }
 
     @Override
@@ -127,20 +143,35 @@ public class PressedTimerButton extends View implements View.OnTouchListener {
     }
 
     private void onPressed(boolean pressed) {
+        if(this.mOnPressedCallback != null)
+            this.mOnPressedCallback.onPressed(pressed);
+
         if (pressed) {
-            if (mCenterFracAnimator != null && mCenterFracAnimator.isRunning())
-                mCenterFracAnimator.end();
-            mCenterFracAnimator = ValueAnimator.ofFloat(mCenterFrac, 0.7f);
-            mCenterFracAnimator.addUpdateListener(mAnimatorUpdateListener);
-            mCenterFracAnimator.start();
-            mTimer.post(mTimerUpdater);
+            if (mAngle < 360) {
+                if (mCenterFracAnimator != null && mCenterFracAnimator.isRunning())
+                    mCenterFracAnimator.end();
+                mCenterFracAnimator = ValueAnimator.ofFloat(mCenterFrac, 0.7f);
+                mCenterFracAnimator.addUpdateListener(mAnimatorUpdateListener);
+                mCenterFracAnimator.start();
+                mTimer.post(mTimerUpdater);
+            } else {
+                mCenterPaint.setColor(Color.RED);
+                invalidate();
+            }
         } else {
-            if (mCenterFracAnimator.isRunning())
-                mCenterFracAnimator.end();
-            mCenterFracAnimator = ValueAnimator.ofFloat(mCenterFrac, 0.8f);
-            mCenterFracAnimator.addUpdateListener(mAnimatorUpdateListener);
-            mCenterFracAnimator.start();
-            mTimer.removeCallbacks(mTimerUpdater);
+            mPriorAngle = mAngle;
+            if (mAngle < 360) {
+                if (mCenterFracAnimator.isRunning())
+                    mCenterFracAnimator.end();
+                mCenterFracAnimator = ValueAnimator.ofFloat(mCenterFrac, 0.8f);
+                mCenterFracAnimator.addUpdateListener(mAnimatorUpdateListener);
+                mCenterFracAnimator.start();
+
+                mTimer.removeCallbacks(mTimerUpdater);
+            } else {
+                mCenterPaint.setColor(Color.WHITE);
+                invalidate();
+            }
         }
     }
 
@@ -162,5 +193,7 @@ public class PressedTimerButton extends View implements View.OnTouchListener {
         return true;
     }
 
-
+    public interface OnPressedCallback{
+        void onPressed(boolean pressed);
+    }
 }

@@ -124,16 +124,33 @@ public class SignToWordsActivity extends BaseBackActivity {
             }
         });
 
+        findViewById(R.id.stop).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mTimerButton.init();
+            }
+        });
+
         mTimerButton = findViewById(R.id.timer_button);
-        mTimerButton.setTimeInterval(10 * 10000);
+        mTimerButton.setTimeInterval(10 * 1000);
+        mTimerButton.setOnPressedCallback(new PressedTimerButton.OnPressedCallback() {
+            @Override
+            public void onPressed(boolean pressed) {
+                mRecording = pressed;
+            }
+        });
 
         findViewById(R.id.submit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    Web.postPredictSign(TAG, mFrames.toArray(new float[mFrames.size()][]));
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (mFrames.size() >= 25) {
+                    try {
+                        Web.postPredictSign(TAG, mFrames.toArray(new float[mFrames.size()][]));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    toastShort(getString(R.string.too_short_video));
                 }
             }
         });

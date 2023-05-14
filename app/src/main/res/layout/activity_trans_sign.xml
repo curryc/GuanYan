@@ -25,11 +25,21 @@
             android:layout_width="wrap_content"
             android:layout_gravity="center"
             android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/app_padding_big"
             android:layout_weight="1">
+            <ImageView
+                android:id="@+id/nothing"
+                android:padding="3dp"
+                android:layout_centerVertical="true"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:visibility="invisible"
+                android:src="@drawable/stop"/>
             <ImageView
                 android:id="@+id/buttonSwitchCamera"
                 android:padding="3dp"
                 android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/nothing"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/switch_camera"/>
@@ -38,9 +48,9 @@
                 android:id="@+id/timer_button"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
+                android:layout_centerInParent="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_centerInParent="true"
                 android:layout_toRightOf="@id/buttonSwitchCamera" />
             <ImageView
                 android:id="@+id/submit"
@@ -49,7 +59,15 @@
                 android:layout_toRightOf="@id/timer_button"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/right"/>
+                android:src="@drawable/ok"/>
+            <ImageView
+                android:id="@+id/stop"
+                android:padding="3dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/submit"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/stop"/>
 
         </RelativeLayout>
     </LinearLayout>

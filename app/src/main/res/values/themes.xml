@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/app_color</item>
         <item name="colorPrimaryVariant">@color/app_color</item>
         <item name="colorOnPrimary">@color/app_color</item>
-        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:statusBarColor">@color/app_color</item>
         <!--api 21 可用 底部导航栏颜色-->
         <item name="android:navigationBarColor">@color/gray</item>
         <!--api 21 可用 各个控制控件的默认颜色-->
@@ -54,7 +54,8 @@
         <item name="android:textColor">@color/gray</item>
     </style>
     <style name="TitleTextAppearance" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">50sp</item>
+        <item name="fontFamily">@font/lishu</item>
         <item name="android:textColor">@color/app_color_variant</item>
     </style>
     <style name="ButtonTextAppearance" parent="TextAppearance.AppCompat">

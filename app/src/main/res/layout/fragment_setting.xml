@@ -12,19 +12,17 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_margin="@dimen/app_padding_mid"
+        android:gravity="center_vertical"
         android:layout_weight="2"
         android:text="@string/setting"
         android:textAppearance="@style/TitleTextAppearance" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/app_padding_sml"
+        android:layout_marginLeft="@dimen/app_padding_sml"
+        android:layout_marginRight="@dimen/app_padding_sml"
+        android:layout_marginTop="@dimen/app_padding_big"
         app:cardCornerRadius="@dimen/app_radius_sml"
         android:layout_weight="16"
         android:elevation="20dp">

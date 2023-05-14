@@ -29,6 +29,8 @@ import okhttp3.Response;
  * @description:
  **/
 public class Web {
+    private static final String TAG = "web";
+
     private static final String POST_FEEDBACK = "http://1.117.68.73:8080/api/advice/creat";
     private static final String POST_CLASSICAL = "http://43.156.5.87:8888/api/gpt/";
     private static final String POST_PREDICT = "http://1.117.68.73:8989/predict";
@@ -49,12 +51,16 @@ public class Web {
                 .post(requestBody)
                 .build();
 
+        Log.i(TAG, "new call");
+
         sOkHttpClient.newCall(request).enqueue(new Callback() {
 
             @Override
             public void onResponse(Call arg0, Response response) throws IOException {
                 try {
-                    JSONObject ret = new JSONObject(response.body().string());
+                    String s = response.body().string();
+                    Log.i(TAG, s);
+                    JSONObject ret = new JSONObject(s);
                     BaseEvent event = new WebEvent(flag, ret.toString(), ret.getString("message"), ret.getInt("code") == 200);
                     EventBus.getDefault().post(event);
                 } catch (JSONException e) {
@@ -64,6 +70,7 @@ public class Web {
 
             @Override
             public void onFailure(Call arg0, IOException arg1) {
+                Log.i(TAG, "fail");
             }
         });
     }
@@ -77,12 +84,16 @@ public class Web {
                 .post(requestBody)
                 .build();
 
+        Log.i(TAG, "new call");
+
         sOkHttpClient.newCall(request).enqueue(new Callback() {
 
             @Override
             public void onResponse(Call arg0, Response response) throws IOException {
                 try {
-                    JSONObject ret = new JSONObject(response.body().string());
+                    String s = response.body().string();
+                    Log.i(TAG, s);
+                    JSONObject ret = new JSONObject(s);
                     BaseEvent event = new WebEvent(tag, ret.toString(), ret.getString("result"), ret.getInt("code") == 200);
                     EventBus.getDefault().post(event);
                 } catch (JSONException e) {
@@ -92,6 +103,7 @@ public class Web {
 
             @Override
             public void onFailure(Call arg0, IOException arg1) {
+                Log.i(TAG, "fail");
             }
         });
     }
@@ -101,6 +113,7 @@ public class Web {
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("data", Arrays.deepToString(points));
+        Log.v(TAG, jsonObject.toString());
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
 
@@ -110,14 +123,15 @@ public class Web {
                 .post(requestBody)
                 .build();
 
+        Log.i(TAG, "new call");
+
         sOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onResponse(Call arg0, Response response) throws IOException {
                 try {
                     String s = response.body().string();// response.body()不能使用两次？cbw
-                    Log.i("hello", s);
                     String decodedJson = StringEscapeUtils.unescapeJava(s);
-                    Log.i("hello", decodedJson);
+                    Log.i(TAG, decodedJson);
                     JSONObject ret = new JSONObject(decodedJson);
                     BaseEvent event = new WebEvent(tag, ret.toString(), ret.getString("prediction"), true);
                     EventBus.getDefault().post(event);
@@ -128,6 +142,7 @@ public class Web {
 
             @Override
             public void onFailure(Call arg0, IOException arg1) {
+                Log.i(TAG, "fail");
             }
         });
     }
