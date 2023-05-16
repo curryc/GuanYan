@@ -71,6 +71,9 @@ public class RealTimeWords {
      * 开始监听
      */
     public void start() {
+        if(realTimeResult == null){
+            initResources();
+        }
         realTimeResult = realTimeResult.delete(0, realTimeResult.length());
         new Thread(new Runnable() {
             @Override

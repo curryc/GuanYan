@@ -28,6 +28,7 @@ import com.scu.guanyan.utils.screen.ScreenCapture;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @program: Guanyan
@@ -96,9 +97,9 @@ public class ScreenCaptureService extends Service {
             public void onScreenCaptureSuccess(Bitmap bitmap) {
                 Bitmap res = Bitmap.createBitmap(bitmap, mPos[0],mPos[1],mPos[2],mPos[3]);
 //                showBitmap(res);
-                String s = mOcr.setImgAndRunModel(res);
-                Log.i(TAG, s == null ? "null" : s);
-                EventBus.getDefault().post(new ScreenCaptureResultEvent(FloatWindowService.TAG, s,s ,true));
+                List<String> s = mOcr.setImgAndRunModel(res);
+
+                EventBus.getDefault().post(new ScreenCaptureResultEvent(FloatWindowService.TAG, s,String.valueOf(s.size()) ,true));
             }
 
             @Override

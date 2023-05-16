@@ -12,7 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_margin="@dimen/app_padding_mid"
-        android:gravity="center_vertical"
         android:layout_weight="2"
         android:text="@string/setting"
         android:textAppearance="@style/TitleTextAppearance" />

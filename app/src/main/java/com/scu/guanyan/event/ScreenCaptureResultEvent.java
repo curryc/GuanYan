@@ -1,5 +1,7 @@
 package com.scu.guanyan.event;
 
+import java.util.List;
+
 /**
  * @program: Guanyan
  * @author: cbw
@@ -7,14 +9,14 @@ package com.scu.guanyan.event;
  * @description:
  **/
 public class ScreenCaptureResultEvent extends BaseEvent{
-    private String data;
+    private List<String> data;
 
-    public ScreenCaptureResultEvent(String flag, String data,String msg, boolean ok){
+    public ScreenCaptureResultEvent(String flag, List<String> data,String msg, boolean ok){
         super(flag, msg, ok);
         this.data = data;
     }
 
-    public String getData() {
+    public List<String> getData() {
         return data;
     }
 }
