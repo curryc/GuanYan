@@ -48,8 +48,6 @@ public abstract class BaseUnityActivity extends BaseActivity {
     protected void destroyAll() {
     }
 
-    protected void saveSomething(){};
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -89,7 +87,7 @@ public abstract class BaseUnityActivity extends BaseActivity {
                     @Override
                     public void run() {
                         // 想要流畅，直接上这个
-                        saveSomething();
+                        destroyAll();
                         android.os.Process.killProcess(android.os.Process.myPid());
 //                        if (!destroyFlag && System.currentTimeMillis() - resumeTime < 2000) {
 //                            destroyAll();

@@ -101,17 +101,17 @@ public class SegmentTranslateActivity extends BaseUnityActivity {
         EventBus.getDefault().unregister(this);
         mTranslator.destroy();
         mPainter.destroy();
-        mPainter = null;
-        mTranslator = null;
-        mWordUtil = null;
-//        if(playing){
-//            mUnityPlayer.pause();
-//            mUnityPlayer.stop();
-//        }
-        mUnityPlayer.destroy();
-        mUnityPlayer = null;
-//        ((ViewGroup)findViewById(getUnityContainerId())).removeView(mUnityPlayer.getView());
-        System.gc();
+//        mPainter = null;
+//        mTranslator = null;
+//        mWordUtil = null;
+////        if(playing){
+////            mUnityPlayer.pause();
+////            mUnityPlayer.stop();
+////        }
+//        mUnityPlayer.destroy();
+//        mUnityPlayer = null;
+////        ((ViewGroup)findViewById(getUnityContainerId())).removeView(mUnityPlayer.getView());
+//        System.gc();
     }
 
     @Override
