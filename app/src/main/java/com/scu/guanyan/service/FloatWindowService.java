@@ -337,7 +337,7 @@ public class FloatWindowService extends Service {
                     this.mBox = ((BoxSelectEvent) event).getBox();
                 }
             } else if (event instanceof ScreenCaptureResultEvent) {
-                if (event.isOk() && !mResult.equals(((ScreenCaptureResultEvent) event).getData())) {
+                if (event.isOk() && !mResult.equals(((ScreenCaptureResultEvent) event).getData().get(0))) {
                     Log.i(TAG, ((ScreenCaptureResultEvent) event).getData().get(0));
                     mPainter.checkAndClear();
                     mResult = ((ScreenCaptureResultEvent) event).getData().get(0);
