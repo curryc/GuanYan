@@ -104,7 +104,7 @@ public class FloatWindowService extends Service {
         status = STATUS.RECORD_STOP;
         mBinder = new SignBinder();
         mAudioUtils = new RealTimeWords(this, TAG);
-        mTranslator = new SignTranslator(this, TAG, (int) SharedPreferencesHelper.get(this, SignTranslator.FLASH_KEY, GeneratorConstants.FLUSH_MODE));
+        mTranslator = new SignTranslator(this, TAG, GeneratorConstants.QUEUE_MODE);
 
         mHandler = new Handler(Looper.myLooper());
 

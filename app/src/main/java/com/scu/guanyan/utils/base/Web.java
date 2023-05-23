@@ -143,6 +143,7 @@ public class Web {
             @Override
             public void onFailure(Call arg0, IOException arg1) {
                 Log.i(TAG, "fail");
+                arg1.printStackTrace();
             }
         });
     }

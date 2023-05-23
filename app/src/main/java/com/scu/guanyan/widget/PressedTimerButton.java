@@ -21,7 +21,7 @@ import androidx.annotation.Nullable;
  * @create: 2023/5/9 13:27
  * @description:按下可以倒计时的按钮
  **/
-public class PressedTimerButton extends View implements View.OnTouchListener {
+public class PressedTimerButton extends View implements View.OnClickListener {
     private float mSize;
     private int mWidth, mHeight;
     private long mTime, mTick, mStart;
@@ -30,6 +30,7 @@ public class PressedTimerButton extends View implements View.OnTouchListener {
     private Handler mTimer;
     private Runnable mTimerUpdater;
     private HandlerThread mThreadForTimer;
+    private boolean mPressed = false;
 
     private OnPressedCallback mOnPressedCallback;
 
@@ -70,7 +71,7 @@ public class PressedTimerButton extends View implements View.OnTouchListener {
     }
 
     private void initData() {
-        this.setOnTouchListener(this);
+        this.setOnClickListener(this);
         mThreadForTimer = new HandlerThread("timer");
         mThreadForTimer.start();
         mTimer = new Handler(mThreadForTimer.getLooper());
@@ -81,7 +82,7 @@ public class PressedTimerButton extends View implements View.OnTouchListener {
                     mTick = System.currentTimeMillis();
                     mAngle = mPriorAngle + (((float) (mTick - mStart)) / mTime) * 360f;
                     mTimer.postDelayed(this, 70);
-                }else{
+                } else {
                     mCenterPaint.setColor(Color.RED);
                 }
                 invalidate();
@@ -120,7 +121,7 @@ public class PressedTimerButton extends View implements View.OnTouchListener {
         this.mTime = timeInterval;
     }
 
-    public void setOnPressedCallback(OnPressedCallback onPressedCallback){
+    public void setOnPressedCallback(OnPressedCallback onPressedCallback) {
         mOnPressedCallback = onPressedCallback;
     }
 
@@ -143,7 +144,7 @@ public class PressedTimerButton extends View implements View.OnTouchListener {
     }
 
     private void onPressed(boolean pressed) {
-        if(this.mOnPressedCallback != null)
+        if (this.mOnPressedCallback != null)
             this.mOnPressedCallback.onPressed(pressed);
 
         if (pressed) {
@@ -176,24 +177,21 @@ public class PressedTimerButton extends View implements View.OnTouchListener {
     }
 
     @Override
-    public boolean onTouch(View view, MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                mStart = System.currentTimeMillis();
-                setPressed(true);
-                onPressed(true);
-                break;
-            case MotionEvent.ACTION_UP:
-                setPressed(false);
-                onPressed(false);
-                break;
-            default:
-                break;
+    public void onClick(View view) {
+        if (!mPressed) {
+            mPressed = true;
+            mStart = System.currentTimeMillis();
+            setPressed(true);
+            onPressed(true);
+        } else {
+            mPressed = false;
+            setPressed(false);
+            onPressed(false);
         }
-        return true;
+
     }
 
-    public interface OnPressedCallback{
+    public interface OnPressedCallback {
         void onPressed(boolean pressed);
     }
 }
